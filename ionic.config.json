@@ -1,0 +1,7 @@
+{
+  "name": "hurricanes",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
