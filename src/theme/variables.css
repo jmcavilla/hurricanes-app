@@ -5,7 +5,7 @@ http:ionicframework.com/docs/theming/ */
 :root {
   --ion-font-family: 'Biryani', sans-serif;
   /** primary **/
-  --ion-color-primary: #000000;
+  --ion-color-primary: #1e1c1b;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -13,12 +13,12 @@ http:ionicframework.com/docs/theming/ */
   --ion-color-primary-tint: #5a5a5a;
 
   /** secondary **/
-  --ion-color-secondary: #E95203;
+  --ion-color-secondary: #fb4c0b;
   --ion-color-secondary-rgb: 61, 194, 255;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #d84c01;
-  --ion-color-secondary-tint: #ff5900;
+  --ion-color-secondary-shade: #c93d09;
+  --ion-color-secondary-tint: #fc703c;
 
   /** tertiary **/
   --ion-color-tertiary: #FCBF28;

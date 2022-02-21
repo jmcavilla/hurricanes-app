@@ -29,7 +29,7 @@ import { RootState } from './store';
 import LoginPage from './pages/LoginPage';
 import SignInPage from './pages/SignInPage';
 import TabUser from './pages/tabs/TabUser';
-import { cardSharp, home, optionsSharp, personCircle } from 'ionicons/icons';
+import { cardSharp, cartSharp, home, optionsSharp, personCircle, personCircleSharp } from 'ionicons/icons';
 import TabHome from './pages/tabs/TabHome';
 import TabOptions from './pages/tabs/TabOptions';
 // import { setupConfig } from '@ionic/react';
@@ -37,6 +37,7 @@ import { App as AppPlugin } from "@capacitor/app";
 import { startChecking } from './store/auth/auth.actions';
 import { uiShowLogin } from './store/ui/ui.actions';
 import ParentSignIn from './pages/ParentSignIn';
+import TabStore from './pages/tabs/TabStore';
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -100,16 +101,23 @@ const App: React.FC = () => {
                       <Route path='/tabOptions' exact>
                         <TabOptions />
                       </Route>
+                      <Route path='/tabShop' exact>
+                        <TabStore />
+                      </Route>
                       <Redirect path='' to='tabHome' exact/>
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom" color="secondary" >
                       <IonTabButton tab="tabUser" href='/tabUser'>
-                        <IonIcon icon={cardSharp} />
-                        <IonLabel>Carnet</IonLabel>
+                        <IonIcon icon={personCircleSharp} />
+                        <IonLabel>Socio</IonLabel>
                       </IonTabButton>
                       <IonTabButton tab="tabHome" href='/tabHome'>
                         <IonIcon icon={home} />
                         <IonLabel>Inicio</IonLabel>
+                      </IonTabButton>
+                      <IonTabButton tab="tabShop" href='/tabShop'>
+                        <IonIcon icon={cartSharp} />
+                        <IonLabel>Shop</IonLabel>
                       </IonTabButton>
                       <IonTabButton tab="tabOptions" href='/tabOptions'>
                         <IonIcon icon={optionsSharp} />

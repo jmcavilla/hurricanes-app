@@ -1,42 +1,30 @@
 import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser";
-import { IonCard, IonCol, IonGrid, IonImg, IonItem, IonList, IonListHeader, IonPage, IonRow } from "@ionic/react";
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonGrid, IonImg, IonItem, IonLabel, IonList, IonListHeader, IonModal, IonPage, IonRow } from "@ionic/react";
+import moment from "moment";
+import { useState } from "react";
 import DateCards from "../../components/date/DateCards";
+import HomeCard from "../../components/HomeCard";
+import ModalHorarios from "../../components/modals/ModalHorarios";
 
 
 const TabHome: React.FC = () => {
-
+  const [showHorarios, setShowHorarios] = useState(false)
+  const text = 'Conocé los horarios de entrenamiento de todas nuestras categorías';
+  const goToHorariosModal = () => {
+    setShowHorarios(true);
+  } 
   return (
     <IonPage>
-      {/* <div className='login__logo-container'> */}
-        <IonGrid>
-          <DateCards />
-          <IonRow>
-            <IonCol>
-              {/* <IonImg
-                className="animate__animated"
-                src={`${process.env.PUBLIC_URL}/assets/images/hurricanes_logo.png`}
-              /> */}
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonCard color="primary" onClick={() => { InAppBrowser.create('https://pency.app/hurricanesrugbyba','_system')}}>
-              <h1 className="home__title">¡Visitá nuestro shop online!</h1>
-                <IonImg
-                  className="animate__animated"
-                  src={`${process.env.PUBLIC_URL}/assets/images/shop_online.jpg`}
-                />
-              </IonCard>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-      {/* </div> */}
-
+      <IonList>
+        <HomeCard 
+          img={`${process.env.PUBLIC_URL}/assets/images/horarios.jpeg`} 
+          text={text} 
+          onBtnClick={goToHorariosModal} 
+        />
+      </IonList>
+      <IonModal isOpen={showHorarios}>
+        <ModalHorarios dismiss={() => { setShowHorarios(false) }}/>
+      </IonModal>
     </IonPage>
   );
 };
