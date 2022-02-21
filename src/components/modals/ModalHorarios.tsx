@@ -19,11 +19,15 @@ const ModalHorarios = ({ dismiss }) => {
                     <IonItem>Martes - 21 a 23hs</IonItem>
                     <IonItem>Jueves - 21 a 23hs</IonItem>
                     <IonItem>Sábado - 12 a 14hs</IonItem>
+                    <IonListHeader lines="full" color='primary'><strong>Femenino</strong></IonListHeader>
+                    <IonItem>Martes - 19 a 21hs</IonItem>
+                    <IonItem>Jueves - 19 a 21hs</IonItem>
+                    <IonItem>Sábado - 10 a 12hs</IonItem>
                     <IonListHeader lines="full" color='primary'><strong>Juveniles</strong></IonListHeader>
                     <IonItem>Martes - 19 a 21hs</IonItem>
                     <IonItem>Jueves - 19 a 21hs</IonItem>
                     <IonItem>Sábado - 10 a 12hs</IonItem>
-                    <IonListHeader lines="full" color='primary'> <strong>Superior</strong></IonListHeader>
+                    <IonListHeader lines="full" color='primary'> <strong>Infantiles</strong></IonListHeader>
                     <IonItem>PRÓXIMAMENTE</IonItem>
                     {/* <IonItem>Jueves - 21 a 23hs</IonItem>
                     <IonItem>Sábado - 12 a 14hs</IonItem> */}

@@ -43,6 +43,7 @@
     "react-identification-card": "^2.0.1",
     "react-mobile-datepicker": "^4.0.2",
     "react-redux": "^7.2.6",
+    "react-responsive-carousel": "^3.2.22",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.0",
