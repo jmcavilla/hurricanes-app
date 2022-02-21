@@ -1,0 +1,38 @@
+.signin__take-img-icon{
+    font-size: 36vw;
+    border: 4px solid;
+    border-radius: 100%;
+    padding: 10vw;
+    color: var(--ion-color-secondary);
+}
+
+.signing__photo-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 5vh;
+    .photo-button{
+        height: 15vh;
+    }
+    ion-icon{
+        font-size: 15vw;
+    }
+
+}
+.signin__action{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10vw 1vh 10vw; 
+    flex: 1;
+    .photo-rounded{
+        border: 2px solid;
+        border-radius: 100%;
+        color: var(--ion-color-secondary);
+        height: 30vh;
+        width: 30vh;
+        background-size: cover;
+        background-position: center center;
+    }
+}

@@ -1,0 +1,34 @@
+.card__container{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    height: 250px;
+    background-color: var(--ion-color-primary);
+}
+.card__photo-rounded{
+    border: 2px solid;
+    border-radius: 100%;
+    color: var(--ion-color-light);
+    height: 13vh;
+    width: 13vh;
+    background-size: cover;
+    background-position: center center;
+}
+.card__data{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.card__img{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.home__title{
+    justify-content: center;
+    display: flex;
+    margin: 0;
+    text-align: center;
+}

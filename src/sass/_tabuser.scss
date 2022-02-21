@@ -1,0 +1,73 @@
+.user__versionContainer{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+
+    .versionCode{
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    .developed{
+        text-align: center;
+        font-size: 0.7rem;
+    }
+
+    ion-img{
+        padding: 0 30vw 0 30vw;
+    }
+}
+.user__img{
+    border: 2px solid;
+    border-radius: 100%;
+    color: var(--ion-color-secondary);
+    height: 30vh;
+    width: 30vh;
+    background-size: cover;
+    background-position: center center;
+}
+.user__lastname{
+
+    justify-content: center;
+    display: flex;
+    margin: 0;
+
+}
+.user__card-container{
+    display: flex;
+    justify-content: center;
+}
+.user__card{
+    height: 100%;
+    width: 80vw;
+    border-radius: 15px;
+    padding: 25px;
+    background: linear-gradient(220deg, #FCBF28, #E95203);
+    -webkit-box-shadow: 10px 10px 38px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 38px -7px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 38px -7px rgba(0,0,0,0.75);
+    .user__card-contain{
+        border-bottom: 1px solid var(--ion-color-light);
+    }
+
+    .user__card-img{
+        max-width: 25vw;
+    }
+
+    .user__name{
+        font-weight: 800 !important;
+    }
+}
+.user__login-icon{
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    align-items: center;
+}
+.user__login-text{
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    flex-direction: column;
+}
