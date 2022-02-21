@@ -1,0 +1,9 @@
+.map__popUp{
+    .mapboxgl-popup-tip{
+        border-top-color: var(--ion-color-secondary) !important;
+    }
+    .mapboxgl-popup-content{
+        background: var(--ion-color-secondary) !important;
+        border-radius: 100% !important
+    }
+}

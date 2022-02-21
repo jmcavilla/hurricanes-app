@@ -119,10 +119,10 @@ const App: React.FC = () => {
                         <IonIcon icon={cartSharp} />
                         <IonLabel>Shop</IonLabel>
                       </IonTabButton>
-                      <IonTabButton tab="tabOptions" href='/tabOptions'>
+                      {/* <IonTabButton tab="tabOptions" href='/tabOptions'>
                         <IonIcon icon={optionsSharp} />
                         <IonLabel>Opciones</IonLabel>
-                      </IonTabButton>
+                      </IonTabButton> */}
                     </IonTabBar>
                   </IonTabs>
                 </IonReactRouter>

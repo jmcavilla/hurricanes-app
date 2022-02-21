@@ -12,8 +12,8 @@ import ModalInfo from "../../components/modals/ModalInfo";
 const TabHome: React.FC = () => {
   const [showHorarios, setShowHorarios] = useState(false)
   const [showInfo, setShowInfo] = useState(false)
-  const text = 'Conocé los horarios de entrenamiento de todas nuestras categorías';
-  const textInfo = 'Encontrá toda la información sobre las cuotas, categorías, etc.'
+  const text = 'Conocé los horarios de entrenamiento de todas nuestras categorías.';
+  const textInfo = 'Encontrá toda la información sobre donde son los entrenamientos.'
   const goToHorariosModal = () => {
     setShowHorarios(true);
   }
@@ -26,9 +26,9 @@ const TabHome: React.FC = () => {
         <HomeCarousel />
         <div style={{ flex: 1 }}>
 
-          <IonList >
+          <IonList className="ion-no-padding">
             <HomeCard
-              img={`${process.env.PUBLIC_URL}/assets/images/info.jpeg`}
+              img={`${process.env.PUBLIC_URL}/assets/images/lugar_entrenamiento.jpeg`}
               text={textInfo}
               onBtnClick={goToInfoModal}
             />

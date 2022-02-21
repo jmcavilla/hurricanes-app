@@ -1,6 +1,6 @@
 {
 	"appId": "ar.com.klover.hurricanes",
-	"appName": "Hurricanes",
+	"appName": "Hurricanes App",
 	"webDir": "build",
 	"bundledWebRuntime": false
 }
