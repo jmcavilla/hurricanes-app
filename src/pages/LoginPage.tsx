@@ -30,16 +30,18 @@ const LoginPage = () => {
     }
     return (
         <IonPage>
-            <IonHeader>
-                <IonButtons slot='end'>
-
-                <IonButton fill='clear' onClick={close}>
-                    <IonIcon style={{ fontSize: '25px' }} color='primary' icon={closeCircleSharp}></IonIcon>
-                </IonButton>
-                </IonButtons>
-            </IonHeader>
             <IonContent>
                 <IonGrid>
+                    <IonRow>
+                        <IonCol size='12' style={{
+                            justifyContent: 'end',
+                            display: 'flex'
+                        }}>
+                            <IonButton fill='clear' onClick={close}>
+                                <IonIcon style={{ fontSize: '25px' }} color='primary' icon={closeCircleSharp}></IonIcon>
+                            </IonButton>
+                        </IonCol>
+                    </IonRow>
                     <IonRow>
                         <IonCol>
                             <div className='img-container'>
@@ -59,11 +61,11 @@ const LoginPage = () => {
                         }}>
                             <IonCardContent>
                                 <IonGrid>
-                                    <IonRow>
+                                    {/* <IonRow>
                                         <IonCol className='login__icon-center'>
                                             <IonIcon src={personCircleSharp} color='primary' style={{ fontSize: '5rem' }} />
                                         </IonCol>
-                                    </IonRow>
+                                    </IonRow> */}
                                     <IonRow>
                                         <IonCol>
                                             <IonItem className='ion-no-padding'>

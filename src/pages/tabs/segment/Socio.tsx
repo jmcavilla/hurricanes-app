@@ -22,7 +22,7 @@ const Socio: React.FC<Props> = ({ socio }) => {
             <IonRow>
                 <IonCol size='12'>
                     <div className='user__card-container'>
-                        <div className='user__card'>
+                        <div className='socio__card'>
                             <div className='user__card-contain'>
                                 <h3>{socio?.numeroSocio && ('00000000' + socio?.numeroSocio).slice(-8)}</h3>
                                 <h3 className='user__name'>{socio?.apellido}, {socio?.nombre}</h3>

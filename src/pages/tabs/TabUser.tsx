@@ -1,10 +1,12 @@
-import { IonActionSheet, IonButton, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonActionSheet, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import Socio from './segment/Socio';
-import { uiShowLogin, uiShowSignIn } from '../../store/ui/ui.actions';
+import { uiCloseLoading, uiOpenLoading, uiShowLogin, uiShowSignIn } from '../../store/ui/ui.actions';
 import { useState } from 'react';
-import { close, createSharp, logInSharp, logoInstagram, logoWhatsapp } from 'ionicons/icons';
+import { close, createSharp, logInSharp, logoInstagram, logOutSharp, logoWhatsapp } from 'ionicons/icons';
+import { unsetUserAction } from '../../store/user/user.actions';
+import { unsetSocioData } from '../../store/socio/socio.actions';
 const TabUser = () => {
     const { data: user } = useSelector((state: RootState) => state.socio)
     const [showActionSheet, setShowActionSheet] = useState(false)
@@ -15,7 +17,14 @@ const TabUser = () => {
     const iniciarSesion = () => {
         dispatch(uiShowLogin());
     }
-
+    const logOut = () => {
+        dispatch(uiOpenLoading())
+        dispatch(unsetUserAction());
+        dispatch(unsetSocioData());
+        setTimeout(() => {
+            dispatch(uiCloseLoading())
+        }, 1000);
+    }
     return (
         <IonPage>
             {
@@ -24,6 +33,12 @@ const TabUser = () => {
                         <IonHeader>
                             <IonToolbar mode='md'>
                                 <IonTitle>Carnet Digital</IonTitle>
+                                {/* <IonButtons slot='end'> */}
+                                    <IonButton onClick={logOut} slot='end' color='secondary' fill='outline'>
+                                        <IonIcon src={logOutSharp}/>
+                                        <span>Salir</span> 
+                                    </IonButton>
+                                {/* </IonButtons> */}
                             </IonToolbar>
                         </IonHeader>
                         <IonContent>
@@ -38,33 +53,9 @@ const TabUser = () => {
                                 src={`${process.env.PUBLIC_URL}/assets/images/hurricanes_logo.png`}
                             />
                         </div>
-                        {/* <div className='user__login-text'>
-                        <h3 style={{
-                            fontWeight: 'bold',
-                            textAlign: 'center'
-                        }}>
-                            ¿Ya sos socio?
-                        </h3>
-                        <IonButton onClick={iniciarSesion} color='secondary' expand="full">INICIA SESIÓN</IonButton>
-                    </div>
-                    <div className='user__login-text'>
-                        <h3 style={{
-                            fontWeight: 'bold',
-                            textAlign: 'center'
-                        }}>
-                            ¿Querés asociarte al club?
-                        </h3>
-                        <IonButton onClick={asociate} color='secondary' expand="full">ASOCIATE</IonButton>
-                    </div> */}
                         <IonGrid>
                             <IonRow>
                                 <IonCol size='6' className='ion-text-center'>
-                                    {/* <IonCard
-                                        className='ion-padding ion-text-center user__card'
-                                        color='secondary'>
-                                            <IonLabel>¿Ya sos socio?</IonLabel>
-                                            <IonButton onClick={iniciarSesion} fill='outline'>INGRESÁ</IonButton>
-                                    </IonCard> */}
                                     <IonLabel color='secondary'>¿Ya sos socio?</IonLabel>
                                     <IonButton onClick={iniciarSesion} className='user__card' fill='solid' color='secondary'>
                                         <div className='user__button_text'>
@@ -74,12 +65,6 @@ const TabUser = () => {
                                     </IonButton>
                                 </IonCol>
                                 <IonCol size='6' className='ion-text-center'>
-                                    {/* <IonCard
-                                        className='ion-padding ion-text-center user__card'
-                                        color='secondary'>
-                                            <IonLabel>¿Querés asociarte al club?</IonLabel>
-                                            <IonButton onClick={asociate} fill='outline'>ASOCIATE</IonButton>
-                                    </IonCard> */}
                                     <IonLabel color='secondary'>¿Querés ser socio?</IonLabel>
                                     <IonButton onClick={asociate} className='user__card' fill='solid' color='secondary'>
                                         <div className='user__button_text'>
@@ -91,12 +76,6 @@ const TabUser = () => {
                             </IonRow>
                             <IonRow>
                                 <IonCol size='12' className='ion-text-center'>
-                                    {/* <IonCard
-                                        className='ion-padding ion-text-center'
-                                        color='tertiary'>
-                                            <IonLabel>¿Querés asociar a tu hijo/a? </IonLabel>
-                                            <IonButton onClick={asociate} fill='outline'>Comunícate con nosotros</IonButton>
-                                    </IonCard> */}
                                     <IonLabel>¿Querés asociar a tu hijo/a? </IonLabel>
                                     <IonButton className='user__button_large' onClick={()=> {setShowActionSheet(true)}} fill='outline' color='dark'>
                                         <span>Comunícate con nosotros</span>

@@ -6,6 +6,10 @@ export const setSocioData = (payload) => ({
     payload
 })
 
+export const unsetSocioData = () => ({
+    type: types.socioUnSetSocioData
+})
+
 export const getSocioData = (user_id) => {
     return async(dispatch) => {
         debugger;
