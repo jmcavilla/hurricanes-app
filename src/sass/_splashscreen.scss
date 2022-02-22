@@ -2,7 +2,7 @@
     flex: 1 1;
     background-color: var(--ion-color-primary);
     border-radius: 100% 100% 0 0;
-    margin-bottom: -10vh;
+    margin-bottom: -5vh;
     width: 130%;
     justify-content: center;
     display: flex;
@@ -13,13 +13,18 @@
         justify-content: flex-start;
         align-items: center;
         flex-direction: column;
+        min-height: 20vh;
         span{
             color: var(--ion-color-light);
             font-size: 10px;
-            margin-top: 10px;
         }
         ion-img{
-            max-width: 20%;
+            max-width: 25%;
+        }
+
+        .version-code{
+            font-size: 15px;
+            margin-top: 10px;
         }
     }
 }

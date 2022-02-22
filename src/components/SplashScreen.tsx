@@ -1,7 +1,19 @@
-import { IonImg, IonPage } from '@ionic/react'
-import React from 'react'
+import { AppVersion } from '@awesome-cordova-plugins/app-version'
+import { IonImg, IonLabel, IonPage } from '@ionic/react'
+import React, { useEffect, useState } from 'react'
 
 const SplashScreen: React.FC = () => {
+    const [code, setCode] = useState('v1.0.0');
+    const [version, setVersion] = useState('v1.0.0')
+
+    const getAppVersion = async () => {
+        setVersion(`v${await AppVersion.getVersionNumber()}`)
+        setCode(String(await AppVersion.getVersionCode()))
+    }
+
+    useEffect(() => {
+        getAppVersion();
+    }, [])
     return (
         <IonPage
             style={{
@@ -17,8 +29,11 @@ const SplashScreen: React.FC = () => {
                     src={`${process.env.PUBLIC_URL}/assets/images/hurricanes_logo.png`}
                 />
             </div>
-            <div className='splash__klover animate__animated animate__fadeInUp'>
+            <div className='splash__klover animate__animated animate__fadeInUp animate__delay-1s'>
+                <div>
+                </div>
                 <div className='logo_container'>
+                    <span className='version-code'> {version} </span>
                     <span>developed by</span>
                     <IonImg src={process.env.PUBLIC_URL + '/assets/icon/klover_logo.png'} />
                 </div>

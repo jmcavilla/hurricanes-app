@@ -111,10 +111,10 @@ const SignInPage = () => {
                         <SlideOne onBtnClicked={onBtnClicked} />
                     </IonSlide>
                     <IonSlide style={{ height: '100%' }}>
-                        <SlideTwoUser onBtnClicked={onBtnClicked}/>
+                        <SlideTwo onBtnClicked={onBtnClicked} />
                     </IonSlide>
                     <IonSlide  style={{ height: '100%' }}>
-                        <SlideTwo onBtnClicked={onBtnClicked} />
+                        <SlideTwoUser onBtnClicked={onBtnClicked}/>
                     </IonSlide>
                     <IonSlide  style={{ height: '100%' }}>
                         <SlideThree onBtnClicked={onBtnClicked} />

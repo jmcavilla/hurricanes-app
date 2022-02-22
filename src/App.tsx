@@ -56,7 +56,7 @@ const App: React.FC = () => {
     }
     setTimeout(() => {
       setShowSplash(false);
-    }, 5000);
+    }, 6000);
   }, []);
 
   useEffect(() => {
@@ -107,10 +107,10 @@ const App: React.FC = () => {
                       <Redirect path='' to='tabHome' exact/>
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom" color="secondary" >
-                      {/* <IonTabButton tab="tabUser" href='/tabUser'>
+                      <IonTabButton tab="tabUser" href='/tabUser'>
                         <IonIcon icon={personCircleSharp} />
                         <IonLabel>Socio</IonLabel>
-                      </IonTabButton> */}
+                      </IonTabButton>
                       <IonTabButton tab="tabHome" href='/tabHome'>
                         <IonIcon icon={home} />
                         <IonLabel>Inicio</IonLabel>

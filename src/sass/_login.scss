@@ -19,3 +19,11 @@ div.item-native{
     align-items: center;
     display: flex;
 }
+
+.img-container{
+    display: flex;
+    justify-content: center;
+    .img{
+        max-width: 30vh;
+    }
+}

@@ -1,4 +1,4 @@
-import { IonAlert, IonButton, IonCardSubtitle, IonCardTitle, IonCol, IonDatetime, IonFooter, IonIcon, IonInput, IonItem, IonLabel, IonPage, IonPopover, IonRow, IonText, IonToolbar } from '@ionic/react';
+import { IonAlert, IonButton, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonDatetime, IonFooter, IonIcon, IonInput, IonItem, IonLabel, IonPage, IonPopover, IonRow, IonText, IonToolbar } from '@ionic/react';
 import { arrowBack, arrowForward, calendar, closeCircleSharp, man, woman } from 'ionicons/icons';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -90,13 +90,15 @@ const SlideTwo = ({ onBtnClicked, parent = false }) => {
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
            { !parent ? 
            <>
+           <IonContent>
+
                 <div style={{ flex: 1, padding: '10vw 0 0 0' }}>
                     <IonCardTitle color="primary" style={{ fontSize: '1.5em' }}>
                         Completá tus datos
                     </IonCardTitle>
-                    <IonCardSubtitle color="primary" style={{ fontSize: '1em' }}>
+                    {/* <IonCardSubtitle color="primary" style={{ fontSize: '1em' }}>
                         Necesitamos algunos datos personales
-                    </IonCardSubtitle>
+                    </IonCardSubtitle> */}
                 </div>
                 <div style={{ padding: '2vw', flex: 5 }}>
                     <IonRow>
@@ -127,7 +129,7 @@ const SlideTwo = ({ onBtnClicked, parent = false }) => {
                         <IonCol>
                             <IonItem color="">
                                 <IonLabel position="floating">Teléfono</IonLabel>
-                                <IonInput autocomplete='off' value={telefono} autocapitalize='on' onIonChange={e => setTelefono(e.detail.value)}></IonInput>
+                                <IonInput autocomplete='language' value={telefono} autocapitalize='on' onIonChange={e => setTelefono(e.detail.value)}></IonInput>
                             </IonItem>
                         </IonCol>
                     </IonRow>
@@ -135,11 +137,12 @@ const SlideTwo = ({ onBtnClicked, parent = false }) => {
                         <IonCol>
                             <IonItem color="">
                                 <IonLabel position="floating">Fecha de nacimiento</IonLabel>
-                                <IonInput autocomplete='off' value={nacimiento} onClick={() => { setDateOpen(true) }} autocapitalize='on'></IonInput>
+                                <IonInput autocomplete='language' value={nacimiento} onClick={() => { setDateOpen(true) }} autocapitalize='on'></IonInput>
                             </IonItem>
 
                             <DatePicker
-                            theme="android"
+                                theme="android"
+                                isPopUp={true}
                                 dateConfig={dateConfig}
                                 isOpen={dateOpen}
                                 confirmText="Aceptar"
@@ -174,13 +177,14 @@ const SlideTwo = ({ onBtnClicked, parent = false }) => {
                                 color={sexo === Gender.Female ? 'secondary' : 'light'}
                                 onClick={ () => setSexo( Gender.Female ) }
                                 style={{ height: '15vh' }}
-                            >
+                                >
                                 <IonIcon icon={woman} size="large" />
                                 mujer
                             </IonButton>
                         </IonCol>
                     </IonRow>
                 </div>
+                </IonContent>
                 <IonFooter mode='ios' style={{ width: '100vw' }}>
                     <IonToolbar mode='ios' color="secondary" >
                         <IonRow>
@@ -226,7 +230,7 @@ const SlideTwo = ({ onBtnClicked, parent = false }) => {
                             handler: blah => {
                                 dispatch(uiHideSignIn());
                                 // dispatch(uiShowSignInParent());
-                                InAppBrowser.create('https://www.instagram.com/hurricanes_rugbyba/','_system')
+                                // close()
                             }
                         },
                     ]}
