@@ -1,17 +1,30 @@
+import { type } from "os";
 import { types } from "./ui.types";
 
 const initialState: UIState = {
     loading: false,
     showLogin: false,
     showSignIn: false,
-    showSignInParent: false
+    showSignInParent: false,
+    showFieldsSocio: false,
+    showValidateEmail: false,
+    error: null
+}
+
+export type Error = { 
+    code: number,
+    message: string,
+    action?: Function
 }
 
 export type UIState = {
     loading: boolean,
     showLogin: boolean,
     showSignIn: boolean,
-    showSignInParent: boolean
+    showSignInParent: boolean,
+    showFieldsSocio: boolean,
+    showValidateEmail: boolean,
+    error: Error
 }
 
 export const uiReducer = ( state = initialState, action ) => {
@@ -57,6 +70,36 @@ export const uiReducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 showSignInParent: false
+            }
+        case types.uiShowFieldsSocio: 
+            return {
+                ...state,
+                showFieldsSocio: true
+            }
+        case types.uiHideFieldsSocio: 
+            return {
+                ...state,
+                showFieldsSocio: false
+            }
+        case types.uiSetError:
+            return {
+                ...state,
+                error: action.payload
+            }
+        case types.uiUnSetError:
+            return {
+                ...state,
+                error: null
+            }
+        case types.uiShowValidateEmail: 
+            return {
+                ...state,
+                showValidateEmail: true
+            }
+        case types.uiHideValidateEmail: 
+            return {
+                ...state,
+                showValidateEmail: false
             }
         default:
             return state;

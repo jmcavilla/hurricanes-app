@@ -1,3 +1,4 @@
+import { Error } from './ui.reducer';
 import { types } from './ui.types';
 
 
@@ -13,3 +14,12 @@ export const uiHideSignIn = () => ({ type: types.uiHideSignin });
 
 export const uiShowSignInParent = () => ({ type: types.uiShowSigninParent });
 export const uiHideSignInParent = () => ({ type: types.uiHideSigninParent });
+
+export const uiShowFieldsSocio = () => ({ type: types.uiShowFieldsSocio });
+export const uiHideFieldsSocio = () => ({ type: types.uiHideFieldsSocio });
+
+export const uiSetError = (payload: Error) => ({ type: types.uiSetError, payload })
+export const uiUnSetError = () => ({ type: types.uiUnSetError })
+
+export const uiShowValidateEmail = () => ({ type: types.uiShowValidateEmail })
+export const uiHideValidateEmail = () => ({ type: types.uiHideValidateEmail })

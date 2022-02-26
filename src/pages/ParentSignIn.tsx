@@ -2,9 +2,9 @@ import { IonAlert, IonContent, IonPage, IonSlide, IonSlides, useIonLoading } fro
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
-import SlideOne from './slides/SlideOne'
+import SlideOne from './slides/SlideTwo'
 import SlideThree from './slides/SlideThree'
-import SlideTwo from './slides/SlideTwo'
+import SlideTwo from './slides/SlideOne'
 import SlideTwoUser from './slides/SlideTwoUser'
 
 const ParentSignIn = () => {

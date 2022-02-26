@@ -80,7 +80,7 @@ const SlideTwoUser = ({ onBtnClicked, parent = false }) => {
                     Si ya estas registrado por favor, andá a la sección de inicio de sesión.
                 </IonCardSubtitle> */}
             </div>
-            <IonFooter mode='ios' style={{ width: '100vw' }}>
+            {/* <IonFooter mode='ios' style={{ width: '100vw' }}>
                 <IonToolbar mode='ios' color="secondary" >
                     <IonRow>
                         <IonCol>
@@ -111,7 +111,7 @@ const SlideTwoUser = ({ onBtnClicked, parent = false }) => {
                     </IonRow>
 
                 </IonToolbar>
-            </IonFooter>
+            </IonFooter> */}
             <IonAlert
                 isOpen={showAlert}
                 onDidDismiss={() => setShowAlert(false)}

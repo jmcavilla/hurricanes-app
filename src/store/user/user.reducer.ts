@@ -2,19 +2,10 @@ import { Status } from "../../interfaces";
 import { SET_USER, UNSET_USER } from "./user.types";
 
 export type User = {
-    id: number,
-    name: string,
-    lastName: string,
-    cardId?: number,
-    player?: boolean,
-    category: string,
-    image: string,
-    gender: string,
-    age: string,
-    birthday: string,
-    dni: string,
-    phone: string,
-    status?: Status
+    email: string,
+    token: string,
+    uid: string,
+    status?: 'Pending' | 'Active'
 }
 
 export type UserState = {

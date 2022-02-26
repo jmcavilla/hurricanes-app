@@ -43,7 +43,7 @@
     width: 80vw;
     border-radius: 15px;
     padding: 25px;
-    background: linear-gradient(220deg, #FCBF28, #E95203);
+    
     -webkit-box-shadow: 10px 10px 38px -7px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 38px -7px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 38px -7px rgba(0,0,0,0.75);
@@ -53,10 +53,17 @@
 
     .user__card-img{
         max-width: 25vw;
+        height: 20vw;
     }
 
     .user__name{
         font-weight: 800 !important;
+    }
+
+    .user__img-container{
+        display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
     }
 }
 .user__login-icon{
@@ -98,4 +105,10 @@
         font-size: 5vh;
         margin-bottom: 10px;
     }
+}
+
+.user__success-icon{
+    display: flex;
+    justify-content: center;
+    padding: 10vh;
 }

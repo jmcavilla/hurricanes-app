@@ -41,8 +41,9 @@ import TabStore from './pages/tabs/TabStore';
 setupIonicReact();
 
 const App: React.FC = () => {
-  const { showLogin, showSignIn, showSignInParent } = useSelector((state: RootState) => state.ui)
+  const { showLogin, showSignIn, showSignInParent, error } = useSelector((state: RootState) => state.ui)
   const { loading } = useSelector((state: RootState) => state.ui);
+  const [showError, setShowError] = useState(false);
   const [present, dismiss] = useIonLoading();
   const [showSplash, setShowSplash] = useState(true);
   const [showToast, setShowToast] = useState(false);
@@ -51,7 +52,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if(token){
+    if (token) {
       dispatch(startChecking());
     }
     setTimeout(() => {
@@ -60,19 +61,25 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if(loading){
-        present();
-    }else{
-        dismiss();
+    if (loading) {
+      present();
+    } else {
+      dismiss();
     }
-}, [loading])
+  }, [loading])
+
+  useEffect( () => {
+    if(error){
+      setShowError(true);
+    }
+  }, [error])
 
   document.addEventListener('ionBackButton', (ev: any) => {
     setShowToast(true);
-    setBackNumber(backNumber+1);
+    setBackNumber(backNumber + 1);
     console.log(backNumber)
-    
-    if(backNumber > 1){
+
+    if (backNumber > 1) {
       AppPlugin.exitApp()
     }
     setTimeout(() => {
@@ -87,78 +94,71 @@ const App: React.FC = () => {
           <SplashScreen />
           :
           <>
-          {
-            // uid ?
-                <IonReactRouter>
-                  <IonTabs >
-                    <IonRouterOutlet>
-                      <Route path='/tabUser' exact>
-                        <TabUser />
-                      </Route>
-                      <Route path='/tabHome' exact>
-                        <TabHome />
-                      </Route>
-                      <Route path='/tabOptions' exact>
-                        <TabOptions />
-                      </Route>
-                      <Route path='/tabShop' exact>
-                        <TabStore />
-                      </Route>
-                      <Redirect path='' to='tabHome' exact/>
-                    </IonRouterOutlet>
-                    <IonTabBar slot="bottom" color="secondary" >
-                      <IonTabButton tab="tabUser" href='/tabUser'>
-                        <IonIcon icon={personCircleSharp} />
-                        <IonLabel>Socio</IonLabel>
-                      </IonTabButton>
-                      <IonTabButton tab="tabHome" href='/tabHome'>
-                        <IonIcon icon={home} />
-                        <IonLabel>Inicio</IonLabel>
-                      </IonTabButton>
-                      <IonTabButton tab="tabShop" href='/tabShop'>
-                        <IonIcon icon={cartSharp} />
-                        <IonLabel>Shop</IonLabel>
-                      </IonTabButton>
-                      {/* <IonTabButton tab="tabOptions" href='/tabOptions'>
+            {
+              // uid ?
+              <IonReactRouter>
+                <IonTabs >
+                  <IonRouterOutlet>
+                    <Route path='/tabUser' exact>
+                      <TabUser />
+                    </Route>
+                    <Route path='/tabHome' exact>
+                      <TabHome />
+                    </Route>
+                    <Route path='/tabOptions' exact>
+                      <TabOptions />
+                    </Route>
+                    <Route path='/tabShop' exact>
+                      <TabStore />
+                    </Route>
+                    <Redirect path='' to='tabHome' exact />
+                  </IonRouterOutlet>
+                  <IonTabBar slot="bottom" color="secondary" >
+                    <IonTabButton tab="tabUser" href='/tabUser'>
+                      <IonIcon icon={personCircleSharp} />
+                      <IonLabel>Socio</IonLabel>
+                    </IonTabButton>
+                    <IonTabButton tab="tabHome" href='/tabHome'>
+                      <IonIcon icon={home} />
+                      <IonLabel>Inicio</IonLabel>
+                    </IonTabButton>
+                    <IonTabButton tab="tabShop" href='/tabShop'>
+                      <IonIcon icon={cartSharp} />
+                      <IonLabel>Shop</IonLabel>
+                    </IonTabButton>
+                    {/* <IonTabButton tab="tabOptions" href='/tabOptions'>
                         <IonIcon icon={optionsSharp} />
                         <IonLabel>Opciones</IonLabel>
                       </IonTabButton> */}
-                    </IonTabBar>
-                  </IonTabs>
-                </IonReactRouter>
-                  
-            // :
-            //     <IonReactRouter>
-            //       <IonRouterOutlet>
-            //         <Route exact path="/login">
-            //           <LoginPage />
-            //         </Route>
-            //         <Route exact path="/signIn">
-            //           <SignInPage />
-            //         </Route>
-            //         <Route exact path="/">
-            //           <Redirect to="/login" />
-            //         </Route>
-            //       </IonRouterOutlet>
-            //     </IonReactRouter>
-          }
-          <IonModal isOpen={showLogin}>
-            <LoginPage />
-          </IonModal>
-          <IonModal isOpen={showSignIn}>
-            <SignInPage />
-          </IonModal>
-          <IonModal isOpen={showSignInParent}>
-            <ParentSignIn />
-          </IonModal>
-          <IonToast
-          isOpen={showToast}
-          onDidDismiss={() => setShowToast(false)}
-          message="Presiona una vez mas para salir de la app."
-          duration={4000}
-        />
+                  </IonTabBar>
+                </IonTabs>
+              </IonReactRouter>
+
+            }
+            <IonModal isOpen={showLogin}>
+              <LoginPage />
+            </IonModal>
+            <IonModal isOpen={showSignIn}>
+              <SignInPage />
+            </IonModal>
+            <IonModal isOpen={showSignInParent}>
+              <ParentSignIn />
+            </IonModal>
+            <IonToast
+              isOpen={showToast}
+              onDidDismiss={() => setShowToast(false)}
+              message="Presiona una vez mas para salir de la app."
+              duration={4000}
+            />
+            <IonToast
+              isOpen={showError}
+              color='danger'
+              onDidDismiss={() => setShowError(false)}
+              message={error?.message}
+              duration={5000}
+            />
           </>
-          
+
       }
     </IonApp>
   )

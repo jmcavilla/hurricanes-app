@@ -1,8 +1,7 @@
 import { IonButton, IonCard, IonCardSubtitle, IonCol, IonContent, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonRow, IonText } from '@ionic/react';
 import { alertCircleSharp, closeCircleSharp } from 'ionicons/icons';
-import React from 'react';
-import { ISocio } from '../../../interfaces';
-import { User } from '../../../store/user/user.reducer';
+import React, { useEffect, useState } from 'react';
+import { TipoSocio } from '../../../interfaces';
 
 interface Props {
     socio: any
@@ -10,11 +9,70 @@ interface Props {
 
 const Socio: React.FC<Props> = ({ socio }) => {
 
+    const [style, setStyle] = useState({});
+    const [tipoSocio, setTipoSocio] = useState('');
+
+    const getTipoSocio = () => {
+        switch (socio.tipo_socio) {
+            case TipoSocio.Jugador:
+                debugger
+                if(socio.socio_huracan){
+                    setStyle({ background: 'linear-gradient(0deg, rgba(234,31,31,1) 2.5%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 95%, rgba(234,31,31,1) 97.5%)' })
+                }else{
+                    setStyle({ background: 'linear-gradient(220deg, #FCBF28, #E95203)' })
+                }
+                setTipoSocio('Jugador')
+                return 'Jugador'
+            case TipoSocio.Especial:
+                setTipoSocio('Especial')
+                return 'Especial'
+            case TipoSocio.Normal:
+                if(socio.socio_huracan){
+                    setStyle({ background: 'linear-gradient(0deg, rgba(234,31,31,1) 2.5%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 95%, rgba(234,31,31,1) 97.5%)' })
+                }else{
+                    setStyle({ background: 'linear-gradient(220deg, #FCBF28, #E95203)' })
+                }
+                setTipoSocio('Normal')
+                return 'Normal'
+            case TipoSocio.Staff:
+                setTipoSocio('Staff')
+                setStyle({ background: 'linear-gradient(220deg, #DBDBDB, #8F8F8F)' })
+                return 'Staff'
+            case TipoSocio.Fundador:
+                setTipoSocio('Fundador')
+                setStyle({ background: 'linear-gradient(220deg, #EFB810, #EFB810)' })
+                return 'Staff'
+            default:
+                setTipoSocio('')
+                setStyle({ background: 'linear-gradient(220deg, #FCBF28, #E95203)' })
+                return ''
+        }
+    }
+
+    const getCategoria = () => {
+        switch (socio.categoria) {
+            case 'V':
+                return 'Veteranos';
+            case 'S':
+                return 'Superior';
+            case 'M':
+                return 'Juveniles';
+            case 'I':
+                return 'Infantiles';
+            default:
+                break;
+        }
+    }
+
+    useEffect(() => {
+        getTipoSocio()
+    }, [])
+
 
     return (
-        <IonContent>
+        <>
             <IonRow>
-                <IonCol style={{ display: 'flex', justifyContent: 'center'}}>
+                <IonCol style={{ display: 'flex', justifyContent: 'center' }}>
                     <div className='user__img' style={{ backgroundImage: `url(${socio?.foto})` }}>
                     </div>
                 </IonCol>
@@ -22,26 +80,33 @@ const Socio: React.FC<Props> = ({ socio }) => {
             <IonRow>
                 <IonCol size='12'>
                     <div className='user__card-container'>
-                        <div className='socio__card'>
+                        <div className='socio__card' style={style}>
                             <div className='user__card-contain'>
-                                <h3>{socio?.numeroSocio && ('00000000' + socio?.numeroSocio).slice(-8)}</h3>
+                                <h4>{socio?.numero_socio && ('00000000' + socio?.numero_socio).slice(-8)} - Socio {tipoSocio}</h4>
                                 <h3 className='user__name'>{socio?.apellido}, {socio?.nombre}</h3>
-                                {socio?.activo && <p>Socio {socio?.categoria}</p>}
-                                <p>Socio <strong>{socio?.activo ? 'ACTIVO' : 'INACTIVO'}</strong></p>
+                                {socio?.activo && socio.tipo_socio === TipoSocio.Jugador && <p>Categoría: {getCategoria()}</p>}
+                                <p><strong>{socio?.activo ? 'ACTIVO' : 'INACTIVO'}</strong></p>
                             </div>
-                            <div className=''>
-                            <IonImg
-                            
-                                className="user__card-img"
-                                src={`${process.env.PUBLIC_URL}/assets/images/hurricanes_logo.png`}
-                            />
+                            <div className='user__img-container'>
+                                <div className=''>
+                                    <IonImg
+                                        className="user__card-img"
+                                        src={`${process.env.PUBLIC_URL}/assets/images/hurricanes_logo.png`}
+                                    />
+                                </div>
+                                {socio.socio_huracan && <div className=''>
+                                    <IonImg
+                                        className="user__card-img"
+                                        src={`${process.env.PUBLIC_URL}/assets/images/huracan_logo.png`}
+                                    />
+                                </div>}
                             </div>
                         </div>
                     </div>
                 </IonCol>
             </IonRow>
             {
-                !socio?.activo && !socio?.numeroSocio && 
+                !socio?.activo && !socio?.numeroSocio &&
                 <IonRow>
                     <IonCol>
                         <IonItem color='tertiary'>
@@ -54,7 +119,7 @@ const Socio: React.FC<Props> = ({ socio }) => {
                 </IonRow>
             }
             {
-                !socio?.activo && socio?.numeroSocio && 
+                !socio?.activo && socio?.numeroSocio &&
                 <IonRow>
                     <IonCol>
                         <IonItem color='danger'>
@@ -66,7 +131,7 @@ const Socio: React.FC<Props> = ({ socio }) => {
                     </IonCol>
                 </IonRow>
             }
-        </IonContent>
+        </>
     );
 };
 

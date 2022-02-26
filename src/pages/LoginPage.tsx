@@ -70,11 +70,11 @@ const LoginPage = () => {
                                         <IonCol>
                                             <IonItem className='ion-no-padding'>
                                                 <IonLabel position="stacked">Email</IonLabel>
-                                                <IonInput value={email} onIonChange={e => setEmail(e.detail.value)}></IonInput>
+                                                <IonInput autocomplete='language' value={email} onIonChange={e => setEmail(e.detail.value)}></IonInput>
                                             </IonItem>
                                             <IonItem className='ion-no-padding'>
                                                 <IonLabel position="stacked">Contraseña</IonLabel>
-                                                <IonInput type='password' value={password} onIonChange={e => setPassword(e.detail.value)} clearInput={true}></IonInput>
+                                                <IonInput autocomplete='language' type='password' value={password} onIonChange={e => setPassword(e.detail.value)} clearInput={true}></IonInput>
                                             </IonItem>
                                         </IonCol>
                                     </IonRow>

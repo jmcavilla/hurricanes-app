@@ -10,6 +10,16 @@ export enum Status {
     Inactivo = 'inactivo',
 }
 
-export interface ISocio extends User{
+export interface ISocio {
 
+    
+
+}
+
+export enum TipoSocio {
+    Jugador= 'J',
+    Especial='X',
+    Normal='N',
+    Staff='S',
+    Fundador='F'
 }

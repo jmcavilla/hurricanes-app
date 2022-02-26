@@ -1,4 +1,6 @@
+import { async } from "rxjs";
 import { fetchConToken } from "../../helpers/fetch";
+import { uiCloseLoading, uiHideFieldsSocio, uiHideSignIn, uiOpenLoading, uiShowFieldsSocio } from "../ui/ui.actions";
 import { types } from "./socio.types";
 
 export const setSocioData = (payload) => ({
@@ -12,33 +14,34 @@ export const unsetSocioData = () => ({
 
 export const getSocioData = (user_id) => {
     return async(dispatch) => {
-        debugger;
-        if(user_id === 'TEST'){
-            dispatch(setSocioData({
-                user_id: 'TEST',
-                numeroSocio: 1,
-                nombre: 'Juan Manuel',
-                apellido: 'Cavilla',
-                sexo: 'M',
-                dni: '36477664',
-                fecha_nac: '07/08/1991',
-                categoria: 'S',
-                socioHuracan: false,
-                activo: true,
-                telefono: '1130647410',
-                foto: `${process.env.PUBLIC_URL}/assets/images/selfie.jpg`
-            }));
-        }else{
-            const resp = await fetchConToken(
-                'socio',
-                {
-                    user_id
-                },
-                'POST'
-            );
-            const body = await resp.json()
+        
+        const resp = await fetchConToken(
+            'socio',
+            {
+                user_id
+            },
+            'POST'
+        );
+        const body = await resp.json()
 
-            dispatch(setSocioData(body.data));
+        dispatch(setSocioData(body.data));
+        dispatch(uiCloseLoading())
+    }
+}
+
+export const createSocio = (data) => {
+    return async(dispatch)=>{
+        try {
+            data.tipo_socio = 'N';
+            dispatch(uiOpenLoading())
+            const resp = await fetchConToken('socio/new', data, 'POST');
+            const body = await resp.json()
+            dispatch(uiHideFieldsSocio())
+            dispatch(uiHideSignIn());
+            dispatch(uiCloseLoading());
+            dispatch(getSocioData(data.user_id));
+        } catch (error) {
+            
         }
     }
 }

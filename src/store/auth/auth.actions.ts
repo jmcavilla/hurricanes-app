@@ -1,51 +1,53 @@
+import { async } from 'rxjs';
 import { fetchConToken, fetchSinToken } from '../../helpers/fetch';
-import { getSocioData } from '../socio/socio.actions';
-import { uiCloseLoading, uiHideLogin, uiHideSignIn, uiOpenLoading, uiShowLogin } from '../ui/ui.actions';
+import { getSocioData, unsetSocioData } from '../socio/socio.actions';
+import { uiCloseLoading, uiHideLogin, uiHideSignIn, uiOpenLoading, uiSetError, uiShowLogin } from '../ui/ui.actions';
+import { setUserAction, unsetUserAction } from '../user/user.actions';
 import { types } from './auth.types';
 
 
 
 export const startLogin = ( email, password ) => {
     return async( dispatch ) => {
-        debugger
-        if(email === 'prueba@prueba.com'){
-            dispatch( login({
-                uid: 'TEST',
-                name: 'juanmcavilla@gmail.com'
-            }) )
-            dispatch(getSocioData('TEST'));
-            dispatch( uiHideLogin());
-            dispatch( uiHideSignIn());
-            return;
-        }
         try {
             
             dispatch(uiOpenLoading())
             const resp = await fetchSinToken( 'auth', { email, password }, 'POST' );
             const body = await resp.json();
 
-        if( body.ok ) {
-            localStorage.setItem('token', body.token );
-            localStorage.setItem('token-init-date', new Date().getTime().toString() );
-
-            dispatch( login({
-                uid: body.uid,
-                name: body.email
-            }) )
-            
-            dispatch(getSocioData(body.uid));
-            dispatch( uiHideLogin());
-            dispatch( uiHideSignIn());
-        }
+            if( body.ok ) {
+                localStorage.setItem('token', body.token );
+                localStorage.setItem('token-init-date', new Date().getTime().toString() );
+                localStorage.setItem('email', body.email);
+                dispatch( login({
+                    uid: body.uid,
+                    name: body.email
+                }) )
+                
+                dispatch(setUserAction({
+                    email,
+                    token: body.token,
+                    uid: body.uid,
+                    status: body.status
+                }))
+                dispatch(getSocioData(body.uid));
+                dispatch( uiHideLogin());
+                dispatch( uiHideSignIn());
+            }else{
+                console.log('ENTRO ACA')
+                dispatch(uiCloseLoading());
+                dispatch(uiSetError({
+                    code: 500,
+                    message: 'Ocurrio un error al iniciar sesión. Por favor, intentelo nuevamente.'
+                }))
+            }
         
         } catch (error) {
-            dispatch( login({
-                uid: 'TEST',
-                name: 'juanmcavilla@gmail.com'
-            }) )
-            dispatch(getSocioData('TEST'));
-            dispatch( uiHideLogin());
-            dispatch( uiHideSignIn());
+            dispatch(uiSetError({
+                code: 500,
+                message: 'Ocurrio un error al iniciar sesión. Por favor, intentelo nuevamente.'
+            }))
+            dispatch(uiCloseLoading());
         }finally{
             dispatch(uiCloseLoading())
         }
@@ -53,20 +55,59 @@ export const startLogin = ( email, password ) => {
     }
 }
 
-export const startRegister = ( email, password, name ) => {
+export const startLogout = () => {
+    return async(dispatch) => {
+        dispatch(uiOpenLoading())
+        dispatch(unsetUserAction());
+        dispatch(unsetSocioData());
+        dispatch( logout() );
+        window.localStorage.clear()
+        setTimeout(() => {
+            dispatch(uiCloseLoading())
+        }, 1000);
+    }
+}
+
+export const startRegister = ( email, password ) => {
     return async( dispatch ) => {
-
-        const resp = await fetchSinToken( 'auth/new', { email, password, name }, 'POST' );
-        const body = await resp.json();
-
-        if( body.ok ) {
-            localStorage.setItem('token', body.token );
-            localStorage.setItem('token-init-date', new Date().getTime().toString() );
-
-            dispatch( login({
-                uid: body.uid,
-                name: body.email
-            }) )
+        try {
+            dispatch(uiOpenLoading())
+            const resp = await fetchSinToken( 'auth/new', { email, password }, 'POST' );
+            const body = await resp.json();
+            
+            if( body.ok ) {
+                localStorage.setItem('token', body.token );
+                localStorage.setItem('token-init-date', new Date().getTime().toString() );
+                localStorage.setItem('email', body.email);
+                dispatch( login({
+                    uid: body.uid,
+                    name: body.email
+                }) )
+                dispatch( setUserAction({
+                    email: body.email,
+                    token: body.token,
+                    uid: body.uid,
+                    status: body.status
+                }))
+                setTimeout(() => {
+                    dispatch(uiCloseLoading())
+                    dispatch(uiHideSignIn());
+                }, 1000);
+            }else{
+                dispatch(uiSetError({
+                    code: 500,
+                    message: 'Ocurrio un error al registrar el usuario. Por favor, intentelo nuevamente.'
+                }))
+                dispatch(uiCloseLoading());
+            }
+        } catch (error) {
+            dispatch(uiSetError({
+                code: 500,
+                message: 'Ocurrio un error al registrar el usuario. Por favor, intentelo nuevamente.'
+            }))
+            dispatch(uiCloseLoading());
+        }finally{
+            dispatch(uiCloseLoading())
         }
 
 
@@ -76,22 +117,82 @@ export const startRegister = ( email, password, name ) => {
 export const startChecking = () => {
     return async(dispatch) => {
         try {
-            
-            const resp = await fetchConToken( 'auth/renew' );
-            const body = await resp.json();
-            
-            if( body.ok ) {
-                localStorage.setItem('token', body.token );
-                localStorage.setItem('token-init-date', new Date().getTime().toString() );
-                dispatch( login({
-                    uid: body.uid,
-                    name: body.email
-                }) )
-                dispatch(getSocioData(body.uid));
+            const token = localStorage.getItem('token');
+            if(token){
+
+                const resp = await fetchConToken( 'auth/renew' );
+                const body = await resp.json();
+                
+                if( body.ok ) {
+                    localStorage.setItem('token', body.token );
+                    localStorage.setItem('token-init-date', new Date().getTime().toString() );
+
+                    dispatch(updateUserData())
+                    dispatch(getSocioData(body.uid));
+                    dispatch( checkingFinish() );
+                }else{
+                    dispatch(uiSetError({
+                        code: 500,
+                        message: 'Ocurrio un error al verificar la sesión. Por favor, inicie sesión.'
+                    }))
+                    dispatch(uiCloseLoading());
+                }
             }
         } catch (error) {
-            // dispatch( checkingFinish() );
-            //     dispatch( uiShowLogin());
+            dispatch(uiSetError({
+                code: 500,
+                message: 'Ocurrio un error al verificar la sesión. Por favor, inicie sesión.'
+            }))
+            dispatch(uiCloseLoading());
+        }finally{
+            dispatch(uiCloseLoading())
+        }
+    }
+}
+
+export const updateUserData = () => {
+    return async (dispatch) => {
+        const resp = await fetchConToken('auth/data', { email: localStorage.getItem('email') }, 'POST')
+        const body = await resp.json();
+        dispatch( login({
+            uid: body.uid,
+            name: body.email
+        }) )
+        dispatch( setUserAction({
+            email: body.email,
+            token: body.token,
+            uid: body.uid,
+            status: body.status
+        }))
+    }
+}
+
+export const validateEmail = (confirmationCode) => {
+    return async(dispatch) => {
+        try {
+            dispatch(uiOpenLoading());
+            const email=  localStorage.getItem('email')
+            const resp = await fetchConToken( 'auth/confirm', { email, confirmationCode }, 'POST' );
+            const body = await resp.json();
+
+            if( body.ok ) {
+                dispatch(updateUserData());
+                dispatch(uiCloseLoading());
+            }else{
+                dispatch(uiSetError({
+                    code: 500,
+                    message: 'Ocurrio un error al verificar el codigo. Por favor, intentelo de nuevo.'
+                }))
+                dispatch(uiCloseLoading());
+            }
+        } catch (error) {
+            dispatch(uiSetError({
+                code: 500,
+                message: 'Ocurrio un error al verificar el codigo. Por favor, intentelo de nuevo.'
+            }))
+            dispatch(uiCloseLoading());
+        }finally{
+            dispatch(uiCloseLoading())
         }
     }
 }
@@ -104,14 +205,5 @@ const login = ( user ) => ({
     type: types.authLogin,
     payload: user
 });
-
-
-export const startLogout = () => {
-    return ( dispatch ) => {
-
-        localStorage.clear();
-        dispatch( logout() );
-    }
-}
 
 const logout = () => ({ type: types.authLogout })

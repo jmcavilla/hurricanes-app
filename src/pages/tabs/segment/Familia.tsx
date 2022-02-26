@@ -7,7 +7,7 @@ const Familia = () => {
   const { user } = useSelector((state: RootState) => state.user)
   return (
     <IonList>
-      <IonCard color='tertiary'>
+      {/* <IonCard color='tertiary'>
         <IonRow>
           <IonCol size='4'>
             <div className='card__photo-rounded' style={{ backgroundImage: `url(.${user?.image})` }}>
@@ -34,7 +34,7 @@ const Familia = () => {
             <IonButton fill='outline'>CUOTAS</IonButton>
           </IonCol>
         </IonRow>
-      </IonCard>
+      </IonCard> */}
     </IonList>
   );
 };

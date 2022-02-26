@@ -11,7 +11,6 @@ import { uiHideSignIn } from '../../store/ui/ui.actions';
 
 const SlideThree = ({ onBtnClicked, parent = false  }) => {
     const dispatch = useDispatch()
-    const [present, dismiss] = useIonLoading();
     const [photo, setPhoto] = useState(null);
 
     const end = async () => {
@@ -40,9 +39,6 @@ const SlideThree = ({ onBtnClicked, parent = false  }) => {
             // Handle error
         });
     }
-    const close = () => {
-        dispatch(uiHideSignIn());
-    }
 
     return (
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -51,6 +47,8 @@ const SlideThree = ({ onBtnClicked, parent = false  }) => {
                     <IonIcon style={{ fontSize: '25px'}} color='primary' icon={closeCircleSharp}></IonIcon>
                 </IonButton>
             </div> */}
+            <IonContent>
+
             <div style={{ padding: '10vw' }}>
                 <IonCardTitle color="primary" style={{ fontSize: '1.5em' }}>
                     Último paso
@@ -80,19 +78,20 @@ const SlideThree = ({ onBtnClicked, parent = false  }) => {
                     </IonButton>
                     {/* <IonButton className='photo-button' expand="block" fill="outline" color='primary' onClick={uploadPhoto}>
                         <div>
-                            <IonIcon src={imagesSharp} />
-                            <p color='light'>
-                                Subir foto
-                            </p>
+                        <IonIcon src={imagesSharp} />
+                        <p color='light'>
+                        Subir foto
+                        </p>
                         </div>
                     </IonButton> */}
                 </div>
             </div>
-            <div style={{ padding: '5vh 10vw 0 10vw', flex: 1 }}>
+            <div style={{ padding: '0vh 10vw 0 10vw', flex: 1 }}>
                 <IonCardSubtitle color="primary" style={{ fontSize: '1em' }}>
                     Recordá tener buena iluminación para que se vea bien tu cara a la hora de sacarte la foto, esta foto será utilizada en el carnét del club.
                 </IonCardSubtitle>
             </div>
+            </IonContent>
             <IonFooter mode='ios' style={{ width: '100vw' }}>
                 <IonToolbar mode='ios' color="secondary" >
                     <IonRow>
