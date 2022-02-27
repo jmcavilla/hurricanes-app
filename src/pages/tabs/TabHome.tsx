@@ -1,8 +1,6 @@
-import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser";
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonImg, IonItem, IonLabel, IonList, IonListHeader, IonModal, IonPage, IonRow } from "@ionic/react";
-import moment from "moment";
+import { IonButton, IonContent, IonIcon, IonList, IonModal, IonPage, IonTitle } from "@ionic/react";
+import { logoInstagram } from "ionicons/icons";
 import { useState } from "react";
-import DateCards from "../../components/date/DateCards";
 import HomeCard from "../../components/HomeCard";
 import HomeCarousel from "../../components/HomeCarousel";
 import ModalHorarios from "../../components/modals/ModalHorarios";
@@ -24,8 +22,8 @@ const TabHome: React.FC = () => {
     <IonPage>
       <IonContent>
         <HomeCarousel />
+        
         <div style={{ flex: 1 }}>
-
           <IonList className="ion-no-padding">
             <HomeCard
               img={`${process.env.PUBLIC_URL}/assets/images/lugar_entrenamiento.jpeg`}
@@ -39,6 +37,15 @@ const TabHome: React.FC = () => {
               position='right'
             />
           </IonList>
+        </div>
+        <div>
+          <IonTitle className="ion-text-center" style={{
+                marginTop: '14px',
+                fontWeight: 'bold'
+          }}>Seguinos en Instagram</IonTitle>
+          <IonButton expand="full" size="large" fill="clear" color="secondary">
+            <IonIcon style={{ fontSize: '5vh'}} src={logoInstagram}></IonIcon>
+          </IonButton>
         </div>
       </IonContent>
       <IonModal isOpen={showHorarios}>

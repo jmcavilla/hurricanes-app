@@ -1,7 +1,6 @@
-import { async } from 'rxjs';
 import { fetchConToken, fetchSinToken } from '../../helpers/fetch';
 import { getSocioData, unsetSocioData } from '../socio/socio.actions';
-import { uiCloseLoading, uiHideLogin, uiHideSignIn, uiOpenLoading, uiSetError, uiShowLogin } from '../ui/ui.actions';
+import { uiCloseLoading, uiHideLogin, uiHideSignIn, uiOpenLoading, uiSetError } from '../ui/ui.actions';
 import { setUserAction, unsetUserAction } from '../user/user.actions';
 import { types } from './auth.types';
 
@@ -34,20 +33,19 @@ export const startLogin = ( email, password ) => {
                 dispatch( uiHideLogin());
                 dispatch( uiHideSignIn());
             }else{
-                console.log('ENTRO ACA')
                 dispatch(uiCloseLoading());
                 dispatch(uiSetError({
                     code: 500,
-                    message: 'Ocurrio un error al iniciar sesión. Por favor, intentelo nuevamente.'
+                    message: body.msg
                 }))
             }
         
         } catch (error) {
+            dispatch(uiCloseLoading());
             dispatch(uiSetError({
                 code: 500,
                 message: 'Ocurrio un error al iniciar sesión. Por favor, intentelo nuevamente.'
             }))
-            dispatch(uiCloseLoading());
         }finally{
             dispatch(uiCloseLoading())
         }
@@ -94,11 +92,11 @@ export const startRegister = ( email, password ) => {
                     dispatch(uiHideSignIn());
                 }, 1000);
             }else{
+                dispatch(uiCloseLoading());
                 dispatch(uiSetError({
                     code: 500,
-                    message: 'Ocurrio un error al registrar el usuario. Por favor, intentelo nuevamente.'
+                    message: body.msg
                 }))
-                dispatch(uiCloseLoading());
             }
         } catch (error) {
             dispatch(uiSetError({
@@ -131,11 +129,11 @@ export const startChecking = () => {
                     dispatch(getSocioData(body.uid));
                     dispatch( checkingFinish() );
                 }else{
+                    dispatch(uiCloseLoading());
                     dispatch(uiSetError({
                         code: 500,
                         message: 'Ocurrio un error al verificar la sesión. Por favor, inicie sesión.'
                     }))
-                    dispatch(uiCloseLoading());
                 }
             }
         } catch (error) {
@@ -179,11 +177,11 @@ export const validateEmail = (confirmationCode) => {
                 dispatch(updateUserData());
                 dispatch(uiCloseLoading());
             }else{
+                dispatch(uiCloseLoading());
                 dispatch(uiSetError({
                     code: 500,
-                    message: 'Ocurrio un error al verificar el codigo. Por favor, intentelo de nuevo.'
+                    message: body.msg
                 }))
-                dispatch(uiCloseLoading());
             }
         } catch (error) {
             dispatch(uiSetError({

@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { setUserAction } from '../../store/user/user.actions';
 import { CameraPreview, CameraPreviewOptions, CameraPreviewPictureOptions } from '@awesome-cordova-plugins/camera-preview';
-import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera';
+import { Camera, CameraResultType, CameraDirection, CameraSource } from '@capacitor/camera';
 import axios from 'axios';
-import { uiHideSignIn } from '../../store/ui/ui.actions';
+import { uiHideSignIn, uiSetError } from '../../store/ui/ui.actions';
 
 const SlideThree = ({ onBtnClicked, parent = false  }) => {
     const dispatch = useDispatch()
@@ -19,25 +19,63 @@ const SlideThree = ({ onBtnClicked, parent = false  }) => {
         })
     }
 
-    const takePhoto = () => {
+    const takePhoto = async () => {
 
-        const options: CameraOptions = {
-            quality: 100,
-            cameraDirection: 1,
+        // const options: CameraOptions = {
+        //     quality: 100,
+        //     cameraDirection: 1,
+        //     correctOrientation: true,
+        //     destinationType: Camera.DestinationType.DATA_URL,
+        //     encodingType: Camera.EncodingType.JPEG,
+        //     mediaType: Camera.MediaType.PICTURE
+        // }
+
+        // Camera.getPicture(options).then((imageData) => {
+        //     // imageData is either a base64 encoded string or a file URI
+        //     // If it's base64 (DATA_URL):
+        //     console.log('base64', imageData);
+        //     setPhoto('data:image/jpeg;base64,' + imageData);
+        // }, (err) => {
+        //     // Handle error
+        // });
+
+        const image = await Camera.getPhoto({
+            quality: 90,
+            allowEditing: false,
+            resultType: CameraResultType.Base64,
             correctOrientation: true,
-            destinationType: Camera.DestinationType.DATA_URL,
-            encodingType: Camera.EncodingType.JPEG,
-            mediaType: Camera.MediaType.PICTURE
+            direction: CameraDirection.Front,
+            source: CameraSource.Camera
+        })
+        if(image){
+            console.log('base64', image.base64String);
+            setPhoto('data:image/jpeg;base64,' + image.base64String);
+        }else{
+            dispatch(uiSetError({
+                code: 400,
+                message: 'No se cargo ninguna imagen'
+            }))
         }
+        
+    }
 
-        Camera.getPicture(options).then((imageData) => {
-            // imageData is either a base64 encoded string or a file URI
-            // If it's base64 (DATA_URL):
-            console.log('base64', imageData);
-            setPhoto('data:image/jpeg;base64,' + imageData);
-        }, (err) => {
-            // Handle error
-        });
+    const uploadPhoto = async ()=>{
+        const image = await Camera.getPhoto({
+            quality: 40,
+            allowEditing: false,
+            resultType: CameraResultType.Base64,
+            source: CameraSource.Photos
+        })
+
+        if(image){
+            console.log('base64', image.base64String);
+            setPhoto('data:image/jpeg;base64,' + image.base64String);
+        }else{
+            dispatch(uiSetError({
+                code: 400,
+                message: 'No se cargo ninguna imagen'
+            }))
+        }
     }
 
     return (
@@ -76,14 +114,14 @@ const SlideThree = ({ onBtnClicked, parent = false  }) => {
                             </p>
                         </div>
                     </IonButton>
-                    {/* <IonButton className='photo-button' expand="block" fill="outline" color='primary' onClick={uploadPhoto}>
+                    <IonButton className='photo-button' expand="block" fill="outline" color='primary' onClick={uploadPhoto}>
                         <div>
                         <IonIcon src={imagesSharp} />
                         <p color='light'>
                         Subir foto
                         </p>
                         </div>
-                    </IonButton> */}
+                    </IonButton>
                 </div>
             </div>
             <div style={{ padding: '0vh 10vw 0 10vw', flex: 1 }}>

@@ -1,6 +1,6 @@
 import { async } from "rxjs";
 import { fetchConToken } from "../../helpers/fetch";
-import { uiCloseLoading, uiHideFieldsSocio, uiHideSignIn, uiOpenLoading, uiShowFieldsSocio } from "../ui/ui.actions";
+import { uiCloseLoading, uiHideFieldsSocio, uiHideSignIn, uiOpenLoading, uiSetError, uiShowFieldsSocio } from "../ui/ui.actions";
 import { types } from "./socio.types";
 
 export const setSocioData = (payload) => ({
@@ -12,20 +12,40 @@ export const unsetSocioData = () => ({
     type: types.socioUnSetSocioData
 })
 
-export const getSocioData = (user_id) => {
+export const getSocioData = (user_id, showAlert = false) => {
     return async(dispatch) => {
-        
-        const resp = await fetchConToken(
-            'socio',
-            {
-                user_id
-            },
-            'POST'
-        );
-        const body = await resp.json()
+        try {
 
-        dispatch(setSocioData(body.data));
-        dispatch(uiCloseLoading())
+            // dispatch(uiOpenLoading())
+            const resp = await fetchConToken(
+                'socio',
+                {
+                    user_id
+                },
+                'POST'
+            );
+            const body = await resp.json()
+
+            if (body.ok) {
+                dispatch(uiCloseLoading())
+                dispatch(setSocioData(body.data));
+            } else {
+                dispatch(uiCloseLoading());
+                if(showAlert){
+                    dispatch(uiSetError({
+                        code: 500,
+                        message: body.msg
+                    }))
+                }
+            }
+        } catch (error) {
+            dispatch(uiCloseLoading());
+            dispatch(uiSetError({
+                code: 500,
+                message: 'Ocurrio un error al obtener los datos del socio'
+            }))
+        }
+        
     }
 }
 
@@ -36,12 +56,26 @@ export const createSocio = (data) => {
             dispatch(uiOpenLoading())
             const resp = await fetchConToken('socio/new', data, 'POST');
             const body = await resp.json()
-            dispatch(uiHideFieldsSocio())
-            dispatch(uiHideSignIn());
-            dispatch(uiCloseLoading());
-            dispatch(getSocioData(data.user_id));
+
+            if(body.ok){
+
+                dispatch(uiHideFieldsSocio())
+                dispatch(uiHideSignIn());
+                dispatch(uiCloseLoading());
+                dispatch(getSocioData(data.user_id));
+            }else{
+                dispatch(uiCloseLoading());
+                dispatch(uiSetError({
+                    code: 500,
+                    message: body.msg
+                }))
+            }
         } catch (error) {
-            
+            dispatch(uiCloseLoading());
+            dispatch(uiSetError({
+                code: 500,
+                message: 'Ocurrio un error al actualizar los datos. Por favor, intentelo nuevamente.'
+            }))
         }
     }
 }

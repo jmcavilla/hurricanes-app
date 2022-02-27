@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCardSubtitle, IonCardTitle, IonCol, IonFooter, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonRow, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonFooter, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonRow, IonToolbar } from '@ionic/react';
 import { arrowBack, arrowForward, closeCircleSharp } from 'ionicons/icons';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -15,17 +15,19 @@ const SlideTwo = ({ onBtnClicked, parent = false }) => {
         });
     }
     return (
-        <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-            <>
+        <div style={{ height: '100%', display: 'flex', flexDirection: 'column',width: '100%' }}>
+                <IonContent>
+
+                
                 <div>
                     <IonImg className='slides__img-huracan' src={process.env.PUBLIC_URL + '/assets/images/huracan_logo.png'}></IonImg>
                 </div>
                 <div style={{ flex: 1 }}>
                     <IonCardTitle color="primary" style={{ fontSize: '1.5em', padding: '10vw 0 10vw 0' }}>
-                        ¿Sos socio de Huracan?
+                        ¿Sos socio de Huracán?
                     </IonCardTitle>
                     <IonCardSubtitle color="primary" style={{ padding: '0 10vw 10vw 10vw' }}>
-                        Para asociarte al club necesitamos que nos brindes algunos datos personales. Recordá que tenés que ser mayor de 18 años para asociarte por tu cuenta.
+                        Para poder realizar el descuento en la cuota necesitamos tu numero de socio del Club Atlético Huracán.
                     </IonCardSubtitle>
                     <IonRow>
                         <IonCol>
@@ -55,11 +57,12 @@ const SlideTwo = ({ onBtnClicked, parent = false }) => {
                         <IonCol>
                             <IonItem>
                                 <IonLabel position='floating'>N° Socio</IonLabel>
-                                <IonInput onIonChange={(e) => { setNumeroSocioHuracan(e.detail.value) }}></IonInput>
+                                <IonInput disabled={!socioHuracan} onIonChange={(e) => { setNumeroSocioHuracan(e.detail.value) }}></IonInput>
                             </IonItem>
                         </IonCol>
                     </IonRow>
                 </div>
+                </IonContent>
                 <IonFooter mode='ios'>
                     <IonToolbar color="secondary" mode='ios'>
                         <IonRow>
@@ -90,7 +93,6 @@ const SlideTwo = ({ onBtnClicked, parent = false }) => {
                         </IonRow>
                     </IonToolbar>
                 </IonFooter>
-            </>
             
         </div>
     );

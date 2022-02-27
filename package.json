@@ -11,6 +11,7 @@
     "@awesome-cordova-plugins/launch-review": "^5.39.0",
     "@capacitor/android": "3.4.0",
     "@capacitor/app": "1.0.7",
+    "@capacitor/camera": "^1.3.0",
     "@capacitor/core": "3.3.4",
     "@capacitor/haptics": "1.1.3",
     "@capacitor/keyboard": "1.2.0",

@@ -1,4 +1,4 @@
-import { IonAlert, IonButton, IonContent, IonHeader, IonIcon, IonPage, IonSlide, IonSlides, IonTitle, IonToolbar, useIonLoading } from '@ionic/react';
+import { IonAlert, IonButton, IonContent, IonHeader, IonIcon, IonPage, IonSlide, IonSlides, IonTitle, IonToolbar } from '@ionic/react';
 import { closeCircleSharp } from 'ionicons/icons';
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,7 +30,8 @@ const SocioSlides = () => {
         telefono: '',
         socio_huracan: false,
         categoria: '',
-        user_id: user.uid
+        user_id: user.uid,
+        numero_socio: null
     });
     const onBtnClicked = async (direction: string, data: any) => {
         const swiper = await mySlides.current.getSwiper();

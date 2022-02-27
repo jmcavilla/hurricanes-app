@@ -121,7 +121,7 @@ const SlideOne = ({ onBtnClicked, parent = false }) => {
                                 <IonCol>
                                     <IonItem color="">
                                         <IonLabel position="floating">DNI</IonLabel>
-                                        <IonInput autocomplete='off' value={dni} autocapitalize='on' onIonChange={e => setDni(e.detail.value)}></IonInput>
+                                        <IonInput type='number' autocomplete='off' value={dni} autocapitalize='on' onIonChange={e => setDni(e.detail.value)}></IonInput>
                                     </IonItem>
                                 </IonCol>
                             </IonRow>
@@ -129,7 +129,7 @@ const SlideOne = ({ onBtnClicked, parent = false }) => {
                                 <IonCol>
                                     <IonItem color="">
                                         <IonLabel position="floating">Teléfono</IonLabel>
-                                        <IonInput autocomplete='language' value={telefono} autocapitalize='on' onIonChange={e => setTelefono(e.detail.value)}></IonInput>
+                                        <IonInput type='tel' autocomplete='language' value={telefono} autocapitalize='on' onIonChange={e => setTelefono(e.detail.value)}></IonInput>
                                     </IonItem>
                                 </IonCol>
                             </IonRow>

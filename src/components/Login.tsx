@@ -1,3 +1,4 @@
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser';
 import { IonActionSheet, IonButton, IonCol, IonGrid, IonIcon, IonImg, IonLabel, IonRow } from '@ionic/react';
 import { close, createSharp, logInSharp, logoInstagram, logoWhatsapp } from 'ionicons/icons';
 import React, { useState } from 'react'
@@ -60,14 +61,14 @@ const Login = () => {
                     text: 'Whatsapp',
                     icon: logoWhatsapp,
                     handler: () => {
-                        console.log('Delete clicked');
+                        InAppBrowser.create(`https://api.whatsapp.com/send?phone=${5491163635592}`,'_system');
                     }
                 },
                 {
                     text: 'Instagram',
                     icon: logoInstagram,
                     handler: () => {
-                        console.log('Delete clicked');
+                        InAppBrowser.create(`https://www.instagram.com/hurricanes_rugbyba/`,'_system');
                     }
                 }, {
                     text: 'Cancelar',
