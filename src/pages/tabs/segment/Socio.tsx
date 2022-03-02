@@ -82,10 +82,10 @@ const Socio: React.FC<Props> = ({ socio }) => {
                     <div className='user__card-container'>
                         <div className='socio__card' style={style}>
                             <div className='user__card-contain'>
-                                <h4>{socio?.numero_socio && ('00000000' + socio?.numero_socio).slice(-8)} - Socio {tipoSocio}</h4>
-                                <h3 className='user__name'>{socio?.apellido}, {socio?.nombre}</h3>
+                                <h5>{socio?.numero_socio && ('00000000' + socio?.numero_socio).slice(-8)} - Socio {tipoSocio}</h5>
+                                <h4 className='user__name'>{socio?.apellido}, {socio?.nombre}</h4>
                                 {socio?.activo && socio.tipo_socio === TipoSocio.Jugador && <p>Categoría: {getCategoria()}</p>}
-                                <p><strong>{socio?.activo ? 'ACTIVO' : 'INACTIVO'}</strong></p>
+                                <p><strong>{socio?.status === 'Inactive' ? 'INACTIVO' : 'ACTIVO'}</strong></p>
                             </div>
                             <div className='user__img-container'>
                                 <div className=''>
@@ -106,7 +106,7 @@ const Socio: React.FC<Props> = ({ socio }) => {
                 </IonCol>
             </IonRow>
             {
-                !socio?.activo && !socio?.numeroSocio &&
+                socio?.status === 'Pending' &&
                 <IonRow>
                     <IonCol>
                         <IonItem color='tertiary'>
@@ -119,13 +119,27 @@ const Socio: React.FC<Props> = ({ socio }) => {
                 </IonRow>
             }
             {
-                !socio?.activo && socio?.numeroSocio &&
+                socio?.status === 'Inactive' &&
                 <IonRow>
                     <IonCol>
                         <IonItem color='danger'>
                             <IonIcon slot='start' icon={closeCircleSharp}></IonIcon>
                             <IonText>
                                 Hemos encontrado problemas con tu usuario. Por favor, ponete en contacto con el club para solucionarlo.
+                            </IonText>
+                        </IonItem>
+                    </IonCol>
+                </IonRow>
+            }
+            {
+                socio?.status === 'Rejected' &&
+                <IonRow>
+                    <IonCol>
+                        <IonItem color='danger'>
+                            <IonIcon slot='start' icon={closeCircleSharp}></IonIcon>
+                            <IonText>
+                                {socio?.sexo === 'M' ? `Fuiste dado de baja como socio` : `Fuiste dada de baja como socia`}. 
+                                Por favor, ponete en contacto con el club para mas información.
                             </IonText>
                         </IonItem>
                     </IonCol>

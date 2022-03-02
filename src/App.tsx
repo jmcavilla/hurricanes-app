@@ -68,8 +68,8 @@ const App: React.FC = () => {
     }
   }, [loading])
 
-  useEffect( () => {
-    if(error){
+  useEffect(() => {
+    if (error) {
       setShowError(true);
     }
   }, [error])

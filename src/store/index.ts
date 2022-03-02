@@ -1,9 +1,10 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import userReducer, { UserState } from "./user/user.reducer";
 import thunk from 'redux-thunk';
+import userReducer, { UserState } from "./user/user.reducer";
 import { authReducer, AuthState } from "./auth/auth.reducer";
 import { uiReducer, UIState } from "./ui/ui.reducer";
 import { socioReducer, SocioState } from "./socio/socio.reducer";
+import { cuotaReducer, CuotaState } from "./cuota/cuota.reducer";
 
 declare global {
     interface Window {
@@ -17,14 +18,16 @@ export type RootState = {
     user: UserState,
     ui: UIState,
     auth: AuthState,
-    socio: SocioState
+    socio: SocioState,
+    cuota: CuotaState
 }
 
 const rootReducer = combineReducers({
     user: userReducer,
     auth: authReducer,
     ui: uiReducer,
-    socio: socioReducer
+    socio: socioReducer,
+    cuota: cuotaReducer
 })
 
 const store = createStore(rootReducer, composeEnhancers(
