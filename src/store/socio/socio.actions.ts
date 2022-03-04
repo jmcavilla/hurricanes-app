@@ -16,7 +16,7 @@ export const getSocioData = (user_id, showAlert = false) => {
     return async(dispatch) => {
         try {
 
-            // dispatch(uiOpenLoading())
+            dispatch(checking())
             const resp = await fetchConToken(
                 'socio',
                 {
@@ -27,10 +27,10 @@ export const getSocioData = (user_id, showAlert = false) => {
             const body = await resp.json()
 
             if (body.ok) {
-                dispatch(uiCloseLoading())
+                dispatch(checkingFinish())
                 dispatch(setSocioData(body.data));
             } else {
-                dispatch(uiCloseLoading());
+                dispatch(checkingFinish());
                 if(showAlert){
                     dispatch(uiSetError({
                         code: 500,
@@ -39,7 +39,7 @@ export const getSocioData = (user_id, showAlert = false) => {
                 }
             }
         } catch (error) {
-            dispatch(uiCloseLoading());
+            dispatch(checkingFinish());
             dispatch(uiSetError({
                 code: 500,
                 message: 'Ocurrio un error al obtener los datos del socio'
@@ -79,3 +79,11 @@ export const createSocio = (data) => {
         }
     }
 }
+
+const checking = () => ({
+    type: types.socioChecking
+})
+
+const checkingFinish = () => ({
+    type: types.socioCheckingFinish
+})

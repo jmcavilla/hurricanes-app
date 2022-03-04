@@ -11,57 +11,65 @@ const SignInPage = () => {
     const [password, setPassword] = useState('');
     const [reemail, setReemail] = useState('')
     const [repassword, setRepassword] = useState('');
+    const [nombre, setNombre] = useState('');
     const dispatch = useDispatch();
 
     const close = () => {
         dispatch(uiHideSignIn());
     }
     const onBtnClicked = async () => {
-        if(email === ''){
+        if (nombre === '') {
             dispatch(uiSetError({
-                code:400,
+                code: 400,
+                message: 'El campo nombre es obligatorio'
+            }))
+            return;
+        }
+        if (email === '') {
+            dispatch(uiSetError({
+                code: 400,
                 message: 'El campo email es obligatorio'
             }))
             return;
         }
-        if(password === ''){
+        if (password === '') {
             dispatch(uiSetError({
-                code:400,
+                code: 400,
                 message: 'El campo contraseña es obligatorio'
             }))
             return;
         }
-        if(password !== repassword){
+        if (password !== repassword) {
             dispatch(uiSetError({
-                code:400,
+                code: 400,
                 message: 'Las contraseñas no coinciden'
             }))
             return;
         }
-        if(!validateEmail(email)){
+        if (!validateEmail(email)) {
             dispatch(uiSetError({
-                code:400,
+                code: 400,
                 message: 'El formato del email es incorrecto'
             }))
             return;
         }
-        if(email !== reemail){
+        if (email !== reemail) {
             dispatch(uiSetError({
-                code:400,
+                code: 400,
                 message: 'Los correos no coinciden'
             }))
             return;
         }
-        dispatch(startRegister(email, password))
+        dispatch(startRegister(email, password, nombre))
     }
 
     const validateEmail = (email) => {
         return String(email)
-          .toLowerCase()
-          .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          );
-      };
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
     return (
         <IonPage>
             <IonContent>
@@ -86,18 +94,25 @@ const SignInPage = () => {
                         </div>
                     </IonCol>
                 </IonRow>
-                <IonRow style={{ textAlign: 'center'}}>
+                <IonRow style={{ textAlign: 'center' }}>
                     <IonCol>
                         <IonTitle>Completá los datos</IonTitle>
                     </IonCol>
                 </IonRow>
-                <IonRow style={{ justifyContent: 'center'}}>
+                <IonRow style={{ justifyContent: 'center' }}>
 
                     <IonCard style={{
-                            border: '2px solid var(--ion-color-secondary)',
-                        }}>
+                        border: '2px solid var(--ion-color-secondary)',
+                    }}>
                         <IonCardContent>
-
+                            <IonRow>
+                                <IonCol>
+                                    <IonItem color="">
+                                        <IonLabel position="stacked">Nombre</IonLabel>
+                                        <IonInput type='email' value={nombre} autocapitalize='on' onIonChange={e => setNombre(e.detail.value)}></IonInput>
+                                    </IonItem>
+                                </IonCol>
+                            </IonRow>
                             <IonRow>
                                 <IonCol>
                                     <IonItem color="">

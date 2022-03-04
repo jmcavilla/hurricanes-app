@@ -18,25 +18,30 @@ export const startLogin = ( email, password ) => {
                 localStorage.setItem('token', body.token );
                 localStorage.setItem('token-init-date', new Date().getTime().toString() );
                 localStorage.setItem('email', body.email);
-                dispatch( login({
-                    uid: body.uid,
-                    name: body.email
-                }) )
-                
-                dispatch(setUserAction({
-                    email,
-                    token: body.token,
-                    uid: body.uid,
-                    status: body.status
-                }))
-                dispatch(getSocioData(body.uid));
-                dispatch( uiHideLogin());
-                dispatch( uiHideSignIn());
+                setTimeout(() => {
+                    
+                    dispatch( login({
+                        uid: body.uid,
+                        name: body.email
+                    }) )
+                    
+                    dispatch(setUserAction({
+                        email,
+                        token: body.token,
+                        uid: body.uid,
+                        status: body.status,
+                        admin: body.admin,
+                        name: body.name
+                    }))
+                    dispatch(getSocioData(body.uid));
+                    dispatch( uiHideLogin());
+                    dispatch( uiHideSignIn());
+                }, 5000);
             }else{
                 dispatch(uiCloseLoading());
                 dispatch(uiSetError({
                     code: 500,
-                    message: body.msg
+                    message: 'El email y/o la contrasña son incorrectas. Por favor, intentelo nuevamente.'
                 }))
             }
         
@@ -66,11 +71,11 @@ export const startLogout = () => {
     }
 }
 
-export const startRegister = ( email, password ) => {
+export const startRegister = ( email, password, name ) => {
     return async( dispatch ) => {
         try {
             dispatch(uiOpenLoading())
-            const resp = await fetchSinToken( 'auth/new', { email, password }, 'POST' );
+            const resp = await fetchSinToken( 'auth/new', { email, password, name }, 'POST' );
             const body = await resp.json();
             
             if( body.ok ) {
@@ -85,7 +90,9 @@ export const startRegister = ( email, password ) => {
                     email: body.email,
                     token: body.token,
                     uid: body.uid,
-                    status: body.status
+                    status: body.status,
+                    admin: body.admin,
+                    name: body.name
                 }))
                 setTimeout(() => {
                     dispatch(uiCloseLoading())
@@ -130,10 +137,6 @@ export const startChecking = () => {
                     dispatch( checkingFinish() );
                 }else{
                     dispatch(uiCloseLoading());
-                    dispatch(uiSetError({
-                        code: 500,
-                        message: 'Ocurrio un error al verificar la sesión. Por favor, inicie sesión.'
-                    }))
                 }
             }
         } catch (error) {
@@ -160,7 +163,9 @@ export const updateUserData = () => {
             email: body.email,
             token: body.token,
             uid: body.uid,
-            status: body.status
+            status: body.status,
+            admin: body.admin,
+            name: body.name
         }))
     }
 }

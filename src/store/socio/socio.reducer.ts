@@ -1,12 +1,14 @@
 import { types } from "./socio.types"
 
 
-const initialState = {
-    data: null
+const initialState:SocioState = {
+    data: null,
+    checking: false
 }
 
 export type SocioState = {
-    data: any
+    data: any,
+    checking: boolean
 }
 
 export const socioReducer = (state = initialState, action) => {
@@ -23,6 +25,16 @@ export const socioReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: null
+            }
+        case types.socioChecking: 
+            return {
+                ...state,
+                checking: true
+            }
+        case types.socioCheckingFinish:
+            return {
+                ...state,
+                checking: false
             }
         default:
             return state;

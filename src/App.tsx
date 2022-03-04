@@ -29,7 +29,7 @@ import { RootState } from './store';
 import LoginPage from './pages/LoginPage';
 import SignInPage from './pages/SignInPage';
 import TabUser from './pages/tabs/TabUser';
-import { cardSharp, cartSharp, home, optionsSharp, personCircle, personCircleSharp } from 'ionicons/icons';
+import { cardSharp, cartSharp, home, keyOutline, optionsSharp, personCircle, personCircleSharp } from 'ionicons/icons';
 import TabHome from './pages/tabs/TabHome';
 import TabOptions from './pages/tabs/TabOptions';
 // import { setupConfig } from '@ionic/react';
@@ -38,11 +38,13 @@ import { startChecking } from './store/auth/auth.actions';
 import { uiShowLogin } from './store/ui/ui.actions';
 import ParentSignIn from './pages/ParentSignIn';
 import TabStore from './pages/tabs/TabStore';
+import TabAdmin from './pages/tabs/TabAdmin';
 setupIonicReact();
 
 const App: React.FC = () => {
   const { showLogin, showSignIn, showSignInParent, error } = useSelector((state: RootState) => state.ui)
   const { loading } = useSelector((state: RootState) => state.ui);
+  const { user } = useSelector((state: RootState) => state.user);
   const [showError, setShowError] = useState(false);
   const [present, dismiss] = useIonLoading();
   const [showSplash, setShowSplash] = useState(true);
@@ -60,13 +62,13 @@ const App: React.FC = () => {
     }, 6000);
   }, []);
 
-  useEffect(() => {
-    if (loading) {
-      present();
-    } else {
-      dismiss();
-    }
-  }, [loading])
+  // useEffect(() => {
+  //   if (loading) {
+  //     present();
+  //   } else {
+  //     dismiss();
+  //   }
+  // }, [loading])
 
   useEffect(() => {
     if (error) {
@@ -111,6 +113,9 @@ const App: React.FC = () => {
                     <Route path='/tabShop' exact>
                       <TabStore />
                     </Route>
+                    <Route path='/tabAdmin' exact>
+                      <TabAdmin />
+                    </Route>
                     <Redirect path='' to='tabHome' exact />
                   </IonRouterOutlet>
                   <IonTabBar slot="bottom" color="secondary" >
@@ -126,6 +131,10 @@ const App: React.FC = () => {
                       <IonIcon icon={cartSharp} />
                       <IonLabel>Shop</IonLabel>
                     </IonTabButton>
+                    {user?.admin && <IonTabButton tab="tabAdmin" href='/tabAdmin'>
+                      <IonIcon icon={keyOutline} />
+                      <IonLabel>Admin</IonLabel>
+                    </IonTabButton>}
                     {/* <IonTabButton tab="tabOptions" href='/tabOptions'>
                         <IonIcon icon={optionsSharp} />
                         <IonLabel>Opciones</IonLabel>

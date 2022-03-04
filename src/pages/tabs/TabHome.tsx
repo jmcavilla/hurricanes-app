@@ -1,3 +1,4 @@
+import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser";
 import { IonButton, IonContent, IonIcon, IonList, IonModal, IonPage, IonTitle } from "@ionic/react";
 import { logoInstagram } from "ionicons/icons";
 import { useState } from "react";
@@ -17,6 +18,9 @@ const TabHome: React.FC = () => {
   }
   const goToInfoModal = () => {
     setShowInfo(true)
+  }
+  const openInstagram = () => {
+    InAppBrowser.create(`https://www.instagram.com/hurricanes_rugbyba/`,'_system');
   }
   return (
     <IonPage>
@@ -43,7 +47,7 @@ const TabHome: React.FC = () => {
                 marginTop: '14px',
                 fontWeight: 'bold'
           }}>Seguinos en Instagram</IonTitle>
-          <IonButton expand="full" size="large" fill="clear" color="secondary">
+          <IonButton expand="full" size="large" fill="clear" color="secondary" onClick={ openInstagram }>
             <IonIcon style={{ fontSize: '5vh'}} src={logoInstagram}></IonIcon>
           </IonButton>
         </div>

@@ -5,7 +5,9 @@ export type User = {
     email: string,
     token: string,
     uid: string,
-    status?: 'Pending' | 'Active'
+    status?: 'Pending' | 'Active',
+    admin: boolean,
+    name: string
 }
 
 export type UserState = {

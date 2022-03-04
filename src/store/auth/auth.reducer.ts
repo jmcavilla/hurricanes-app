@@ -3,7 +3,7 @@ import { types } from './auth.types';
 const initialState = {
     checking: true,
     uid: null,
-    name: null
+    email: null
 }
 
 export type AuthState = {
