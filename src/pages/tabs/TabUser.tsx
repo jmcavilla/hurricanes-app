@@ -34,9 +34,16 @@ const TabUser = () => {
                             socio ?
                                 <Carnet />
                                 :
-                                checking 
+                                true 
                                 ?
-                                    <IonSpinner name="crescent" />
+                                <div style={{
+                                    height: '100%',
+                                    display: 'flex',
+                                    justifyContent:'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <IonSpinner  color='secondary' name="crescent" />
+                                </div>
                                 :
                                 user.status !== 'Pending' ?
                                     <SocioData />

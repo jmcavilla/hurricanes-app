@@ -112,10 +112,12 @@ const ModalIngreso = ({ hide, tipo }) => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
+                { tipo === 'Egreso' &&
                 <IonItem>
-                    <IonLabel position='stacked'>Concepto</IonLabel>
+                    <IonLabel position='stacked'>¿Quien hizo el gasto?</IonLabel>
                     <IonInput value={quien} onIonChange={e => setQuien(e.detail.value)}></IonInput>
                 </IonItem>
+                }
                 <IonItem>
                     <IonLabel position='stacked'>Concepto</IonLabel>
                     <IonInput value={concepto} onIonChange={e => setConcepto(e.detail.value)}></IonInput>
