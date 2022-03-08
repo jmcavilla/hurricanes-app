@@ -82,7 +82,7 @@ const Socio: React.FC<Props> = ({ socio }) => {
                     <div className='user__card-container'>
                         <div className='socio__card' style={style}>
                             <div className='user__card-contain'>
-                                <h5>{socio?.numero_socio && ('00000000' + socio?.numero_socio).slice(-8)} - Socio {tipoSocio}</h5>
+                                <h5>{socio?.numero_socio && ('0000' + socio?.numero_socio).slice(-4)} - Socio {tipoSocio}</h5>
                                 <h4 className='user__name'>{socio?.apellido}, {socio?.nombre}</h4>
                                 {socio?.activo && socio.tipo_socio === TipoSocio.Jugador && <p>Categoría: {getCategoria()}</p>}
                                 <p><strong>{socio?.status === 'Inactive' ? 'INACTIVO' : 'ACTIVO'}</strong></p>
