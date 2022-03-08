@@ -1,12 +1,14 @@
-import { IonAlert, IonButton, IonCard, IonCardContent, IonCol, IonContent, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle } from '@ionic/react';
+import { IonAlert, IonButton, IonCard, IonCardContent, IonCol, IonContent, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSpinner, IonTitle } from '@ionic/react';
 import axios from 'axios';
 import { closeCircleSharp } from 'ionicons/icons';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
 import { startRegister } from '../store/auth/auth.actions';
 import { uiHideSignIn, uiSetError } from '../store/ui/ui.actions';
 
 const SignInPage = () => {
+    const { loading } = useSelector((state:RootState) => state.ui);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [reemail, setReemail] = useState('')
@@ -147,7 +149,16 @@ const SignInPage = () => {
                             </IonRow>
                             <IonRow>
                                 <IonCol size='12'>
-                                    <IonButton expand="block" fill="solid" color='secondary' onClick={onBtnClicked}>Envíar</IonButton>
+                                    
+                                    <IonButton expand="block" fill="solid" color='secondary' onClick={onBtnClicked}>
+                                        {
+                                        loading 
+                                            ?
+                                            <IonSpinner />
+                                            :
+                                            'Envíar'}
+                                    </IonButton>
+                                        
                                 </IonCol>
                             </IonRow>
                         </IonCardContent>

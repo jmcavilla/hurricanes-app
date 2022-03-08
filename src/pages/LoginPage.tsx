@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonRow } from '@ionic/react'
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSpinner } from '@ionic/react'
 import { closeCircleSharp, personCircleSharp } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,7 +8,7 @@ import { startChecking, startLogin } from '../store/auth/auth.actions'
 import { uiHideLogin } from '../store/ui/ui.actions'
 
 const LoginPage = () => {
-
+    const { loading } = useSelector((state:RootState) => state.ui);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory();
@@ -80,7 +80,14 @@ const LoginPage = () => {
                                     </IonRow>
                                     <IonRow>
                                         <IonCol size='12'>
-                                            <IonButton expand="block" fill="solid" color='secondary' onClick={login}>Ingresar</IonButton>
+                                            <IonButton expand="block" fill="solid" color='secondary' onClick={login}>
+                                            {
+                                        loading 
+                                            ?
+                                            <IonSpinner />
+                                            :
+                                            'Ingresar'}
+                                            </IonButton>
                                         </IonCol>
                                         <IonCol size='12'>
                                             <IonButton expand="block" fill="clear" color='primary' size='small'>Olvidé mi contraseña</IonButton>

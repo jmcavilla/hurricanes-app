@@ -34,7 +34,7 @@ const TabUser = () => {
                             socio ?
                                 <Carnet />
                                 :
-                                true 
+                                checking 
                                 ?
                                 <div style={{
                                     height: '100%',

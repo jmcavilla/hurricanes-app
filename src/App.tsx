@@ -39,6 +39,7 @@ import { uiShowLogin } from './store/ui/ui.actions';
 import ParentSignIn from './pages/ParentSignIn';
 import TabStore from './pages/tabs/TabStore';
 import TabAdmin from './pages/tabs/TabAdmin';
+import { uiHideLogin, uiHideSignIn } from './store/ui/ui.actions'
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -144,10 +145,10 @@ const App: React.FC = () => {
               </IonReactRouter>
 
             }
-            <IonModal isOpen={showLogin}>
+            <IonModal isOpen={showLogin} onIonModalDidDismiss={() => dispatch(uiHideLogin())}>
               <LoginPage />
             </IonModal>
-            <IonModal isOpen={showSignIn}>
+            <IonModal isOpen={showSignIn} onIonModalDidDismiss={() => dispatch(uiHideSignIn())}>
               <SignInPage />
             </IonModal>
             <IonModal isOpen={showSignInParent}>
@@ -165,6 +166,7 @@ const App: React.FC = () => {
               onDidDismiss={() => setShowError(false)}
               message={error?.message}
               duration={5000}
+              position="top"
             />
           </>
 

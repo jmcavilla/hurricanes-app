@@ -34,6 +34,7 @@ export const startLogin = ( email, password ) => {
                         name: body.name
                     }))
                     dispatch(getSocioData(body.uid));
+                    dispatch(uiCloseLoading())
                     dispatch( uiHideLogin());
                     dispatch( uiHideSignIn());
                 }, 5000);
@@ -51,8 +52,6 @@ export const startLogin = ( email, password ) => {
                 code: 500,
                 message: 'Ocurrio un error al iniciar sesión. Por favor, intentelo nuevamente.'
             }))
-        }finally{
-            dispatch(uiCloseLoading())
         }
 
     }

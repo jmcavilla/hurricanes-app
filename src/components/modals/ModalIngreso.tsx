@@ -1,5 +1,5 @@
 import { IonAlert, IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonTitle, IonToast, IonToolbar, useIonLoading } from '@ionic/react'
-import { closeCircleSharp, documentAttachSharp } from 'ionicons/icons'
+import { closeCircleSharp, documentAttachSharp, trashBinSharp } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
 import { Camera, CameraResultType, CameraDirection, CameraSource } from '@capacitor/camera';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +16,7 @@ const ModalIngreso = ({ hide, tipo }) => {
     const dispatch = useDispatch()
     const [concepto, setConcepto] = useState('');
     const [quien, setQuien] = useState('');
-    const [monto, setMonto] = useState('');
+    const [monto, setMonto] = useState(null);
     const [comprobante, setComprobante] = useState('');
     const [showAlert, setShowAlert] = useState(false)
     const [showError, setShowError] = useState(false)
@@ -115,16 +115,16 @@ const ModalIngreso = ({ hide, tipo }) => {
                 { tipo === 'Egreso' &&
                 <IonItem>
                     <IonLabel position='stacked'>¿Quien hizo el gasto?</IonLabel>
-                    <IonInput value={quien} onIonChange={e => setQuien(e.detail.value)}></IonInput>
+                    <IonInput autocomplete='off' value={quien} onIonChange={e => setQuien(e.detail.value)}></IonInput>
                 </IonItem>
                 }
                 <IonItem>
                     <IonLabel position='stacked'>Concepto</IonLabel>
-                    <IonInput value={concepto} onIonChange={e => setConcepto(e.detail.value)}></IonInput>
+                    <IonInput autocomplete='off' value={concepto} onIonChange={e => setConcepto(e.detail.value)}></IonInput>
                 </IonItem>
                 <IonItem>
                     <IonLabel position='stacked'>Monto</IonLabel>
-                    <IonInput value={monto} onIonChange={e => setMonto(e.detail.value)}></IonInput>
+                    <IonInput autocomplete='off' type='number' value={monto} onIonChange={e => setMonto(e.detail.value)}></IonInput>
                 </IonItem>
                 <IonButton onClick={()=>setShowAlert(true)} className='admin__comprobante-button' fill='outline' color='secondary'>
                     <div className='user__button_text'>
@@ -132,12 +132,21 @@ const ModalIngreso = ({ hide, tipo }) => {
                         <span>SUBIR COMPROBANTE</span>
                     </div>
                 </IonButton>
+                {comprobante && comprobante.trim() !== '' && 
+                    <IonButton className='admin__enviar-button' onClick={() => setComprobante('')} expand='block' fill='clear' style={{ padding: '0 10px' }}>
+                        <IonIcon size='large' src={trashBinSharp}/>
+                    </IonButton>
+                }
                 {comprobante && comprobante.trim() !== '' && <IonImg style={{ height: '50vh', padding: '10px' }} src={comprobante}></IonImg>}
             </IonContent>
             <IonFooter>
                 <IonToolbar color='secondary'>
 
-                <IonButton className='admin__enviar-button' onClick={create} expand='block' fill='solid' style={{ padding: '0 10px' }}>ENVÍAR</IonButton>
+                <IonButton className='admin__enviar-button' onClick={create} 
+                expand='block' 
+                fill='solid' 
+                disabled={!quien || quien === '' || !concepto || concepto === '' || !monto}
+                style={{ padding: '0 10px' }}>ENVÍAR</IonButton>
                 </IonToolbar>
             </IonFooter>
             <IonAlert

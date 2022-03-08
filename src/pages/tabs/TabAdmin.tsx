@@ -1,5 +1,5 @@
-import { IonButton, IonCard, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonItem, IonList, IonModal, IonPage, IonProgressBar, IonRow, IonSpinner } from '@ionic/react'
-import { addCircleOutline, addSharp, chevronUp, chevronUpCircleSharp, logoFacebook, logoVimeo, removeCircleOutline } from 'ionicons/icons';
+import { IonButton, IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonItem, IonLabel, IonList, IonModal, IonPage, IonProgressBar, IonRow, IonSpinner } from '@ionic/react'
+import { addCircleOutline, addSharp, checkmarkCircleSharp, chevronUp, chevronUpCircleSharp, closeCircleSharp, logoFacebook, logoVimeo, removeCircleOutline } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ModalIngreso from '../../components/modals/ModalIngreso';
@@ -34,7 +34,7 @@ const TabAdmin = () => {
                         <>
                         
                             {
-                            ingresos && egresos && ingresos.length > 0 && egresos.length > 0 
+                            ingresos && egresos
                             ?
                             <>
                                 <IonGrid>
@@ -65,12 +65,12 @@ const TabAdmin = () => {
                                                     {
                                                         ingresos?.map((ingreso, i) => (
                                                             <IonList>
-                                                                <IonItem>
-                                                                    {ingreso.concepto.toUpperCase()}<br />
-                                                                    ${ingreso.monto} <br />
+                                                                <IonCard autoCapitalize='true' className='ion-text-center'>
+                                                                    <IonLabel>{ingreso.concepto.toUpperCase()}</IonLabel>
+                                                                    <IonCardTitle>${ingreso.monto}</IonCardTitle>
                                                                     {ingreso.quien}<br />
                                                                     {ingreso.fecha}
-                                                                </IonItem>
+                                                                </IonCard>
                                                             </IonList>
                                                         ))
                                                     }
@@ -78,13 +78,29 @@ const TabAdmin = () => {
                                                 <IonCol size='6'>
                                                     {
                                                         egresos?.map((egreso, i) => (
+                                                            // <IonList>
+                                                            //     <IonItem autoCapitalize='true'>
+                                                            //         {egreso.concepto.toUpperCase()}<br /> 
+                                                            //         ${egreso.monto}<br /> 
+                                                            //         {egreso.quien}<br /> 
+                                                            //         {egreso.fecha} <br />
+                                                            //         <IonChip color={ egreso.pago === 'Pending' ? 'danger' : 'success' }>
+                                                            //             <IonIcon size='large' src={ egreso.pago === 'Pending' ? closeCircleSharp : checkmarkCircleSharp }/>
+                                                            //         </IonChip>
+                                                            //     </IonItem>
+                                                            // </IonList>
                                                             <IonList>
-                                                                <IonItem autoCapitalize='true'>
-                                                                    {egreso.concepto.toUpperCase()}<br /> 
-                                                                    ${egreso.monto}<br /> 
+                                                                <IonCard autoCapitalize='true' className='ion-text-center'>
+                                                                    <IonLabel>{egreso.concepto.toUpperCase()}</IonLabel>
+                                                                    <IonCardTitle>${egreso.monto} </IonCardTitle>
                                                                     {egreso.quien}<br /> 
-                                                                    {egreso.fecha}
-                                                                </IonItem>
+                                                                    {egreso.fecha} <br />
+                                                                    <IonChip color={ egreso.pago === 'Pending' ? 'danger' : 'success' }>
+                                                                        <IonLabel >
+                                                                            { egreso.pago === 'Pending' ? 'No pago' : 'Pagado' }
+                                                                        </IonLabel>
+                                                                    </IonChip>
+                                                                </IonCard>
                                                             </IonList>
                                                         ))
                                                     }

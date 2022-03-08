@@ -15,7 +15,7 @@ export const unsetSocioData = () => ({
 export const getSocioData = (user_id, showAlert = false) => {
     return async(dispatch) => {
         try {
-
+            dispatch(uiOpenLoading())
             dispatch(checking())
             const resp = await fetchConToken(
                 'socio',
@@ -27,9 +27,11 @@ export const getSocioData = (user_id, showAlert = false) => {
             const body = await resp.json()
 
             if (body.ok) {
+                dispatch(uiCloseLoading());
                 dispatch(checkingFinish())
                 dispatch(setSocioData(body.data));
             } else {
+                dispatch(uiCloseLoading());
                 dispatch(checkingFinish());
                 if(showAlert){
                     dispatch(uiSetError({
