@@ -95,9 +95,9 @@ const TabAdmin = () => {
                                                                     <IonCardTitle>${egreso.monto} </IonCardTitle>
                                                                     {egreso.quien}<br /> 
                                                                     {egreso.fecha} <br />
-                                                                    <IonChip color={ egreso.pago === 'Pending' ? 'danger' : 'success' }>
+                                                                    <IonChip color={ !egreso.pago ? 'danger' : 'success' }>
                                                                         <IonLabel >
-                                                                            { egreso.pago === 'Pending' ? 'No pago' : 'Pagado' }
+                                                                            { !egreso.pago ? 'No pago' : 'Pagado' }
                                                                         </IonLabel>
                                                                     </IonChip>
                                                                 </IonCard>
