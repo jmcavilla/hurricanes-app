@@ -63,7 +63,7 @@ const TabAdmin = () => {
                                             <>
                                                 <IonCol size='6'>
                                                     {
-                                                        ingresos?.map((ingreso, i) => (
+                                                        ingresos?.reverse().map((ingreso, i) => (
                                                             <IonList>
                                                                 <IonCard autoCapitalize='true' className='ion-text-center'>
                                                                     <IonLabel>{ingreso.concepto.toUpperCase()}</IonLabel>
@@ -77,7 +77,7 @@ const TabAdmin = () => {
                                                 </IonCol>
                                                 <IonCol size='6'>
                                                     {
-                                                        egresos?.map((egreso, i) => (
+                                                        egresos?.reverse().map((egreso, i) => (
                                                             // <IonList>
                                                             //     <IonItem autoCapitalize='true'>
                                                             //         {egreso.concepto.toUpperCase()}<br /> 
