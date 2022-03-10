@@ -1,7 +1,5 @@
 import { IonAlert, IonContent, IonPage, IonSlide, IonSlides, useIonLoading } from '@ionic/react'
 import React, { useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
 import SlideOne from './slides/SlideTwo'
 import SlideThree from './slides/SlideThree'
 import SlideTwo from './slides/SlideOne'
@@ -10,8 +8,6 @@ import SlideTwoUser from './slides/SlideTwoUser'
 const ParentSignIn = () => {
     const [showAlert, setShowAlert] = useState(false)
     const [present, dismiss] = useIonLoading();
-    const dispatch = useDispatch();
-    const history = useHistory();
     const [user, setUser] = useState({
         nombre: '',
         apellido: '',

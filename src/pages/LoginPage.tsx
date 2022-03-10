@@ -1,29 +1,49 @@
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSpinner } from '@ionic/react'
-import { closeCircleSharp, personCircleSharp } from 'ionicons/icons'
+import { IonButton, IonCol, IonContent, IonGrid, IonIcon, IonImg, IonPage, IonRow, } from '@ionic/react'
+import { closeCircleSharp } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router'
-import { RootState } from '../store'
-import { startChecking, startLogin } from '../store/auth/auth.actions'
+import { useDispatch } from 'react-redux'
+import CardChangePass from '../components/CardChangePass'
+import CardLogin from '../components/CardLogin'
+import CardOlvide from '../components/CardOlvide'
+import CardToken from '../components/CardToken'
+import { startChecking } from '../store/auth/auth.actions'
 import { uiHideLogin } from '../store/ui/ui.actions'
 
 const LoginPage = () => {
-    const { loading } = useSelector((state:RootState) => state.ui);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const history = useHistory();
+    const [email, setEmail] = useState('');    
+    const [showOlvide, setShowOlvide] = useState(false);
+    const [showTokenOlvide, setShowTokenOlvide] = useState(false);
+    const [showChange, setShowChange] = useState(false);
+
     const dispatch = useDispatch();
-    const login = async () => {
-        dispatch(startLogin(email, password));
+
+    const goToLogin = () => {
+        setShowTokenOlvide(false);
+        setShowOlvide(false);
+        setShowChange(false);
     }
 
-    const register = () => {
-        history.push('signIn');
+    const showOlvideAction = () => {
+        setShowTokenOlvide(false);
+        setShowOlvide(true);
+        setShowChange(false);
+    }
+
+    const showTokenOlvideAction = () => {
+        setShowTokenOlvide(true);
+        setShowOlvide(false);
+        setShowChange(false);
+    }
+
+    const showChangeAction = () => {
+        setShowTokenOlvide(false);
+        setShowOlvide(false);
+        setShowChange(true);
     }
 
     useEffect(() => {
         dispatch(startChecking())
-    }, [])
+    }, [dispatch])
 
     const close = () => {
         dispatch(uiHideLogin());
@@ -54,56 +74,54 @@ const LoginPage = () => {
                         </IonCol>
                     </IonRow>
                     <IonRow>
-
-
-                        <IonCard style={{
-                            border: '2px solid var(--ion-color-secondary)'
-                        }}>
-                            <IonCardContent>
-                                <IonGrid>
-                                    {/* <IonRow>
-                                        <IonCol className='login__icon-center'>
-                                            <IonIcon src={personCircleSharp} color='primary' style={{ fontSize: '5rem' }} />
-                                        </IonCol>
-                                    </IonRow> */}
-                                    <IonRow>
-                                        <IonCol>
-                                            <IonItem className='ion-no-padding'>
-                                                <IonLabel position="stacked">Email</IonLabel>
-                                                <IonInput autocomplete='language' value={email} onIonChange={e => setEmail(e.detail.value)}></IonInput>
-                                            </IonItem>
-                                            <IonItem className='ion-no-padding'>
-                                                <IonLabel position="stacked">Contraseña</IonLabel>
-                                                <IonInput autocomplete='language' type='password' value={password} onIonChange={e => setPassword(e.detail.value)} clearInput={true}></IonInput>
-                                            </IonItem>
-                                        </IonCol>
-                                    </IonRow>
-                                    <IonRow>
-                                        <IonCol size='12'>
-                                            <IonButton expand="block" fill="solid" color='secondary' onClick={login}>
-                                            {
-                                        loading 
-                                            ?
-                                            <IonSpinner />
-                                            :
-                                            'Ingresar'}
-                                            </IonButton>
-                                        </IonCol>
-                                        <IonCol size='12'>
-                                            <IonButton expand="block" fill="clear" color='primary' size='small'>Olvidé mi contraseña</IonButton>
-                                        </IonCol>
-                                    </IonRow>
-                                    {/* <IonRow>
-                                    <IonCol>
-                                    <IonButton expand="full" fill="clear" color='secondary' onClick={register}>Registrate</IonButton>
-                                    </IonCol>
-                                </IonRow> */}
-                                </IonGrid>
-                            </IonCardContent>
-                        </IonCard>
+                        {
+                            !showOlvide && !showTokenOlvide && !showChange &&
+                            <CardLogin 
+                                email={ email } 
+                                setEmail={ setEmail } 
+                                showOlvideAction={ showOlvideAction }
+                            />
+                        }
+                        {
+                            showOlvide && 
+                            <CardOlvide
+                                email={email}
+                                setEmail={setEmail}
+                                showTokenOlvideAction={showTokenOlvideAction}
+                            />
+                        }
+                        {
+                            showTokenOlvide &&
+                            <CardToken 
+                                email={email} 
+                                showChangeAction={showChangeAction} 
+                            />
+                        }
+                        {
+                            showChange && 
+                            <CardChangePass email={email} goToLogin={goToLogin} />
+                        }
+                        {/* !showTokenOlvide 
+                            ? 
+                                <CardOlvide
+                                    email={email}
+                                    setEmail={setEmail}
+                                    setShowTokenOlvide={setShowTokenOlvide}
+                                />
+                            :
+                            !showChange 
+                            ?
+                                <CardToken 
+                                    email={email} 
+                                    setShowChange={setShowChange} 
+                                />
+                            :
+                            <CardChangePass email={email} goToLogin={goToLogin} />
+                        } */}
                     </IonRow>
                 </IonGrid>
             </IonContent>
+            
         </IonPage>
     )
 }

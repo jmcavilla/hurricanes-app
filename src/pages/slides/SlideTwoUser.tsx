@@ -1,38 +1,11 @@
-import { IonAlert, IonButton, IonCardSubtitle, IonCardTitle, IonCol, IonFooter, IonIcon, IonInput, IonItem, IonLabel, IonRow, IonToolbar } from '@ionic/react'
-import { arrowBack, arrowForward, closeCircleSharp } from 'ionicons/icons'
+import { IonAlert, IonCardSubtitle, IonCardTitle, IonCol, IonInput, IonItem, IonLabel, IonRow } from '@ionic/react'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { uiHideSignIn } from '../../store/ui/ui.actions'
 
 const SlideTwoUser = ({ onBtnClicked, parent = false }) => {
-    const dispatch = useDispatch()
     const [showAlert, setShowAlert] = useState(false)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repassword, setRepassword] = useState('');
-    const next = () => {
-        
-        if(!validateEmail(email) || email.length < 6){
-            setShowAlert(true);
-            return;
-        }
-
-        onBtnClicked("next", {
-            email,
-            password
-        });
-    }
-
-    const validateEmail = (email) => {
-        return String(email)
-            .toLowerCase()
-            .match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            );
-    };
-    const close = () => {
-        dispatch(uiHideSignIn());
-    }
 
     return (
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>

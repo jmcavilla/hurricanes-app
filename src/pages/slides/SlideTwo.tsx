@@ -1,9 +1,6 @@
-import { IonBackButton, IonButton, IonButtons, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonFooter, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonRow, IonToolbar } from '@ionic/react';
-import { arrowBack, arrowForward, closeCircleSharp } from 'ionicons/icons';
+import { IonButton, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonFooter, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonRow, IonToolbar } from '@ionic/react';
+import { arrowBack, arrowForward } from 'ionicons/icons';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
-import { uiHideSignIn, uiShowLogin } from '../../store/ui/ui.actions';
 
 const SlideTwo = ({ onBtnClicked, parent = false }) => {
     const [socioHuracan, setSocioHuracan] = useState(false)

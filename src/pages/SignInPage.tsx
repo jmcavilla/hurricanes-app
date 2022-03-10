@@ -1,5 +1,4 @@
-import { IonAlert, IonButton, IonCard, IonCardContent, IonCol, IonContent, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSpinner, IonTitle } from '@ionic/react';
-import axios from 'axios';
+import { IonButton, IonCard, IonCardContent, IonCol, IonContent, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonRow, IonSpinner, IonTitle } from '@ionic/react';
 import { closeCircleSharp } from 'ionicons/icons';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

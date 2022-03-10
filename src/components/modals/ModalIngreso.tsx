@@ -1,6 +1,6 @@
 import { IonAlert, IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonTitle, IonToast, IonToolbar, useIonLoading } from '@ionic/react'
 import { closeCircleSharp, documentAttachSharp, trashBinSharp } from 'ionicons/icons'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Camera, CameraResultType, CameraDirection, CameraSource } from '@capacitor/camera';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiSetError } from '../../store/ui/ui.actions';

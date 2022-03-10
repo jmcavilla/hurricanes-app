@@ -1,6 +1,5 @@
 import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonGrid, IonRow } from '@ionic/react';
 import moment from 'moment';
-import React from 'react'
 
 const DateCards = () => {
 

@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardSubtitle, IonCol, IonContent, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonRow, IonText } from '@ionic/react';
+import { IonCol, IonIcon, IonImg, IonItem, IonRow, IonText } from '@ionic/react';
 import { alertCircleSharp, closeCircleSharp } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
 import { TipoSocio } from '../../../interfaces';

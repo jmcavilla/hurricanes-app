@@ -1,13 +1,11 @@
-import { IonAlert, IonButton, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonDatetime, IonFooter, IonIcon, IonInput, IonItem, IonLabel, IonPage, IonPopover, IonRow, IonText, IonToolbar } from '@ionic/react';
-import { arrowBack, arrowForward, calendar, closeCircleSharp, man, woman } from 'ionicons/icons';
+import { IonAlert, IonButton, IonCardTitle, IonCol, IonContent, IonFooter, IonIcon, IonInput, IonItem, IonLabel, IonRow, IonToolbar } from '@ionic/react';
+import { arrowForward, man, woman } from 'ionicons/icons';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Gender } from '../../interfaces';
-import { RootState } from '../../store';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import DatePicker from 'react-mobile-datepicker';
-import { uiHideSignIn, uiShowSignInParent } from '../../store/ui/ui.actions';
-import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser';
+import { uiHideSignIn } from '../../store/ui/ui.actions';
 
 const SlideOne = ({ onBtnClicked, parent = false }) => {
     const dispatch = useDispatch();
@@ -81,9 +79,6 @@ const SlideOne = ({ onBtnClicked, parent = false }) => {
             age--;
         }
         return age;
-    }
-    const close = () => {
-        dispatch(uiHideSignIn());
     }
 
     return (

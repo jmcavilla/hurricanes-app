@@ -1,6 +1,6 @@
-import { IonButton, IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonItem, IonLabel, IonList, IonModal, IonPage, IonProgressBar, IonRow, IonSpinner } from '@ionic/react'
-import { addCircleOutline, addSharp, checkmarkCircleSharp, chevronUp, chevronUpCircleSharp, closeCircleSharp, logoFacebook, logoVimeo, removeCircleOutline } from 'ionicons/icons';
-import React, { useEffect, useState } from 'react'
+import { IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonList, IonModal, IonPage, IonRow, IonSpinner } from '@ionic/react'
+import { addCircleOutline, chevronUpCircleSharp, removeCircleOutline } from 'ionicons/icons';
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ModalIngreso from '../../components/modals/ModalIngreso';
 import { RootState } from '../../store';
@@ -16,7 +16,7 @@ const TabAdmin = () => {
     useEffect(() => {
         dispatch(startGetIngresos());
         dispatch(startGetEgresos());
-    }, [])
+    }, [dispatch])
 
     const showNewIngreso = (tipo) => {
         setTipo(tipo)
@@ -63,7 +63,7 @@ const TabAdmin = () => {
                                             <>
                                                 <IonCol size='6'>
                                                     {
-                                                        ingresos?.reverse().map((ingreso, i) => (
+                                                        ingresos?.slice(0, 10).reverse().map((ingreso, i) => (
                                                             <IonList>
                                                                 <IonCard autoCapitalize='true' className='ion-text-center'>
                                                                     <IonLabel>{ingreso.concepto.toUpperCase()}</IonLabel>
@@ -77,7 +77,7 @@ const TabAdmin = () => {
                                                 </IonCol>
                                                 <IonCol size='6'>
                                                     {
-                                                        egresos?.reverse().map((egreso, i) => (
+                                                        egresos?.slice(0, 10).reverse().map((egreso, i) => (
                                                             // <IonList>
                                                             //     <IonItem autoCapitalize='true'>
                                                             //         {egreso.concepto.toUpperCase()}<br /> 

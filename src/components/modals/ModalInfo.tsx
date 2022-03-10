@@ -1,7 +1,6 @@
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser'
 import { IonButton, IonContent, IonHeader, IonIcon, IonImg, IonItem, IonLabel, IonList, IonListHeader, IonTitle, IonToolbar } from '@ionic/react'
 import { arrowForwardSharp, closeCircleSharp } from 'ionicons/icons'
-import React from 'react'
 import Map from '../Map'
 
 const ModalInfo = ({ dismiss }) => {

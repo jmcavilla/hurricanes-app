@@ -1,4 +1,3 @@
-import { User } from "../store/user/user.reducer";
 
 export enum Gender {
     Male = 'M',

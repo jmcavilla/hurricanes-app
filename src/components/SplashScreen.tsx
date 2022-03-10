@@ -1,14 +1,12 @@
 import { AppVersion } from '@awesome-cordova-plugins/app-version'
-import { IonImg, IonLabel, IonPage } from '@ionic/react'
+import { IonImg, IonPage } from '@ionic/react'
 import React, { useEffect, useState } from 'react'
 
 const SplashScreen: React.FC = () => {
-    const [code, setCode] = useState('v1.0.0');
     const [version, setVersion] = useState('v1.0.0')
 
     const getAppVersion = async () => {
         setVersion(`v${await AppVersion.getVersionNumber()}`)
-        setCode(String(await AppVersion.getVersionCode()))
     }
 
     useEffect(() => {

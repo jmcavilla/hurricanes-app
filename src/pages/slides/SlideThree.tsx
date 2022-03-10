@@ -1,13 +1,9 @@
-import { IonButton, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonFooter, IonIcon, IonImg, IonModal, IonRow, IonToolbar, useIonLoading } from '@ionic/react';
-import { arrowBack, arrowForward, cameraSharp, closeCircleSharp, imagesSharp, personSharp } from 'ionicons/icons';
-import React, { useEffect, useState } from 'react';
+import { IonButton, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonFooter, IonIcon, IonRow, IonToolbar } from '@ionic/react';
+import { arrowBack, arrowForward, cameraSharp, imagesSharp, personSharp } from 'ionicons/icons';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
-import { setUserAction } from '../../store/user/user.actions';
-import { CameraPreview, CameraPreviewOptions, CameraPreviewPictureOptions } from '@awesome-cordova-plugins/camera-preview';
 import { Camera, CameraResultType, CameraDirection, CameraSource } from '@capacitor/camera';
-import axios from 'axios';
-import { uiHideSignIn, uiSetError } from '../../store/ui/ui.actions';
+import { uiSetError } from '../../store/ui/ui.actions';
 
 const SlideThree = ({ onBtnClicked, parent = false  }) => {
     const dispatch = useDispatch()

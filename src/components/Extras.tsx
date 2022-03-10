@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 
 const Extras = () => {
     const [version, setVersion] = useState('N/A')
-    const [code, setCode] = useState('N/A');
     const goToRate = () => {
         LaunchReview.launch()
     }
@@ -17,7 +16,6 @@ const Extras = () => {
 
     const getAppVersion = async () => {
         setVersion(`v${await AppVersion.getVersionNumber()}`)
-        setCode(String(await AppVersion.getVersionCode()))
     }
 
     useEffect(() => {

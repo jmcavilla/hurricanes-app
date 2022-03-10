@@ -1,6 +1,5 @@
 import { IonButton, IonContent, IonHeader, IonIcon, IonItem, IonList, IonListHeader, IonTitle, IonToolbar } from '@ionic/react'
 import { closeCircleSharp } from 'ionicons/icons'
-import React from 'react'
 
 const ModalHorarios = ({ dismiss }) => {
     return (

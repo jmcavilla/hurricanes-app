@@ -3,7 +3,6 @@ import { checkmarkCircleSharp } from 'ionicons/icons'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { validateEmail } from '../store/auth/auth.actions';
-import { uiShowFieldsSocio, uiShowValidateEmail } from '../store/ui/ui.actions';
 
 const Verification = () => {
     const dispatch = useDispatch();

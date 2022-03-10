@@ -1,5 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonIcon, IonLabel, IonModal, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonToast, setupIonicReact, useIonLoading } from '@ionic/react';
+import { IonApp, IonIcon, IonLabel, IonModal, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonToast, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 /* Core CSS required for Ionic components to work properly */
@@ -24,18 +24,16 @@ import './app.scss';
 import SplashScreen from './components/SplashScreen';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { RootState } from './store';
 import LoginPage from './pages/LoginPage';
 import SignInPage from './pages/SignInPage';
 import TabUser from './pages/tabs/TabUser';
-import { cardSharp, cartSharp, home, keyOutline, optionsSharp, personCircle, personCircleSharp } from 'ionicons/icons';
+import { cartSharp, home, keyOutline,personCircleSharp } from 'ionicons/icons';
 import TabHome from './pages/tabs/TabHome';
 import TabOptions from './pages/tabs/TabOptions';
 // import { setupConfig } from '@ionic/react';
 import { App as AppPlugin } from "@capacitor/app";
 import { startChecking } from './store/auth/auth.actions';
-import { uiShowLogin } from './store/ui/ui.actions';
 import ParentSignIn from './pages/ParentSignIn';
 import TabStore from './pages/tabs/TabStore';
 import TabAdmin from './pages/tabs/TabAdmin';
@@ -44,10 +42,8 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const { showLogin, showSignIn, showSignInParent, error } = useSelector((state: RootState) => state.ui)
-  const { loading } = useSelector((state: RootState) => state.ui);
   const { user } = useSelector((state: RootState) => state.user);
   const [showError, setShowError] = useState(false);
-  const [present, dismiss] = useIonLoading();
   const [showSplash, setShowSplash] = useState(true);
   const [showToast, setShowToast] = useState(false);
   const [backNumber, setBackNumber] = useState(1);
@@ -61,7 +57,7 @@ const App: React.FC = () => {
     setTimeout(() => {
       setShowSplash(false);
     }, 6000);
-  }, []);
+  }, [dispatch]);
 
   // useEffect(() => {
   //   if (loading) {

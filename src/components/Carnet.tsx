@@ -1,15 +1,11 @@
-import { IonButton, IonCard, IonCardContent, IonChip, IonCol, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
-import { closeCircleSharp, logOutSharp } from 'ionicons/icons'
+import { IonButton, IonCard, IonCardContent, IonChip, IonCol, IonContent, IonHeader, IonIcon, IonLabel, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
+import { closeCircleSharp } from 'ionicons/icons'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Socio from '../pages/tabs/segment/Socio'
 import { RootState } from '../store'
-import { startLogout } from '../store/auth/auth.actions'
 import { startGetCuotasSocio } from '../store/cuota/cuota.actions'
-import { unsetSocioData } from '../store/socio/socio.actions'
-import { uiCloseLoading, uiOpenLoading } from '../store/ui/ui.actions'
-import { unsetUserAction } from '../store/user/user.actions'
 import 'moment/locale/es';
 const Carnet = () => {
     const { data: socio } = useSelector((state: RootState) => state.socio);
@@ -19,7 +15,7 @@ const Carnet = () => {
     moment.locale('es');
     useEffect(() => {
         dispatch(startGetCuotasSocio(socio._id))
-    }, [])
+    }, [dispatch])
     
     return (
         <>

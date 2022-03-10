@@ -5,17 +5,14 @@ const Map = (props) => {
     // const position = [-34.65030133584823, -58.46183672866482]
     
     const mapElement = useRef();
-    const [mapLongitude, setMapLongitude] = useState('-34.65030133584823');
-    const [mapLatitude, setMapLatitude] = useState('-58.46183672866482');
-    const [mapZoom, setMapZoom] = useState(15);
-    const [map, setMap] = useState({});
+    const [mapZoom] = useState(15);
+    const [, setMap] = useState({});
     // const map = useRef(tt.map({
     //     key: "FpMziMharZ1u4UWslCyMJeLbpaAX6uof", //TomTom, not Google Maps
     //     container: "map",
     //     center:  [-34.65030133584823, -58.46183672866482],
     //     zoom: 12,
     //   }))
-    const position = [51.505, -0.09]
 
 
     useEffect(() => {

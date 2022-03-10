@@ -9,7 +9,7 @@ const TabStore = () => {
         setTimeout(() => {
             dismiss()
         }, 1500);
-    }, [])
+    }, [present, dismiss])
     
   return (
     <IonPage>
