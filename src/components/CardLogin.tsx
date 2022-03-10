@@ -1,10 +1,10 @@
-import { IonButton, IonCard, IonCardContent, IonCol, IonGrid, IonInput, IonItem, IonLabel, IonRow, IonSpinner } from '@ionic/react'
+import { IonButton, IonCard, IonCardContent, IonCol, IonGrid, IonInput, IonItem, IonLabel, IonRow, IonSpinner, IonToast } from '@ionic/react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { startLogin } from '../store/auth/auth.actions';
 
-const CardLogin = ({ email , setEmail, showOlvideAction }) => {
+const CardLogin = ({ email , setEmail, showOlvideAction, showChangeSuccess, setShowChangeSuccess }) => {
     const { loading } = useSelector((state:RootState) => state.ui);
     const [password, setPassword] = useState('');
     
@@ -15,6 +15,13 @@ const CardLogin = ({ email , setEmail, showOlvideAction }) => {
 
     return (
         <>
+            <IonToast
+                color='success'
+                isOpen={true}
+                onDidDismiss={() => setShowChangeSuccess(false)}
+                message="Se cambió correctamente la contraseña."
+                duration={3000}
+            />
             <IonCard style={{
                 border: '2px solid var(--ion-color-secondary)',
                 width: '100%'

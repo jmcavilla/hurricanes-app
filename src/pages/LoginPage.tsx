@@ -14,10 +14,11 @@ const LoginPage = () => {
     const [showOlvide, setShowOlvide] = useState(false);
     const [showTokenOlvide, setShowTokenOlvide] = useState(false);
     const [showChange, setShowChange] = useState(false);
-
+    const [showChangeSuccess, setShowChangeSuccess] = useState(false);
     const dispatch = useDispatch();
 
     const goToLogin = () => {
+        setShowChangeSuccess(true);
         setShowTokenOlvide(false);
         setShowOlvide(false);
         setShowChange(false);
@@ -80,6 +81,8 @@ const LoginPage = () => {
                                 email={ email } 
                                 setEmail={ setEmail } 
                                 showOlvideAction={ showOlvideAction }
+                                showChangeSuccess={showChangeSuccess}
+                                setShowChangeSuccess={setShowChangeSuccess}
                             />
                         }
                         {
