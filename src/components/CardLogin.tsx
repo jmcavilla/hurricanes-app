@@ -17,7 +17,7 @@ const CardLogin = ({ email , setEmail, showOlvideAction, showChangeSuccess, setS
         <>
             <IonToast
                 color='success'
-                isOpen={true}
+                isOpen={showChangeSuccess}
                 onDidDismiss={() => setShowChangeSuccess(false)}
                 message="Se cambió correctamente la contraseña."
                 duration={3000}
