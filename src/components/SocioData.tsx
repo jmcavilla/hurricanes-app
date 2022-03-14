@@ -26,14 +26,14 @@ const SocioData = () => {
                 </IonRow>
                 <IonRow>
                     <IonCol size='12' className='ion-text-center'>
-                        <h4>Ahora por favor, para terminar de asociarte completá estos datos.</h4>
+                        <h4>Ahora por favor, para terminar de asociarte completá tus datos.</h4>
                     </IonCol>
                 </IonRow>
                 <IonRow>
                     <IonCol size='12' className='ion-text-center'>
                         {/* <IonLabel>¿Querés asociar a tu hijo/a? </IonLabel> */}
                         <IonButton className='user__button_large' onClick={() => { dispatch(uiShowFieldsSocio()) }} fill='outline' color='secondary'>
-                            <span>COMPLETÁ TUS DATOS</span>
+                            <span>COMPLETÁ TUS DATOS ACÁ</span>
                         </IonButton>
                     </IonCol>
                 </IonRow>

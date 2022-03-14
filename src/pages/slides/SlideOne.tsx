@@ -144,6 +144,7 @@ const SlideOne = ({ onBtnClicked, parent = false }) => {
                                         cancelText="Cancelar"
                                         onSelect={formatDate}
                                         onCancel={() => { setDateOpen(false) }}
+                                        min={new Date(1900, 0, 1)}
                                     />
                                 </IonCol>
                             </IonRow>

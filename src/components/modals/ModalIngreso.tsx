@@ -115,7 +115,7 @@ const ModalIngreso = ({ hide, tipo }) => {
                 {
                 <IonItem>
                     <IonLabel position='stacked'>¿Quien hizo el gasto?</IonLabel>
-                    <IonInput autocomplete='off' disabled={tipo !== 'Egreso'} value={quien} onIonChange={e => setQuien(e.detail.value)}></IonInput>
+                    <IonInput autocomplete='off' value={quien} onIonChange={e => setQuien(e.detail.value)}></IonInput>
                 </IonItem>
                 }
                 <IonItem>
@@ -145,7 +145,7 @@ const ModalIngreso = ({ hide, tipo }) => {
                 <IonButton className='admin__enviar-button' onClick={create} 
                 expand='block' 
                 fill='solid' 
-                disabled={!quien || quien === '' || !concepto || concepto === '' || !monto}
+                disabled={ !quien || quien === '' || !concepto || concepto === '' || !monto}
                 style={{ padding: '0 10px' }}>ENVÍAR</IonButton>
                 </IonToolbar>
             </IonFooter>

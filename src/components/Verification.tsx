@@ -1,10 +1,13 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonItem, IonLabel, IonRow } from '@ionic/react'
+import { IonButton, IonCol, IonContent, IonGrid, IonIcon, IonInput, IonItem, IonLabel, IonRow, IonSpinner } from '@ionic/react'
 import { checkmarkCircleSharp } from 'ionicons/icons'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
 import { validateEmail } from '../store/auth/auth.actions';
 
 const Verification = () => {
+    const { loading } = useSelector((state: RootState) => state.ui);
+
     const dispatch = useDispatch();
     const [confirmationCode, setConfirmationCode] = useState('')
     return (
@@ -38,8 +41,16 @@ const Verification = () => {
                 <IonRow>
                     <IonCol size='12' className='ion-text-center'>
                         {/* <IonLabel>¿Querés asociar a tu hijo/a? </IonLabel> */}
-                        <IonButton className='' expand='block' size='large' onClick={() => { dispatch(validateEmail(confirmationCode)) }} fill='outline' color='secondary'>
-                            <span>ENVÍAR</span>
+                        <IonButton className='' expand='block' size='large' onClick={() => { 
+                            dispatch(validateEmail(confirmationCode)) 
+                        }} fill='outline' color='secondary'>
+                            {
+                                loading 
+                                ?
+                                    <IonSpinner />
+                                :
+                                    <span>ENVÍAR</span>
+                            }
                         </IonButton>
                     </IonCol>
                 </IonRow>
