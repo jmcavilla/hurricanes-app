@@ -12,6 +12,7 @@ import { startGetEgresos, startGetIngresos } from '../../store/admin/admin.actio
 const ModalIngreso = ({ hide, tipo }) => {
     
     const { user } = useSelector((state: RootState) => state.user);
+    const { data: socio } = useSelector((state: RootState) => state.socio);
     const [present, dismiss] = useIonLoading();
     const dispatch = useDispatch()
     const [concepto, setConcepto] = useState('');
@@ -71,14 +72,14 @@ const ModalIngreso = ({ hide, tipo }) => {
         // pago: { type: Boolean, default: false },
         // fecha: { type: String, require: true },
         // fecha_pago: { type: String }
-        present()
+        present();
         const data = {
             comprobante,
             concepto,
             monto,
             tipo: tipo,
             user_id: user.uid,
-            quien: user.name,
+            quien,
             fecha: moment().format('DD/MM/YYYY')
         }
 
@@ -97,7 +98,7 @@ const ModalIngreso = ({ hide, tipo }) => {
     }
 
     useEffect(() => {
-        setQuien(user.name)
+        setQuien(user.name || socio.nombre)
     }, [user])
     
 
@@ -114,7 +115,12 @@ const ModalIngreso = ({ hide, tipo }) => {
             <IonContent>
                 {
                 <IonItem>
-                    <IonLabel position='stacked'>¿Quien hizo el gasto?</IonLabel>
+                    <IonLabel position='stacked'>{
+                        tipo === 'Egreso' ?
+                            '¿Quién hizo el gasto?'
+                        :
+                            '¿Quién ingresa el dinero?'
+                    }</IonLabel>
                     <IonInput autocomplete='off' value={quien} onIonChange={e => setQuien(e.detail.value)}></IonInput>
                 </IonItem>
                 }
