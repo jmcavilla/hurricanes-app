@@ -21,7 +21,7 @@ const Carnet = () => {
         <>
             <IonContent>
                 <Socio socio={socio} />
-                <IonRow style={{ marginTop: '20px' }}>
+                <IonRow style={{ marginTop: '10px' }}>
                     {/* <IonCol>
                         <div style={{ padding: '0 10vw' }}>
                             <IonButton color='secondary' fill='outline' expand='block'> VER FICHA</IonButton>

@@ -63,7 +63,8 @@ const TabAdmin = () => {
                                             <>
                                                 <IonCol size='6'>
                                                     {
-                                                        ingresos?.slice(0, 10).reverse().map((ingreso, i) => (
+                                                        egresos && egresos.length > 0 ? 
+                                                        ingresos?.reverse().slice(0, 10).map((ingreso, i) => (
                                                             <IonList>
                                                                 <IonCard autoCapitalize='true' className='ion-text-center'>
                                                                     <IonLabel>{ingreso.concepto.toUpperCase()}</IonLabel>
@@ -73,11 +74,21 @@ const TabAdmin = () => {
                                                                 </IonCard>
                                                             </IonList>
                                                         ))
+                                                        :
+                                                        <div style={{
+                                                            height: '100%',
+                                                            display: 'flex',
+                                                            justifyContent:'center',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <IonSpinner color='secondary' name="crescent" />
+                                                        </div>
                                                     }
                                                 </IonCol>
                                                 <IonCol size='6'>
                                                     {
-                                                        egresos?.slice(0, 10).reverse().map((egreso, i) => (
+                                                        egresos && egresos.length > 0 ? 
+                                                        egresos?.reverse().slice(0, 10).map((egreso, i) => (
                                                             // <IonList>
                                                             //     <IonItem autoCapitalize='true'>
                                                             //         {egreso.concepto.toUpperCase()}<br /> 
@@ -103,6 +114,15 @@ const TabAdmin = () => {
                                                                 </IonCard>
                                                             </IonList>
                                                         ))
+                                                        :
+                                                        <div style={{
+                                                            height: '100%',
+                                                            display: 'flex',
+                                                            justifyContent:'center',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <IonSpinner color='secondary' name="crescent" />
+                                                        </div>
                                                     }
                                                 </IonCol>
                                             </>
@@ -113,7 +133,9 @@ const TabAdmin = () => {
                                         <IonIcon size='large' icon={chevronUpCircleSharp} />
                                     </IonFabButton>
                                     <IonFabList side="top">
-                                        <IonFabButton color='success' onClick={() => showNewIngreso('Ingreso')}><IonIcon size='large' color='dark' icon={addCircleOutline} /></IonFabButton>
+                                        <IonFabButton color='success' onClick={() => showNewIngreso('Ingreso')}>
+                                            <IonIcon size='large' color='dark' icon={addCircleOutline} />
+                                        </IonFabButton>
                                         <IonFabButton color='danger' onClick={() => showNewIngreso('Egreso')}><IonIcon size='large' icon={removeCircleOutline} /></IonFabButton>
                                     </IonFabList>
                                 </IonFab>

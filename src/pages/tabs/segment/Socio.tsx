@@ -1,6 +1,7 @@
-import { IonCol, IonIcon, IonImg, IonItem, IonRow, IonText } from '@ionic/react';
-import { alertCircleSharp, closeCircleSharp } from 'ionicons/icons';
+import { IonButton, IonCol, IonFabButton, IonIcon, IonImg, IonItem, IonModal, IonRow, IonText } from '@ionic/react';
+import { alertCircleSharp, closeCircleSharp, pencilSharp } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
+import ModalChangePhoto from '../../../components/modals/ModalChangePhoto';
 import { TipoSocio } from '../../../interfaces';
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const Socio: React.FC<Props> = ({ socio }) => {
-
+    const [showChangePhoto, setShowChangePhoto] = useState(false);
     const [style, setStyle] = useState({});
     const [tipoSocio, setTipoSocio] = useState('');
 
@@ -78,11 +79,18 @@ const Socio: React.FC<Props> = ({ socio }) => {
                 </IonCol>
             </IonRow>
             <IonRow>
+            <IonCol size='12' style={{ padding: '0 10vw' }}>
+                    <IonButton expand='block' fill='clear' color='secondary' onClick={() => { setShowChangePhoto(true) }}>
+                        <IonIcon src={pencilSharp} />
+                    </IonButton>
+                </IonCol>
+            </IonRow>
+            <IonRow>
                 <IonCol size='12'>
                     <div className='user__card-container'>
                         <div className='socio__card' style={style}>
                             <div className='user__card-contain'>
-                                <h5>{socio?.numero_socio && ('0000' + socio?.numero_socio).slice(-4)} - Socio {tipoSocio}</h5>
+                                <h5>{socio?.numero_socio && ('0000' + socio?.numero_socio).slice(-4)} - {tipoSocio}</h5>
                                 <h4 className='user__name'>{socio?.apellido}, {socio?.nombre}</h4>
                                 {socio?.activo && socio.tipo_socio === TipoSocio.Jugador && <p>Categoría: {getCategoria()}</p>}
                                 <p><strong>{socio?.status === 'Inactive' ? 'INACTIVO' : 'ACTIVO'}</strong></p>
@@ -145,6 +153,9 @@ const Socio: React.FC<Props> = ({ socio }) => {
                     </IonCol>
                 </IonRow>
             }
+            <IonModal isOpen={showChangePhoto}>
+                <ModalChangePhoto dismiss={() => { setShowChangePhoto(false) }} socio={socio}/>
+            </IonModal>
         </>
     );
 };
