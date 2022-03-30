@@ -64,8 +64,8 @@ const SocioSlides = () => {
             socio.categoria = 'V';
         }else if( edad > 19 ){
             socio.categoria = 'S';
-        }else if( edad > 10 ){
-            socio.categoria = 'M'
+        }else if( edad > 13 ){
+            socio.categoria = 'J'
         }else{
             socio.categoria = 'I'
         }
