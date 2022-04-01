@@ -1,7 +1,9 @@
-import { IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonList, IonModal, IonPage, IonRow, IonSpinner } from '@ionic/react'
+import { IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonSpinner } from '@ionic/react'
 import { addCircleOutline, chevronUpCircleSharp, removeCircleOutline } from 'ionicons/icons';
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import EgresosSegment from '../../components/EgresosSegment';
+import IngresosSegment from '../../components/IngresosSegment';
 import ModalIngreso from '../../components/modals/ModalIngreso';
 import { RootState } from '../../store';
 import { startGetEgresos, startGetIngresos } from '../../store/admin/admin.actions';
@@ -12,7 +14,7 @@ const TabAdmin = () => {
     const { ingresos, egresos, ingresosCount, egresosCount } = useSelector((state: RootState) => state.admin);
     const [showModalIngreso, setShowModalIngreso] = useState(false)
     const [tipo, setTipo] = useState('')
-
+    const [segment, setSegment] = useState('I');
     useEffect(() => {
         dispatch(startGetIngresos());
         dispatch(startGetEgresos());
@@ -32,7 +34,7 @@ const TabAdmin = () => {
                         <h3>Si llegaste hasta aca, algo no está bien.</h3>
                         :
                         <>
-                        
+                            
                             {
                             ingresos && egresos
                             ?
@@ -40,12 +42,14 @@ const TabAdmin = () => {
                                 <IonGrid>
                                     <IonRow>
                                         <IonCol size='12'>
-                                            <IonCard className='ion-text-center ion-padding' color='medium'>
-                                                <IonCardSubtitle>TOTAL NETO</IonCardSubtitle>
+                                            <IonCard style={{
+                                                    border: '3px solid var(--ion-color-secondary)'
+                                            }} className='ion-text-center ion-padding' color='medium'>
+                                                <IonCardSubtitle>TOTAL DISPONIBLE</IonCardSubtitle>
                                                 <IonCardTitle>${ingresosCount - egresosCount}</IonCardTitle>
                                             </IonCard>
                                         </IonCol>
-                                        <IonCol size='6'>
+                                        {/* <IonCol size='6'>
                                             <IonCard className='ion-text-center ion-padding' color='success'>
                                                 <IonCardSubtitle color='dark'>INGRESOS</IonCardSubtitle>
                                                 <IonCardTitle color='dark'>${ingresosCount}</IonCardTitle>
@@ -56,11 +60,40 @@ const TabAdmin = () => {
                                                 <IonCardSubtitle>EGRESOS</IonCardSubtitle>
                                                 <IonCardTitle>${egresosCount}</IonCardTitle>
                                             </IonCard>
-                                        </IonCol>
+                                        </IonCol> */}
                                     </IonRow>
                                     <IonRow>
-                                        
-                                            <>
+                                        <IonSegment onIonChange={e => setSegment(e.detail.value)} value={segment}>
+                                            <IonSegmentButton value="I">
+                                                <IonLabel>Ingresos</IonLabel>
+                                            </IonSegmentButton>
+                                            <IonSegmentButton value="O">
+                                                <IonLabel>Egresos</IonLabel>
+                                            </IonSegmentButton>
+                                        </IonSegment>
+                                            {
+                                                segment === 'I' ?
+                                                <IonCol size='12'>
+                                                    {/* <IonCol size='12'> */}
+                                                        <IonCard className='ion-text-center ion-padding' color='success'>
+                                                            <IonCardSubtitle color='dark'>INGRESOS</IonCardSubtitle>
+                                                            <IonCardTitle color='dark'>${ingresosCount}</IonCardTitle>
+                                                        </IonCard>
+                                                    {/* </IonCol> */}
+                                                    <IngresosSegment />
+                                                </IonCol>
+                                                :
+                                                <IonCol size='12'>
+                                                    {/* <IonCol size='12'> */}
+                                                        <IonCard className='ion-text-center ion-padding' color='danger'>
+                                                            <IonCardSubtitle>EGRESOS</IonCardSubtitle>
+                                                            <IonCardTitle>${egresosCount}</IonCardTitle>
+                                                        </IonCard>
+                                                    {/* </IonCol> */}
+                                                    <EgresosSegment />
+                                                </IonCol>
+                                            }
+                                            {/* <>
                                                 <IonCol size='6'>
                                                     {
                                                         egresos && egresos.length > 0 ? 
@@ -125,7 +158,7 @@ const TabAdmin = () => {
                                                         </div>
                                                     }
                                                 </IonCol>
-                                            </>
+                                            </> */}
                                     </IonRow>
                                 </IonGrid>
                                 <IonFab vertical="bottom" horizontal="end" slot="fixed">
