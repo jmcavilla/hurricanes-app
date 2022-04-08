@@ -12,8 +12,6 @@ export type SocioState = {
 }
 
 export const socioReducer = (state = initialState, action) => {
-    console.log(action.type)
-    console.log(action.payload)
     switch ( action.type ) {
         
         case types.socioSetSocioData:

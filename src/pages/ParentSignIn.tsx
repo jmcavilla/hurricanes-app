@@ -40,7 +40,6 @@ const ParentSignIn = () => {
             swiper.slidePrev();
         } else if( direction === 'end' ){
             user.photo = data.photo;
-            console.log('usuario', user);
             
             present()
             try {

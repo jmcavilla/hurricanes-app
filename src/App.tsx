@@ -76,7 +76,6 @@ const App: React.FC = () => {
   document.addEventListener('ionBackButton', (ev: any) => {
     setShowToast(true);
     setBackNumber(backNumber + 1);
-    console.log(backNumber)
 
     if (backNumber > 1) {
       AppPlugin.exitApp()

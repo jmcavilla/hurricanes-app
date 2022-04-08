@@ -11,7 +11,7 @@ const EgresosSegment = () => {
             {
                 egresos && egresos.length > 0 ?
                     egresos?.map((egreso, i) => (
-                            <IonCard autoCapitalize='true' className='ion-text-center'>
+                            <IonCard key={i} autoCapitalize='true' className='ion-text-center'>
                                 <IonLabel>{egreso.concepto.toUpperCase()}</IonLabel>
                                 <IonCardTitle>${egreso.monto} </IonCardTitle>
                                 {egreso.quien}<br />

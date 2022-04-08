@@ -82,7 +82,6 @@ const Login = () => {
                             icon: close,
                             role: 'cancel',
                             handler: () => {
-                                console.log('Cancel clicked');
                             }
                         }]}
                     >

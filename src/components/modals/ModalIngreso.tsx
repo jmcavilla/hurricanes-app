@@ -33,7 +33,6 @@ const ModalIngreso = ({ hide, tipo }) => {
             source: CameraSource.Camera
         })
         if (image) {
-            console.log('base64', image.base64String);
             setComprobante('data:image/jpeg;base64,' + image.base64String);
         } else {
             dispatch(uiSetError({
@@ -53,7 +52,6 @@ const ModalIngreso = ({ hide, tipo }) => {
         })
 
         if (image) {
-            console.log('base64', image.base64String);
             setComprobante('data:image/jpeg;base64,' + image.base64String);
         } else {
             dispatch(uiSetError({

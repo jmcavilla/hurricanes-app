@@ -47,7 +47,6 @@ const SocioSlides = () => {
             swiper.slidePrev();
         } else if (direction === 'end') {
             socio.foto = data.photo;
-            console.log('usuario', socio);
 
             setCategoria();
             dispatch(createSocio(socio))

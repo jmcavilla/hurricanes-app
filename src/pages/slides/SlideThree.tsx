@@ -46,7 +46,6 @@ const SlideThree = ({ onBtnClicked, parent = false  }) => {
             source: CameraSource.Camera
         })
         if(image){
-            console.log('base64', image.base64String);
             setPhoto('data:image/jpeg;base64,' + image.base64String);
         }else{
             dispatch(uiSetError({
@@ -66,7 +65,6 @@ const SlideThree = ({ onBtnClicked, parent = false  }) => {
         })
 
         if(image){
-            console.log('base64', image.base64String);
             setPhoto('data:image/jpeg;base64,' + image.base64String);
         }else{
             dispatch(uiSetError({

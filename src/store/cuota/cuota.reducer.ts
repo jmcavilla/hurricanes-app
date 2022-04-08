@@ -10,8 +10,6 @@ export type CuotaState = {
 }
 
 export const cuotaReducer = (state = initialState, action) => {
-    console.log(action.type)
-    console.log(action.payload)
     switch ( action.type ) {
         
         case types.cuotaGetCuotasSocio:
