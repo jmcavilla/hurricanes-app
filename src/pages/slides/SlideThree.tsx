@@ -156,7 +156,7 @@ const SlideThree = ({ onBtnClicked, parent = false  }) => {
                                 expand="full"
                                 fill="clear"
                                 color='light'
-                                // disabled={}
+                                disabled={ !photo }
                                 onClick={end}
                             >
                                 Finalizar <IonIcon icon={arrowForward} />
