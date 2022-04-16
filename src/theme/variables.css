@@ -76,6 +76,13 @@ http:ionicframework.com/docs/theming/ */
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
+  --ion-color-mp: #009ee3;
+  --ion-color-mp-rgb: 244, 245, 248;
+  --ion-color-mp-contrast: #ffffff;
+  --ion-color-mp-contrast-rgb: 0, 0, 0;
+  --ion-color-mp-shade: #d7d8da;
+  --ion-color-mp-tint: #f5f6f9;
+
   --padding-start: 0px;
 }
 

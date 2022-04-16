@@ -12,7 +12,8 @@ export type Evento = {
 }
 
 const initialState: EventoState = {
-    eventos: null
+    eventos: null,
+    availableNumbers: null
 }
 
 export type Error = { 
@@ -22,7 +23,8 @@ export type Error = {
 }
 
 export type EventoState = {
-    eventos: Evento[]
+    eventos: Evento[],
+    availableNumbers: any[]
 }
 
 export const eventoReducer = ( state = initialState, action ) => {
@@ -32,6 +34,11 @@ export const eventoReducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 eventos: action.payload
+            }
+        case types.rifaGetAvailableNumbers:
+            return {
+                ...state,
+                availableNumbers: action.payload
             }
         default:
             return state;

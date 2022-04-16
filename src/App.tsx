@@ -28,7 +28,7 @@ import { RootState } from './store';
 import LoginPage from './pages/LoginPage';
 import SignInPage from './pages/SignInPage';
 import TabUser from './pages/tabs/TabUser';
-import { cartSharp, home, keyOutline,personCircleSharp } from 'ionicons/icons';
+import { cartSharp, home, keyOutline,personCircleSharp, ticketSharp } from 'ionicons/icons';
 import TabHome from './pages/tabs/TabHome';
 import TabOptions from './pages/tabs/TabOptions';
 // import { setupConfig } from '@ionic/react';
@@ -38,6 +38,8 @@ import ParentSignIn from './pages/ParentSignIn';
 import TabStore from './pages/tabs/TabStore';
 import TabAdmin from './pages/tabs/TabAdmin';
 import { uiHideLogin, uiHideSignIn } from './store/ui/ui.actions'
+import TabRifa from './pages/tabs/TabRifa';
+import { fetchSinToken } from './helpers/fetch';
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -48,8 +50,24 @@ const App: React.FC = () => {
   const [showToast, setShowToast] = useState(false);
   const [backNumber, setBackNumber] = useState(1);
   const dispatch = useDispatch();
+  const [rifa, setRifa] = useState<any>();
+
+  const getRifas = async () => {
+    try {
+        const resp = await fetchSinToken(`rifa/`);
+        const data = await resp.json();
+
+        console.log(data)
+        if (data.ok) {
+            setRifa(data.rifa);
+        }
+    } catch (error) {
+
+    }
+}
 
   useEffect(() => {
+    getRifas();
     const token = localStorage.getItem('token');
     if (token) {
       dispatch(startChecking());
@@ -58,14 +76,6 @@ const App: React.FC = () => {
       setShowSplash(false);
     }, 6000);
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   if (loading) {
-  //     present();
-  //   } else {
-  //     dismiss();
-  //   }
-  // }, [loading])
 
   useEffect(() => {
     if (error) {
@@ -112,6 +122,9 @@ const App: React.FC = () => {
                     <Route path='/tabAdmin' exact>
                       <TabAdmin />
                     </Route>
+                    <Route path='/tabRifa' exact>
+                      <TabRifa />
+                    </Route>
                     <Redirect path='' to='tabHome' exact />
                   </IonRouterOutlet>
                   <IonTabBar slot="bottom" color="secondary" >
@@ -127,6 +140,10 @@ const App: React.FC = () => {
                       <IonIcon icon={cartSharp} />
                       <IonLabel>Shop</IonLabel>
                     </IonTabButton>
+                    {rifa && <IonTabButton tab="tabRifa" href='/tabRifa'>
+                      <IonIcon icon={ticketSharp} />
+                      <IonLabel>Rifas</IonLabel>
+                    </IonTabButton>}
                     {user?.admin && <IonTabButton tab="tabAdmin" href='/tabAdmin'>
                       <IonIcon icon={keyOutline} />
                       <IonLabel>Admin</IonLabel>

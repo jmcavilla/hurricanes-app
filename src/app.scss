@@ -13,3 +13,12 @@
 .mapDiv{
     height: 300px;
   }
+
+  .ion-color-mp {
+    --ion-color-base: var(--ion-color-mp);
+    --ion-color-base-rgb: var(--ion-color-mp-rgb);
+    --ion-color-contrast: var(--ion-color-mp-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-mp-contrast-rgb);
+    --ion-color-shade: var(--ion-color-mp-shade);
+    --ion-color-tint: var(--ion-color-mp-tint);
+  }
