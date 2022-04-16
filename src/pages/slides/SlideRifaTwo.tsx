@@ -98,7 +98,7 @@ const SlideRifaTwo = ({ onBtnClicked, rifa }) => {
                                                 removeNumber(i);
                                             }}
                                             >
-                                            <strong>{ number.numero }</strong>
+                                            <strong>D{ number.numero }</strong>
                                         </IonCard>
                                     </IonCol>
                                 ))
@@ -120,7 +120,7 @@ const SlideRifaTwo = ({ onBtnClicked, rifa }) => {
                                             }
                                         }}
                                     >
-                                        <strong>{ number.numero }</strong>
+                                        <strong>D{ number.numero }</strong>
                                     </IonCard>
                                 </IonCol>
                             ))

@@ -118,7 +118,7 @@ const SlideRifaFour = ({ onBtnClicked, numbers  }) => {
                                         alignItems: 'center',
                                         justifyContent: 'center'
                                     }}>
-                                        {`${number.numero}`}
+                                        {`D${number.numero}`}
                                     </div>
                                 ))
                             }
