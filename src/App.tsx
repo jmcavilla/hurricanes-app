@@ -40,13 +40,14 @@ import TabAdmin from './pages/tabs/TabAdmin';
 import { uiHideLogin, uiHideSignIn } from './store/ui/ui.actions'
 import TabRifa from './pages/tabs/TabRifa';
 import { fetchSinToken } from './helpers/fetch';
+import { Capacitor } from '@capacitor/core';
 setupIonicReact();
 
 const App: React.FC = () => {
   const { showLogin, showSignIn, showSignInParent, error } = useSelector((state: RootState) => state.ui)
   const { user } = useSelector((state: RootState) => state.user);
   const [showError, setShowError] = useState(false);
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(Capacitor.isNativePlatform());
   const [showToast, setShowToast] = useState(false);
   const [backNumber, setBackNumber] = useState(1);
   const dispatch = useDispatch();
@@ -67,6 +68,7 @@ const App: React.FC = () => {
 }
 
   useEffect(() => {
+    
     getRifas();
     const token = localStorage.getItem('token');
     if (token) {
