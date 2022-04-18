@@ -16,16 +16,18 @@ const TabRifa = () => {
     const [present, dismiss] = useIonLoading();
     const slideOpts = {
         initialSlide: 0,
-        speed: 400
+        speed: 400,
+        draggable: false
     };
     const [socio, setSocio] = useState({
         name: '',
         email: '',
         tel: '',
         numeros: [],
-        comprobante: ''
+        comprobante: '',
+        id_rifa: ''
     });
-    const onBtnClicked = async (direction: string, data: any) => {
+    const onBtnClicked = async (direction: string, data?: any) => {
         debugger
         const swiper: any = await mySlides.current.getSwiper();
         if (direction === "next") {
@@ -42,6 +44,7 @@ const TabRifa = () => {
         } else if (direction === 'end') {
             present()
             socio.comprobante = data.comprobante;
+            socio.id_rifa = rifa._id;
             try {
                 const resp = await fetchSinToken('rifa/newTicket', socio, 'POST');
                 const data = await resp.json();
@@ -81,7 +84,7 @@ const TabRifa = () => {
     return (
         <IonPage>
             <IonContent>
-                <IonSlides ref={mySlides} draggable={false} options={slideOpts} style={{ height: '100%' }}>
+                <IonSlides ref={mySlides} draggable={false}  options={slideOpts} style={{ height: '100%' }}>
                     <IonSlide style={{ height: '100%' }}>
                         {/* <SlidePersonalData onBtnClicked={onBtnClicked} rifa={rifa}/> */}
                         <SlideRifaOne onBtnClicked={onBtnClicked} rifa={rifa}/>
@@ -99,9 +102,9 @@ const TabRifa = () => {
             </IonContent>
             <IonAlert
                 isOpen={showAlert}
-                onDidDismiss={() => setShowAlert(false)}
+                onDidDismiss={() => {setShowAlert(false); dispatch(startGetAvailableNumbers(rifa)); onBtnClicked('prev')}}
                 cssClass='my-custom-class'
-                header={'Ocurrio un error, por favor intentelo nuevamente.'}
+                header={'Alguno de los números seleccionados ya estan reservados. Actualizaremos los numeros. Aguardá por favor.'}
                 buttons={['OK']}
             />
         </IonPage>

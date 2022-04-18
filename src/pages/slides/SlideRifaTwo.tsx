@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonFooter, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonRow, IonSelect, IonSelectOption, IonToolbar, useIonLoading } from '@ionic/react';
+import { IonButton, IonCard, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonFooter, IonIcon, IonImg, IonInput, IonItem, IonItemDivider, IonLabel, IonProgressBar, IonRow, IonSelect, IonSelectOption, IonToolbar, useIonLoading } from '@ionic/react';
 import { arrowBack, arrowForward } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -75,25 +75,41 @@ const SlideRifaTwo = ({ onBtnClicked, rifa }) => {
                 {
                 
                     <>
-                        {/* <IonRow>
-                            <IonCard style={{ width: '100%'}} className='ion-padding' color='secondary' onClick={() => setChoose('RANDOM')}>
-                                NÚMEROS ALEATORIOS
-                            </IonCard>
-                        </IonRow> */}
-                        <div style={{ flex: 1, padding: '10vw 0 0 0' }}>
+                        <IonCard className='ion-padding' style={{
+                            border: '2px solid var(--ion-color-secondary)'
+                        }} >
+                            <IonCardTitle color="secondary" style={{ fontSize: '1.5em' }}>
+                                <strong>Precio: ${rifa?.value}</strong> 
+                            </IonCardTitle>
+                        </IonCard>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            padding: '15px'
+                        }}>
                             <IonCardTitle color="primary" style={{ fontSize: '1.5em' }}>
                                 Elegí tus números
                             </IonCardTitle>
+                            <IonLabel>
+                                <p>Presioná sobre el número que quieras elegir</p>
+                            </IonLabel>
                         </div>
-                        <IonCardSubtitle>Números elegidos</IonCardSubtitle>
+                        {/* <IonCardSubtitle>Números elegidos</IonCardSubtitle> */}
+                        <IonItemDivider>Números elegidos</IonItemDivider>
                         <IonRow>
                             {
-                                selectedNumbers && selectedNumbers.length > 0 &&
-                                selectedNumbers.map((number, i) => (
-                                    <IonCol size='3' key={i}>
+                                selectedNumbers && selectedNumbers.length > 0 ?
+                                <>
+                                {selectedNumbers.map((number, i) => (
+                                    <IonCol size='4' key={i}>
                                         <IonCard 
-                                            className='ion-padding' 
-                                            color={'warning'}
+                                            style={{
+                                                padding: '5px',
+                                                fontSize: '6vw',
+                                                border: '3px solid var(--ion-color-tertiary)'
+                                            }} 
+                                            // color={'warning'}
                                             onClick={() => { 
                                                 removeNumber(i);
                                             }}
@@ -101,19 +117,32 @@ const SlideRifaTwo = ({ onBtnClicked, rifa }) => {
                                             <strong>D{ number.numero }</strong>
                                         </IonCard>
                                     </IonCol>
-                                ))
+                                ))}
+                                </>
+                                :
+                                <>
+                                    <IonLabel className='ion-padding'>
+                                        <p>No se eligieron números aún</p>
+                                    </IonLabel>
+                                </>
                                 
                             }
                         </IonRow>
-                        <IonCardSubtitle>Números libres</IonCardSubtitle>
+                        {/* <IonCardSubtitle>Números libres</IonCardSubtitle> */}
+                        <IonItemDivider>Números libres</IonItemDivider>
                         <IonRow>
                         {
                             availableNumbers && availableNumbers.length > 0 &&
                             availableNumbers.map((number, i) => (
-                                !number.selected && <IonCol size='3' key={i}>
+                                !number.selected && <IonCol size='4' key={i}>
                                     <IonCard 
-                                        className='ion-padding' 
-                                        color={number.selected ? 'danger' : 'success'}
+                                        style={{
+                                            padding: '2vw',
+                                            fontSize: '6vw',
+                                            border: '3px solid var(--ion-color-success)',
+                                            color: 'var(--ion-color-primary)'
+                                        }}
+                                        // color={number.selected ? 'danger' : 'success'}
                                         onClick={() => { 
                                             if(!number.selected){
                                                 selectNumber(i);

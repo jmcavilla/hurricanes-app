@@ -76,7 +76,7 @@ const SlideRifaFour = ({ onBtnClicked, numbers  }) => {
                         <div style={{ padding: '' }}>
                             {/* <IonCard className='ion-padding'> */}
 
-                                <IonIcon style={{ fontSize: '20vh', padding: '5v'}} color='success' src={checkmarkCircleSharp} />
+                                <IonIcon style={{ fontSize: '20vh', padding: '5vw'}} color='success' src={checkmarkCircleSharp} />
                             {/* </IonCard> */}
                             <IonRow>
                                 <IonCol>
@@ -87,17 +87,17 @@ const SlideRifaFour = ({ onBtnClicked, numbers  }) => {
                             </IonRow>
                             <IonRow>
                                 <IonCol>
-                                    <IonText>
-                                        Uno de nuestros administradores verificará que este todo correcto y confirmará tus números. 
-                                        Mientras tanto, no te preocupes, estos quedarán reservados para vos.
-                                    </IonText>
+                                    <IonLabel>
+                                    <p>Uno de nuestros administradores verificará que este todo correcto y confirmará tus números. 
+                                        Mientras tanto, no te preocupes, estos quedarán reservados para vos.</p>
+                                    </IonLabel>
                                 </IonCol>
                             </IonRow>
                             <IonRow>
                                 <IonCol>
-                                    <IonText>
-                                        <strong>Verificá tu casilla de correo, ahí envíamos el comprobante de los números.</strong> 
-                                    </IonText>
+                                    <IonLabel>
+                                        <p><strong>Verificá tu casilla de correo, ahí envíamos el comprobante de los números.</strong> </p>
+                                    </IonLabel>
                                 </IonCol>
                             </IonRow>
                             <div style={{
@@ -106,7 +106,7 @@ const SlideRifaFour = ({ onBtnClicked, numbers  }) => {
                                 justifyContent: 'center'
                             }}>
 
-                            {
+                            {/* {
                                 numbers.map( number => (
                                     <div style={{
                                         border: '1px solid #000',
@@ -120,6 +120,22 @@ const SlideRifaFour = ({ onBtnClicked, numbers  }) => {
                                     }}>
                                         {`D${number.numero}`}
                                     </div>
+                                ))
+                            } */}
+                            {
+                                numbers.map( (number, i) => (
+                                    <IonCol size='4' key={i}>
+                                        <IonCard 
+                                            style={{
+                                                padding: '2vw',
+                                                fontSize: '6vw',
+                                                border: '3px solid var(--ion-color-success)',
+                                                color: 'var(--ion-color-primary)'
+                                            }}
+                                        >
+                                            <strong>D{ number.numero }</strong>
+                                        </IonCard>
+                                    </IonCol>
                                 ))
                             }
                             </div>

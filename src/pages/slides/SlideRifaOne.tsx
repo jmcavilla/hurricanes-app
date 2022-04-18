@@ -26,18 +26,18 @@ const SlideRifaOne = ({ onBtnClicked, rifa }) => {
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             <>
                 <IonContent>
-                    <div style={{ flex: 1, padding: '10vw 0 0 0' }}>
-                        <IonImg src={rifa?.image}/>
-                        <IonCardTitle color="primary" style={{ fontSize: '1.5em' }}>
+                    <div style={{ flex: 1, padding: '0vw 0 0 0' }}>
+                        <IonImg style={{ height: '85vw'}} src={rifa?.image}/>
+                        {/* <IonCardTitle color="primary" style={{ fontSize: '1.5em',padding: '2vw 0 0 0' }}>
                             {rifa?.name}
-                        </IonCardTitle>
+                        </IonCardTitle> */}
                     </div>
-                    <div style={{ flex: 1, padding: '10vw 0 0 0' }}>
+                    <div style={{ flex: 1, padding: '10px 0 0 0' }}>
                         <IonCardTitle color="primary" style={{ fontSize: '1.5em' }}>
                             Completá tus datos
                         </IonCardTitle>
                     </div>
-                    <div style={{ padding: '2vw', flex: 5 }}>
+                    <div style={{ padding: '0vw' }}>
                         <IonRow>
                             <IonCol>
                                 <IonItem color="">
