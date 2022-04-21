@@ -7,7 +7,8 @@ export type User = {
     uid: string,
     status?: 'Pending' | 'Active',
     admin: boolean,
-    name: string
+    name: string,
+    admin_count: boolean
 }
 
 export type UserState = {

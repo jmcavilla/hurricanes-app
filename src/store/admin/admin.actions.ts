@@ -46,6 +46,94 @@ export const startGetIngresos = () => {
     }
 }
 
+export const startGetRifa = () => {
+    return async (dispatch) => {
+        try {
+            const resp = await fetchConToken('rifa')
+            const body = await resp.json();
+            
+            dispatch(setRifa({
+                ...body.rifa
+            }))
+        } catch (error) {
+            
+        }
+    }
+}
+
+export const startGetSociosActivos = () => {
+    return async (dispatch) => {
+        try {
+            // dispatch(uiOpenLoading())
+            const resp = await fetchConToken( 'socio/socios' );
+            const body = await resp.json();
+            if (body.ok) {
+                
+                dispatch(setSociosActivos(
+                    body.socios.sort((a,b) => ( new Number(a.numero_socio) > new Number(b.numero_socio) ) ? 1 : (( new Number(b.numero_socio) > new Number(a.numero_socio)) ? -1 : 0))
+                ));
+            }
+
+            // dispatch(uiCloseLoading())
+        } catch (error) {
+            
+        }
+    }
+}
+
+export const getSociosPending = () => {
+    return async (dispatch) => {
+
+        try {
+            const res = await fetchConToken('socio/sociosPending');
+            const body = await res.json();
+
+            dispatch(setSociosPending(body.data || []))
+        } catch (error) {
+            
+        }
+
+    }
+}
+
+export const startGetTicketsRifa = (rifa) => {
+    return async (dispatch) => {
+        try {
+            try {
+                const resp = await fetchConToken('rifa/pending', { id_rifa: rifa._id }, 'POST');
+                const body = await resp.json();
+                if (body.ok) {
+                    dispatch(setTicketsTaken(body.numbers));
+                    // dispatch(setTicketsTaken(rifa));
+                
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        } catch (error) {
+
+        }
+    }
+}
+
+export const startGetTicketsAccepted = (id_rifa) => {
+    return async (dispatch) => {
+        try {
+            try {
+                const resp = await fetchConToken('rifa/accepted', { id_rifa }, 'POST');
+                const body = await resp.json();
+                if (body.ok) {
+                    dispatch(setTicketsAccepted(body.accepted));
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        } catch (error) {
+
+        }
+    }
+}
+
 const setEgresos = (payload) => ({
     type: types.adminSetEgresos,
     payload
@@ -64,4 +152,29 @@ const setEgresosCount = (payload) => ({
 const setIngresosCount = (payload) => ({
     type: types.adminSetIngresosCount,
     payload
+})
+
+const setRifa = (payload) => ({
+    type: types.adminSetRifa,
+    payload
+})
+
+const setSociosActivos = (payload) => ({
+    type: types.adminSetSociosActivos,
+    payload
+})
+
+const setSociosPending = (payload) => ({
+    type: types.adminSetSociosPendientes,
+    payload
+})
+
+const setTicketsAccepted = (payload) => ({
+    type: types.adminGetTicketsAccepted, 
+    payload 
+})
+
+const setTicketsTaken = (payload) => ({ 
+    type: types.adminGetTicketsTaken, 
+    payload 
 })

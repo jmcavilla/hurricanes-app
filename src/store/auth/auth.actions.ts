@@ -31,7 +31,8 @@ export const startLogin = ( email, password ) => {
                         uid: body.uid,
                         status: body.status,
                         admin: body.admin,
-                        name: body.name
+                        name: body.name,
+                        admin_count: body.admin_count
                     }))
                     dispatch(getSocioData(body.uid));
                     dispatch(uiCloseLoading())
@@ -91,7 +92,8 @@ export const startRegister = ( email, password, name ) => {
                     uid: body.uid,
                     status: body.status,
                     admin: body.admin,
-                    name: body.name
+                    name: body.name,
+                    admin_count: body.admin_count
                 }))
                 setTimeout(() => {
                     dispatch(uiCloseLoading())
@@ -164,7 +166,8 @@ export const updateUserData = () => {
             uid: body.uid,
             status: body.status,
             admin: body.admin,
-            name: body.name
+            name: body.name,
+            admin_count: body.admin_count
         }))
     }
 }
