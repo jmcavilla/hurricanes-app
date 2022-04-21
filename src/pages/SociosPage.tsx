@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardContent, IonSearchbar, IonCardHeader, IonCol, IonItem, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton } from '@ionic/react';
+import { IonButton, IonCard, IonCardContent, IonSearchbar, IonCardHeader, IonCol, IonItem, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton, IonSpinner } from '@ionic/react';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store';
@@ -35,13 +35,33 @@ const SociosPage = () => {
                 <IonCol size='6'>
                     <IonCard className='ion-text-center' color='primary'>
                         <IonCardHeader><strong>Pendientes</strong></IonCardHeader>
-                        <IonCardContent>{sociosPendientes.length}</IonCardContent>
+                        <IonCardContent style={{ fontSize: '5vw'}}>
+                            {sociosPendientes.length}
+                        </IonCardContent>
                     </IonCard>
                 </IonCol>
                 <IonCol size='6'>
-                    <IonCard className='ion-text-center' color='secondary'>
-                        <IonCardHeader><strong>Activos</strong></IonCardHeader>
-                        <IonCardContent>{sociosActivos.length}</IonCardContent>
+                    <IonCard className='ion-text-center' color='secondary' style={{ minHeight: '9vh'}}>
+                        <>
+                            <IonCardHeader><strong>Activos</strong></IonCardHeader>
+                            <IonCardContent style={{ fontSize: '5vw'}}>
+                                {sociosActivos.length ? sociosActivos.length : <IonSpinner color='light' name="crescent" />}
+                            </IonCardContent>
+                        </>
+                        {/* {
+                        sociosActivos.length ?
+                        <>
+                            <IonCardHeader><strong>Activos</strong></IonCardHeader>
+                            <IonCardContent>{sociosActivos.length}</IonCardContent>
+                        </>
+                        :
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: '12vh'
+                        }}><IonSpinner color='light' name="crescent" /></div>
+                        } */}
                     </IonCard>
                 </IonCol>
             </IonRow>
@@ -91,6 +111,18 @@ const SociosPage = () => {
                         }}>VER</IonButton>
                     </IonItem>
                 ))
+            }
+            {
+                segment === 'A' && sociosTable && sociosTable.length === 0 &&
+                <>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <IonSpinner color='secondary' name="crescent" />
+                    </div>
+                </>
             }
             {
                 segment === 'P' && sociosPendientes && sociosPendientes.length === 0 &&

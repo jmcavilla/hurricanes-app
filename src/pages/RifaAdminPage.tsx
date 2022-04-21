@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCol, IonItem, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton } from '@ionic/react';
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCol, IonItem, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton, IonSpinner } from '@ionic/react';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store';
@@ -8,7 +8,7 @@ import RifaDataModal from './modals/RifaDataModal';
 const RifaAdminPage = () => {
     const { rifa, ticketsAccepted, ticketsPending } = useSelector((state: RootState) => state.admin);
     const [segment, setSegment] = useState('P');
-    const [taked, setTaked] = useState(0);
+    const [taked, setTaked] = useState(null);
     const [showModalPending, setShowModalPending] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [selected, setSelected] = useState(null);
@@ -37,13 +37,18 @@ const RifaAdminPage = () => {
                 <IonCol size='6'>
                     <IonCard className='ion-text-center' color='primary'>
                         <IonCardHeader><strong>NUMEROS TOMADOS</strong></IonCardHeader>
-                        <IonCardContent>{taked}</IonCardContent>
+                        <IonCardContent>
+                            {taked ? taked : <IonSpinner color='light' name="crescent" />}
+                        </IonCardContent>
                     </IonCard>
                 </IonCol>
                 <IonCol size='6'>
                     <IonCard className='ion-text-center' color='secondary'>
                         <IonCardHeader><strong>TOTAL RECAUDADO</strong></IonCardHeader>
-                        <IonCardContent>{taked * rifa.value}</IonCardContent>
+                        <IonCardContent>
+                            {/* {taked * rifa.value} */}
+                            {taked ? `$${taked * rifa.value}` : <IonSpinner color='light' name="crescent" />}
+                        </IonCardContent>
                     </IonCard>
                 </IonCol>
             </IonRow>
@@ -80,6 +85,18 @@ const RifaAdminPage = () => {
                         }}>VER</IonButton>
                     </IonItem>
                 ))
+            }
+            {
+                segment === 'A' && ticketsAccepted && ticketsAccepted.length === 0 &&
+                <>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <IonSpinner color='secondary' name="crescent" />
+                    </div>
+                </>
             }
             {
                 segment === 'P' && ticketsPending && ticketsPending.length === 0 &&
