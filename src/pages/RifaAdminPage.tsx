@@ -22,12 +22,16 @@ const RifaAdminPage = () => {
     useEffect(() => {
         let acceptedNum = 0;
         let pendingNum = 0;
-        ticketsAccepted.forEach( tik => {
-            acceptedNum += tik.numeros.length;
-        })
-        ticketsPending.forEach( tok => {
-            pendingNum += tok.numeros.length;
-        })
+        if(ticketsAccepted){
+            ticketsAccepted.forEach( tik => {
+                acceptedNum += tik.numeros.length;
+            })
+        }
+        if(ticketsPending){
+            ticketsPending.forEach( tok => {
+                pendingNum += tok.numeros.length;
+            })
+        }
         setTaked(acceptedNum + pendingNum);
     }, [ticketsAccepted, ticketsPending])
 
@@ -64,7 +68,7 @@ const RifaAdminPage = () => {
                 segment === "P" && ticketsPending && ticketsPending.length > 0 && ticketsPending.map((ticket, i) => (
                     <IonItem key={i} lines="full">
                         <IonLabel>{ticket.name} - {
-                            ticket.numeros.map(num => `D${num.numero}, `)
+                            ticket.numeros.map(num => `D${num.numero}${i !== ticket.numeros.length -1 ? '/' : ''}`)
                         } - ${ticket.numeros.length * rifa.value}</IonLabel>
                         <IonButton fill='clear' color='primary' onClick={() => {
                             setSelected(ticket);
@@ -77,7 +81,7 @@ const RifaAdminPage = () => {
                 segment === "A" && ticketsAccepted && ticketsAccepted.length > 0 && ticketsAccepted.map((ticket, i) => (
                     <IonItem key={i} lines="full">
                         <IonLabel>{ticket.name} - {
-                            ticket.numeros.map(num => `D${num.numero}, `)
+                            ticket.numeros.map((num,i) => `D${num.numero}${i !== ticket.numeros.length -1 ? '/' : ''}`)
                         } - ${ticket.numeros.length * rifa.value}</IonLabel>
                         <IonButton fill='clear' color='primary' onClick={() => {
                             setSelected(ticket);

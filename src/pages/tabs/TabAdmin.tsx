@@ -1,12 +1,12 @@
-import { IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonSpinner } from '@ionic/react'
-import { addCircleOutline, chevronUpCircleSharp, removeCircleOutline } from 'ionicons/icons';
+import { IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonHeader, IonIcon, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonTitle, IonToolbar } from '@ionic/react'
+import { addCircleOutline, chevronUpCircleSharp, refreshCircleSharp, reloadSharp, removeCircleOutline } from 'ionicons/icons';
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import EgresosSegment from '../../components/EgresosSegment';
 import IngresosSegment from '../../components/IngresosSegment';
 import ModalIngreso from '../../components/modals/ModalIngreso';
 import { RootState } from '../../store';
-import { startGetEgresos, startGetIngresos, startGetRifa } from '../../store/admin/admin.actions';
+import { getSociosPending, startGetEgresos, startGetIngresos, startGetRifa, startGetSociosActivos, startGetTicketsAccepted, startGetTicketsRifa } from '../../store/admin/admin.actions';
 import ContablePage from '../ContablePage';
 import RifaAdminPage from '../RifaAdminPage';
 import SociosPage from '../SociosPage';
@@ -22,7 +22,18 @@ const TabAdmin = () => {
         dispatch(startGetRifa());
     }, [dispatch])
 
-
+    const reloadAction = () => {
+        if(segment === 'S'){
+            dispatch(startGetSociosActivos());
+            dispatch(getSociosPending());
+        }else if(segment === 'C'){
+            dispatch(startGetIngresos());
+            dispatch(startGetEgresos());
+        }else if(segment === 'R'){
+            dispatch(startGetTicketsRifa(rifa));
+            dispatch(startGetTicketsAccepted(rifa._id));
+        }
+    }
 
     return (
         <IonPage>
@@ -33,6 +44,15 @@ const TabAdmin = () => {
                         <h3>Si llegaste hasta aca, algo no está bien.</h3>
                         :
                         <>
+                            <IonHeader>
+                                <IonToolbar color='secondary'>
+                                    <IonTitle>Admin</IonTitle>
+                                    <IonChip className='ion-margin-rigth' slot='end' color='dark' outline={false} >
+                                        <IonLabel className='ion-margin-right' color='light'>{`RECARGAR `} </IonLabel>
+                                        <IonIcon className='ion-no-margin' color='light' icon={refreshCircleSharp} onClick={reloadAction} size='large'/>
+                                    </IonChip>
+                                </IonToolbar>
+                            </IonHeader>
                             <IonSegment onIonChange={e => setSegment(e.detail.value)} value={segment}>
                                 <IonSegmentButton value="S">
                                     {segment === 'S' ? <IonLabel color='primary'><strong>SOCIOS</strong></IonLabel> : <IonLabel>SOCIOS</IonLabel>}

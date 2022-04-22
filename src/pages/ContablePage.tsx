@@ -28,7 +28,7 @@ const ContablePage = () => {
                                 <IonCol size='12'>
                                     <IonCard style={{
                                         border: '3px solid var(--ion-color-secondary)'
-                                    }} className='ion-text-center ion-padding' color='medium'>
+                                    }} className='ion-text-center ion-padding' color=''>
                                         <IonCardSubtitle>TOTAL DISPONIBLE</IonCardSubtitle>
                                         <IonCardTitle>${ingresosCount - egresosCount}</IonCardTitle>
                                     </IonCard>

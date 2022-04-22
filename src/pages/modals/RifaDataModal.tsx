@@ -109,7 +109,7 @@ const RifaDataModal = ({ ticket, close, isPending = false }) => {
                         {ticket?.numeros && ticket?.numeros.length > 0 && <IonCol size='12'>
                             <IonItem>
                                 <IonLabel position='stacked'>Numeros</IonLabel>
-                                <IonInput value={`${ticket.numeros?.map(num => `D${num.numero}, `)}`} disabled={true}></IonInput>
+                                <IonInput value={`${ticket.numeros?.map(num => `D${num.numero} `)}`} disabled={true}></IonInput>
                             </IonItem>
                         </IonCol>}
                     </IonRow>
