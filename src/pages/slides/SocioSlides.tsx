@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import SlideThree from './SlideThree';
 import SlideTwo from './SlideTwo';
 import SlideOne from './SlideOne';
-import { createSocio } from '../../store/socio/socio.actions';
+import { createFamily, createSocio } from '../../store/socio/socio.actions';
 import { RootState } from '../../store';
 import { uiHideFieldsSocio } from '../../store/ui/ui.actions';
 
-const SocioSlides = () => {
+const SocioSlides = ({ parent = false, close}) => {
     const { user } = useSelector((state: RootState) => state.user);
     const mySlides = useRef(null);
     const dispatch = useDispatch();
@@ -31,7 +31,8 @@ const SocioSlides = () => {
         socio_huracan: false,
         categoria: '',
         user_id: user.uid,
-        numero_socio: null
+        numero_socio: null,
+        parent_id: null
     });
     const onBtnClicked = async (direction: string, data: any) => {
         const swiper = await mySlides.current.getSwiper();
@@ -49,13 +50,15 @@ const SocioSlides = () => {
             socio.foto = data.photo;
 
             setCategoria();
-            dispatch(createSocio(socio))
+            if(parent){
+                socio.parent_id = user.uid;
+                dispatch(createFamily(socio));
+            }else{
+                dispatch(createSocio(socio))
+            }
         }
     };
 
-    const dismiss = () => {
-        dispatch(uiHideFieldsSocio())
-    }
 
     const setCategoria = () => {
         const edad = parseInt(socio.edad)
@@ -75,7 +78,7 @@ const SocioSlides = () => {
             <IonHeader>
                 <IonToolbar color='secondary'>
                     <IonTitle>Datos Asociado</IonTitle>
-                    <IonButton slot='end' fill='clear' onClick={dismiss}>
+                    <IonButton slot='end' fill='clear' onClick={close}>
                         <IonIcon color='light' icon={closeCircleSharp} style={{ fontSize: '1.8em' }}></IonIcon>
                     </IonButton>
                 </IonToolbar>
@@ -83,13 +86,13 @@ const SocioSlides = () => {
             <IonContent>
                 <IonSlides ref={mySlides} draggable={false} options={slideOpts} style={{ height: '100%' }}>
                     <IonSlide style={{ height: '100%' }}>
-                        <SlideOne onBtnClicked={onBtnClicked} />
+                        <SlideOne parent={parent} onBtnClicked={onBtnClicked} />
                     </IonSlide>
                     <IonSlide style={{ height: '100%' }}>
-                        <SlideTwo onBtnClicked={onBtnClicked} />
+                        <SlideTwo parent={parent} onBtnClicked={onBtnClicked} />
                     </IonSlide>
                     <IonSlide style={{ height: '100%' }}>
-                        <SlideThree onBtnClicked={onBtnClicked} />
+                        <SlideThree parent={parent} onBtnClicked={onBtnClicked} />
                     </IonSlide>
                 </IonSlides>
             </IonContent>

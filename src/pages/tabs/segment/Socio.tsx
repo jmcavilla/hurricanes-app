@@ -11,42 +11,44 @@ interface Props {
 const Socio: React.FC<Props> = ({ socio }) => {
     const [showChangePhoto, setShowChangePhoto] = useState(false);
     const [style, setStyle] = useState({});
-    const [tipoSocio, setTipoSocio] = useState('');
+    const [tipoSocio, setTipoSocio] = useState('linear-gradient(220deg, #FCBF28, #E95203)');
 
     const getTipoSocio = () => {
-        switch (socio.tipo_socio) {
-            case TipoSocio.Jugador:
-                debugger
-                if(socio.socio_huracan){
-                    setStyle({ background: 'linear-gradient(0deg, rgba(234,31,31,1) 2.5%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 95%, rgba(234,31,31,1) 97.5%)' })
-                }else{
+        if (socio) {
+            switch (socio?.tipo_socio) {
+                case TipoSocio.Jugador:
+                    debugger
+                    if (socio?.socio_huracan) {
+                        setStyle({ background: 'linear-gradient(0deg, rgba(234,31,31,1) 2.5%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 95%, rgba(234,31,31,1) 97.5%)' })
+                    } else {
+                        setStyle({ background: 'linear-gradient(220deg, #FCBF28, #E95203)' })
+                    }
+                    setTipoSocio('Jugador')
+                    return 'Jugador'
+                case TipoSocio.Especial:
+                    setTipoSocio('Especial')
+                    return 'Especial'
+                case TipoSocio.Normal:
+                    if (socio?.socio_huracan) {
+                        setStyle({ background: 'linear-gradient(0deg, rgba(234,31,31,1) 2.5%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 95%, rgba(234,31,31,1) 97.5%)' })
+                    } else {
+                        setStyle({ background: 'linear-gradient(220deg, #FCBF28, #E95203)' })
+                    }
+                    setTipoSocio('Normal')
+                    return 'Normal'
+                case TipoSocio.Staff:
+                    setTipoSocio('Staff')
+                    setStyle({ background: 'linear-gradient(220deg, #DBDBDB, #8F8F8F)' })
+                    return 'Staff'
+                case TipoSocio.Fundador:
+                    setTipoSocio('Fundador')
+                    setStyle({ background: 'linear-gradient(220deg, #EFB810, #EFB810)' })
+                    return 'Staff'
+                default:
+                    setTipoSocio('')
                     setStyle({ background: 'linear-gradient(220deg, #FCBF28, #E95203)' })
-                }
-                setTipoSocio('Jugador')
-                return 'Jugador'
-            case TipoSocio.Especial:
-                setTipoSocio('Especial')
-                return 'Especial'
-            case TipoSocio.Normal:
-                if(socio.socio_huracan){
-                    setStyle({ background: 'linear-gradient(0deg, rgba(234,31,31,1) 2.5%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 95%, rgba(234,31,31,1) 97.5%)' })
-                }else{
-                    setStyle({ background: 'linear-gradient(220deg, #FCBF28, #E95203)' })
-                }
-                setTipoSocio('Normal')
-                return 'Normal'
-            case TipoSocio.Staff:
-                setTipoSocio('Staff')
-                setStyle({ background: 'linear-gradient(220deg, #DBDBDB, #8F8F8F)' })
-                return 'Staff'
-            case TipoSocio.Fundador:
-                setTipoSocio('Fundador')
-                setStyle({ background: 'linear-gradient(220deg, #EFB810, #EFB810)' })
-                return 'Staff'
-            default:
-                setTipoSocio('')
-                setStyle({ background: 'linear-gradient(220deg, #FCBF28, #E95203)' })
-                return ''
+                    return ''
+            }
         }
     }
 
@@ -79,21 +81,21 @@ const Socio: React.FC<Props> = ({ socio }) => {
                 </IonCol>
             </IonRow>
             <IonRow>
-            <IonCol size='12' style={{ padding: '0 10vw' }}>
+                <IonCol size='12' style={{ padding: '0 10vw' }}>
                     <IonButton expand='block' fill='clear' color='secondary' onClick={() => { setShowChangePhoto(true) }}>
                         <IonIcon src={pencilSharp} />
                     </IonButton>
                 </IonCol>
             </IonRow>
             <IonRow>
-                <IonCol size='12'>
+                <IonCol size='12' style={{ textAlign: 'left' }}>
                     <div className='user__card-container'>
                         <div className='socio__card' style={style}>
                             <div className='user__card-contain'>
-                                <h5>{socio?.numero_socio && ('0000' + socio?.numero_socio).slice(-4)} - {tipoSocio}</h5>
+                                <h5>{socio.status === 'Active' && socio?.numero_socio && `${('0000' + socio?.numero_socio).slice(-4)} - ${tipoSocio}`} </h5>
                                 <h4 className='user__name'>{socio?.apellido}, {socio?.nombre}</h4>
                                 {socio?.activo && socio.tipo_socio === TipoSocio.Jugador && <p>Categoría: {getCategoria()}</p>}
-                                <p><strong>{socio?.status === 'Inactive' ? 'INACTIVO' : 'ACTIVO'}</strong></p>
+                                <p><strong>{socio?.status === 'Active' ? 'ACTIVO' : socio?.status ? 'PENDIENTE' : 'INACTIVO'}</strong></p>
                             </div>
                             <div className='user__img-container'>
                                 <div className=''>
@@ -102,7 +104,7 @@ const Socio: React.FC<Props> = ({ socio }) => {
                                         src={`${process.env.PUBLIC_URL}/assets/images/hurricanes_logo.png`}
                                     />
                                 </div>
-                                {socio.socio_huracan && <div className=''>
+                                {socio?.socio_huracan && <div className=''>
                                     <IonImg
                                         className="user__card-img"
                                         src={`${process.env.PUBLIC_URL}/assets/images/huracan_logo.png`}
@@ -119,7 +121,7 @@ const Socio: React.FC<Props> = ({ socio }) => {
                     <IonCol>
                         <IonItem color='tertiary'>
                             <IonIcon slot='start' icon={alertCircleSharp}></IonIcon>
-                            <IonText>
+                            <IonText style={{ padding: '5px'}}>
                                 Todavía no hemos confirmado tus datos. En breve terminaremos de procesarlos.
                             </IonText>
                         </IonItem>
@@ -146,7 +148,7 @@ const Socio: React.FC<Props> = ({ socio }) => {
                         <IonItem color='danger'>
                             <IonIcon slot='start' icon={closeCircleSharp}></IonIcon>
                             <IonText>
-                                {socio?.sexo === 'M' ? `Fuiste dado de baja como socio` : `Fuiste dada de baja como socia`}. 
+                                {socio?.sexo === 'M' ? `Fuiste dado de baja como socio` : `Fuiste dada de baja como socia`}.
                                 Por favor, ponete en contacto con el club para mas información.
                             </IonText>
                         </IonItem>
@@ -154,7 +156,7 @@ const Socio: React.FC<Props> = ({ socio }) => {
                 </IonRow>
             }
             <IonModal isOpen={showChangePhoto}>
-                <ModalChangePhoto dismiss={() => { setShowChangePhoto(false) }} socio={socio}/>
+                <ModalChangePhoto dismiss={() => { setShowChangePhoto(false) }} socio={socio} />
             </IonModal>
         </>
     );

@@ -18,6 +18,9 @@ export const uiHideSignInParent = () => ({ type: types.uiHideSigninParent });
 export const uiShowFieldsSocio = () => ({ type: types.uiShowFieldsSocio });
 export const uiHideFieldsSocio = () => ({ type: types.uiHideFieldsSocio });
 
+export const uiShowAddFamily = () => ({ type: types.uiShowAddFamily });
+export const uiHideAddFamily = () => ({ type: types.uiHideAddFamily });
+
 export const uiSetError = (payload: Error) => ({ type: types.uiSetError, payload })
 export const uiUnSetError = () => ({ type: types.uiUnSetError })
 

@@ -66,7 +66,7 @@ const SlideOne = ({ onBtnClicked, parent = false }) => {
         setNacimiento(format(value, 'dd/MM/yyyy'));
         const age = getAge(value);
         setEdad(age);
-        if (age < 18) {
+        if (!parent && age < 18) {
             setShowAlert(true);
         }
     };
@@ -83,159 +83,150 @@ const SlideOne = ({ onBtnClicked, parent = false }) => {
 
     return (
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-            {!parent ?
-                <>
-                    <IonContent>
+            <>
+                <IonContent>
+                    <div style={{ flex: 1, padding: '2vh 0 0 0' }}>
+                        <IonCardTitle color="primary" style={{ fontSize: '1.5em' }}>
+                            {parent ? 'Completá los datos' :'Completá tus datos'}
+                        </IonCardTitle>
+                    </div>
+                    <div style={{ padding: '2vw', flex: 5 }}>
+                        <IonRow>
+                            <IonCol>
+                                <IonItem color="">
+                                    <IonLabel position="floating">Nombre</IonLabel>
+                                    <IonInput autocomplete='off' value={nombre} autocapitalize='on' onIonChange={e => setNombre(e.detail.value)}></IonInput>
+                                </IonItem>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol>
+                                <IonItem color="">
+                                    <IonLabel position="floating">Apellido</IonLabel>
+                                    <IonInput autocomplete='off' value={apellido} autocapitalize='on' onIonChange={e => setApellido(e.detail.value)}></IonInput>
+                                </IonItem>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol>
+                                <IonItem color="">
+                                    <IonLabel position="floating">DNI</IonLabel>
+                                    <IonInput type='number' autocomplete='off' value={dni} autocapitalize='on' onIonChange={e => setDni(e.detail.value)}></IonInput>
+                                </IonItem>
+                            </IonCol>
+                        </IonRow>
+                        {!parent && <IonRow>
+                            <IonCol>
+                                <IonItem color="">
+                                    <IonLabel position="floating">Teléfono</IonLabel>
+                                    <IonInput type='tel' autocomplete='language' value={telefono} autocapitalize='on' onIonChange={e => setTelefono(e.detail.value)}></IonInput>
+                                </IonItem>
+                            </IonCol>
+                        </IonRow>}
+                        <IonRow>
+                            <IonCol>
+                                <IonItem color="">
+                                    <IonLabel position="floating">Fecha de nacimiento</IonLabel>
+                                    <IonInput autocomplete='language' value={fecha_nac} onClick={() => { setDateOpen(true) }} autocapitalize='on'></IonInput>
+                                </IonItem>
 
-                        <div style={{ flex: 1, padding: '10vw 0 0 0' }}>
-                            <IonCardTitle color="primary" style={{ fontSize: '1.5em' }}>
-                                Completá tus datos
-                            </IonCardTitle>
-                            {/* <IonCardSubtitle color="primary" style={{ fontSize: '1em' }}>
-                        Necesitamos algunos datos personales
-                    </IonCardSubtitle> */}
-                        </div>
-                        <div style={{ padding: '2vw', flex: 5 }}>
-                            <IonRow>
-                                <IonCol>
-                                    <IonItem color="">
-                                        <IonLabel position="floating">Nombre</IonLabel>
-                                        <IonInput autocomplete='off' value={nombre} autocapitalize='on' onIonChange={e => setNombre(e.detail.value)}></IonInput>
-                                    </IonItem>
-                                </IonCol>
-                            </IonRow>
-                            <IonRow>
-                                <IonCol>
-                                    <IonItem color="">
-                                        <IonLabel position="floating">Apellido</IonLabel>
-                                        <IonInput autocomplete='off' value={apellido} autocapitalize='on' onIonChange={e => setApellido(e.detail.value)}></IonInput>
-                                    </IonItem>
-                                </IonCol>
-                            </IonRow>
-                            <IonRow>
-                                <IonCol>
-                                    <IonItem color="">
-                                        <IonLabel position="floating">DNI</IonLabel>
-                                        <IonInput type='number' autocomplete='off' value={dni} autocapitalize='on' onIonChange={e => setDni(e.detail.value)}></IonInput>
-                                    </IonItem>
-                                </IonCol>
-                            </IonRow>
-                            <IonRow>
-                                <IonCol>
-                                    <IonItem color="">
-                                        <IonLabel position="floating">Teléfono</IonLabel>
-                                        <IonInput type='tel' autocomplete='language' value={telefono} autocapitalize='on' onIonChange={e => setTelefono(e.detail.value)}></IonInput>
-                                    </IonItem>
-                                </IonCol>
-                            </IonRow>
-                            <IonRow>
-                                <IonCol>
-                                    <IonItem color="">
-                                        <IonLabel position="floating">Fecha de nacimiento</IonLabel>
-                                        <IonInput autocomplete='language' value={fecha_nac} onClick={() => { setDateOpen(true) }} autocapitalize='on'></IonInput>
-                                    </IonItem>
-
-                                    <DatePicker
-                                        theme="android"
-                                        isPopUp={true}
-                                        dateConfig={dateConfig}
-                                        isOpen={dateOpen}
-                                        confirmText="Aceptar"
-                                        cancelText="Cancelar"
-                                        onSelect={formatDate}
-                                        onCancel={() => { setDateOpen(false) }}
-                                        min={new Date(1900, 0, 1)}
-                                    />
-                                </IonCol>
-                            </IonRow>
-                            <IonRow>
-                                <IonCol>
-                                    <IonItem color="">
-                                        <IonLabel position="floating">Edad</IonLabel>
-                                        <IonInput value={edad} autocapitalize='on' disabled={true}></IonInput>
-                                    </IonItem>
-                                </IonCol>
-                            </IonRow>
-                            <IonRow>
-                                <IonCol>
-                                    <IonButton
-                                        expand="full"
-                                        color={sexo === Gender.Male ? 'secondary' : 'light'}
-                                        onClick={() => setSexo(Gender.Male)}
-                                        style={{ height: '15vh' }}
-                                    >
-                                        Hombre<IonIcon icon={man} size="large" />
-                                    </IonButton>
-                                </IonCol>
-                                <IonCol>
-                                    <IonButton
-                                        expand="full"
-                                        color={sexo === Gender.Female ? 'secondary' : 'light'}
-                                        onClick={() => setSexo(Gender.Female)}
-                                        style={{ height: '15vh' }}
-                                    >
-                                        <IonIcon icon={woman} size="large" />
-                                        mujer
-                                    </IonButton>
-                                </IonCol>
-                            </IonRow>
-                        </div>
-                    </IonContent>
-                    <IonFooter mode='ios' style={{ width: '100vw' }}>
-                        <IonToolbar mode='ios' color="secondary" >
-                            <IonRow>
-                                {/* <IonCol>
+                                <DatePicker
+                                    theme="android"
+                                    isPopUp={true}
+                                    dateConfig={dateConfig}
+                                    isOpen={dateOpen}
+                                    confirmText="Aceptar"
+                                    cancelText="Cancelar"
+                                    onSelect={formatDate}
+                                    onCancel={() => { setDateOpen(false) }}
+                                    min={new Date(1900, 0, 1)}
+                                />
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol>
+                                <IonItem color="">
+                                    <IonLabel position="floating">Edad</IonLabel>
+                                    <IonInput value={edad} autocapitalize='on' disabled={true}></IonInput>
+                                </IonItem>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol>
                                 <IonButton
-                                mode='ios'
+                                    expand="full"
+                                    color={sexo === Gender.Male ? 'secondary' : 'light'}
+                                    onClick={() => setSexo(Gender.Male)}
+                                    style={{ height: '15vh' }}
+                                >
+                                    {parent ? 'Niño' : 'Hombre'}<IonIcon icon={man} size="large" />
+                                </IonButton>
+                            </IonCol>
+                            <IonCol>
+                                <IonButton
+                                    expand="full"
+                                    color={sexo === Gender.Female ? 'secondary' : 'light'}
+                                    onClick={() => setSexo(Gender.Female)}
+                                    style={{ height: '15vh' }}
+                                >
+                                    <IonIcon icon={woman} size="large" />
+                                    {parent ? 'Niña' :'mujer'}
+                                </IonButton>
+                            </IonCol>
+                        </IonRow>
+                    </div>
+                </IonContent>
+                <IonFooter mode='ios' style={{ width: '100vw' }}>
+                    <IonToolbar mode='ios' color="secondary" >
+                        <IonRow>
+                            {/* <IonCol>
+                            <IonButton
+                            mode='ios'
+                                expand="full"
+                                fill="clear"
+                                color='light'
+                                onClick={() => onBtnClicked("prev")}
+                            >
+                                <IonIcon icon={arrowBack} /> Atras
+                            </IonButton>
+                        </IonCol> */}
+                            <IonCol>
+                                <IonButton
+                                    mode='ios'
                                     expand="full"
                                     fill="clear"
                                     color='light'
-                                    onClick={() => onBtnClicked("prev")}
+                                    onClick={next}
+                                    disabled={!sexo || !nombre || !apellido || !edad}
                                 >
-                                    <IonIcon icon={arrowBack} /> Atras
+                                    Siguiente <IonIcon icon={arrowForward} />
                                 </IonButton>
-                            </IonCol> */}
-                                <IonCol>
-                                    <IonButton
-                                        mode='ios'
-                                        expand="full"
-                                        fill="clear"
-                                        color='light'
-                                        onClick={next}
-                                        disabled={!sexo || !nombre || !apellido || !edad}
-                                    >
-                                        Siguiente <IonIcon icon={arrowForward} />
-                                    </IonButton>
-                                </IonCol>
-                            </IonRow>
+                            </IonCol>
+                        </IonRow>
 
-                        </IonToolbar>
-                    </IonFooter>
-                    <IonAlert
-                        isOpen={showAlert}
-                        onDidDismiss={() => setShowAlert(false)}
-                        header={''}
-                        subHeader={'Atención'}
-                        message={'Lamentablemente no podemos asociarte por este medio ya que sos menor de 18 años, por favor, comunicate con nosotros a traves de instagram para indicarte los pasos a seguir. ¡Muchas gracias!'}
-                        buttons={[
-                            {
-                                text: 'Aceptar',
-                                role: 'cancel',
-                                cssClass: 'secondary',
-                                id: 'cancel-button',
-                                handler: blah => {
-                                    dispatch(uiHideSignIn());
-                                    // dispatch(uiShowSignInParent());
-                                    // close()
-                                }
-                            },
-                        ]}
-                    />
-                </>
-                :
-                <>
-                </>
-            }
+                    </IonToolbar>
+                </IonFooter>
+                <IonAlert
+                    isOpen={showAlert}
+                    onDidDismiss={() => setShowAlert(false)}
+                    header={''}
+                    subHeader={'Atención'}
+                    message={'Lamentablemente no podemos asociarte por este medio ya que sos menor de 18 años, por favor, comunicate con nosotros a traves de instagram para indicarte los pasos a seguir. ¡Muchas gracias!'}
+                    buttons={[
+                        {
+                            text: 'Aceptar',
+                            role: 'cancel',
+                            cssClass: 'secondary',
+                            id: 'cancel-button',
+                            handler: blah => {
+                                dispatch(uiHideSignIn());
+                                // dispatch(uiShowSignInParent());
+                                // close()
+                            }
+                        },
+                    ]}
+                />
+            </>
         </div>
     );
 };

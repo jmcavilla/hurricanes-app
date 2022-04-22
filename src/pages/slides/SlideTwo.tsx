@@ -21,10 +21,10 @@ const SlideTwo = ({ onBtnClicked, parent = false }) => {
                 </div>
                 <div style={{ flex: 1 }}>
                     <IonCardTitle color="primary" style={{ fontSize: '1.5em', padding: '10vw 0 10vw 0' }}>
-                        ¿Sos socio de Huracán?
+                        {parent ? '¿Es socio/a de Huracán?' : '¿Sos socio de Huracán?'}
                     </IonCardTitle>
                     <IonCardSubtitle color="primary" style={{ padding: '0 10vw 10vw 10vw' }}>
-                        Para poder realizar el descuento en la cuota necesitamos tu numero de socio del Club Atlético Huracán.
+                        {`Para poder realizar el descuento en la cuota necesitamos ${parent ? 'su' : 'tu'} número de socio del Club Atlético Huracán.`}
                     </IonCardSubtitle>
                     <IonRow>
                         <IonCol>

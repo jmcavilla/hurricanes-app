@@ -7,6 +7,7 @@ const initialState: UIState = {
     showSignIn: false,
     showSignInParent: false,
     showFieldsSocio: false,
+    showAddFamily: false,
     showValidateEmail: false,
     error: null
 }
@@ -24,6 +25,7 @@ export type UIState = {
     showSignInParent: boolean,
     showFieldsSocio: boolean,
     showValidateEmail: boolean,
+    showAddFamily: boolean,
     error: Error
 }
 
@@ -100,6 +102,16 @@ export const uiReducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 showValidateEmail: false
+            }
+        case types.uiShowAddFamily: 
+            return {
+                ...state,
+                showAddFamily: true
+            }
+        case types.uiHideAddFamily: 
+            return {
+                ...state,
+                showAddFamily: false
             }
         default:
             return state;

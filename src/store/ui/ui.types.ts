@@ -18,6 +18,9 @@ export const types = {
     uiShowFieldsSocio: '[ui] Show fields socio',
     uiHideFieldsSocio: '[ui] Hide fields socio',
 
+    uiShowAddFamily: '[ui] Show Add Family',
+    uiHideAddFamily: '[ui] Hide Add Family',
+
     uiSetError: '[ui] Set error',
     uiUnSetError: '[ui] UnSet error',
 

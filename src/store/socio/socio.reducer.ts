@@ -3,12 +3,14 @@ import { types } from "./socio.types"
 
 const initialState:SocioState = {
     data: null,
-    checking: false
+    checking: false,
+    familia: null
 }
 
 export type SocioState = {
     data: any,
-    checking: boolean
+    checking: boolean,
+    familia: any[]
 }
 
 export const socioReducer = (state = initialState, action) => {
@@ -33,6 +35,11 @@ export const socioReducer = (state = initialState, action) => {
             return {
                 ...state,
                 checking: false
+            }
+        case types.socioSetFamilyData:
+            return {
+                ...state,
+                familia: action.payload
             }
         default:
             return state;

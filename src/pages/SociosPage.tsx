@@ -48,20 +48,6 @@ const SociosPage = () => {
                                 {sociosActivos.length ? sociosActivos.length : <IonSpinner color='light' name="crescent" />}
                             </IonCardContent>
                         </>
-                        {/* {
-                        sociosActivos.length ?
-                        <>
-                            <IonCardHeader><strong>Activos</strong></IonCardHeader>
-                            <IonCardContent>{sociosActivos.length}</IonCardContent>
-                        </>
-                        :
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: '12vh'
-                        }}><IonSpinner color='light' name="crescent" /></div>
-                        } */}
                     </IonCard>
                 </IonCol>
             </IonRow>

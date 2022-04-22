@@ -8,7 +8,7 @@ import SocioData from '../../components/SocioData';
 import { logOutSharp } from 'ionicons/icons';
 import { startLogout } from '../../store/auth/auth.actions';
 const TabUser = () => {
-    const { data: socio, checking } = useSelector((state: RootState) => state.socio);
+    const { data: socio, checking, familia } = useSelector((state: RootState) => state.socio);
     const { user } = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch()
     const logOut = () => {
@@ -22,16 +22,14 @@ const TabUser = () => {
                     <IonHeader>
                         <IonToolbar mode='md'>
                             <IonTitle>Carnét Digital</IonTitle>
-                            {/* <IonButtons slot='end'> */}
                             <IonButton onClick={logOut} slot='end' color='secondary' fill='outline'>
                                 <IonIcon src={logOutSharp} />
                                 <span>Salir</span>
                             </IonButton>
-                            {/* </IonButtons> */}
                         </IonToolbar>
                     </IonHeader>
                         {
-                            socio ?
+                            (socio || (familia && familia.length > 0)) ?
                                 <Carnet />
                                 :
                                 checking 
