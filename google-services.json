@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "103382929625",
+    "project_id": "hurricanes-app-d6dcc",
+    "storage_bucket": "hurricanes-app-d6dcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103382929625:android:f1f567d9938e1f84236ec8",
+        "android_client_info": {
+          "package_name": "ar.com.klover.hurricanes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103382929625-am3v69d776ehbro357bfbmokjcsclhtn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtG87EwTyVgw6o6f0F6aeWz6hQ7F0uubY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103382929625-am3v69d776ehbro357bfbmokjcsclhtn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
