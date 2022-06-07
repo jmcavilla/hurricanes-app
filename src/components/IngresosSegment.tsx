@@ -1,4 +1,4 @@
-import { IonCard, IonCardTitle, IonContent, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel, IonList, IonSpinner } from '@ionic/react';
+import { IonCard, IonCardTitle, IonChip, IonContent, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel, IonList, IonSpinner } from '@ionic/react';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
@@ -17,7 +17,10 @@ const IngresosSegment = () => {
                                     <IonLabel>{ingreso.concepto.toUpperCase()}</IonLabel>
                                     <IonCardTitle>${ingreso.monto}</IonCardTitle>
                                     {ingreso.quien}<br />
-                                    {ingreso.fecha}
+                                    {ingreso.fecha}<br />
+                                    <IonChip color={ingreso.motivo === 'ROPA' ? 'primary' : 'secondary'}>
+                                       <IonLabel>{ingreso.motivo}</IonLabel>
+                                    </IonChip>
                                 </IonCard>
                             
                         </>

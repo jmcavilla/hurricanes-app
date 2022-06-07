@@ -3,8 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { fetchConToken } from '../helpers/fetch';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { trashBinSharp, imageOutline } from 'ionicons/icons';
+import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { startGetEgresos, startGetIngresos } from '../store/admin/admin.actions';
 
-const InfoCuotaPaga = ({ cuota, close, pagar = false }) => {
+const InfoCuotaPaga = ({ cuota, close, socio, pagar = false }) => {
+    const dispatch = useDispatch()
+
+    const { user } = useSelector((state: RootState) => state.user);
     const [formaPago, setFormaPago] = useState('');
     const [quienRecibio, setQuienRecibio] = useState('');
     const [comprobante, setComprobante] = useState('');
@@ -15,6 +22,7 @@ const InfoCuotaPaga = ({ cuota, close, pagar = false }) => {
         const body = await resp.json();
 
         if (body.ok) {
+            createIngreso();
             close();
         }
         dismiss()
@@ -31,6 +39,41 @@ const InfoCuotaPaga = ({ cuota, close, pagar = false }) => {
         if (image) {
             console.log('base64', image.base64String);
             setComprobante('data:image/jpeg;base64,' + image.base64String);
+        }
+    }
+
+    const createIngreso = async () => {
+        // concepto: { type: String, require: true},
+        // monto: { type: Number, require: true },
+        // comprobante: { type: String },
+        // tipo: { type: String, enum: ['Ingreso', 'Egreso'], require: true },
+        // user_id: { type: String, require: true },
+        // pago: { type: Boolean, default: false },
+        // fecha: { type: String, require: true },
+        // fecha_pago: { type: String }
+        present();
+        const data = {
+            comprobante,
+            concepto: `CUOTA SOCIO Nº: ${('0000' + socio?.numero_socio).slice(-4)}`,
+            monto: cuota.monto,
+            tipo: 'Ingreso',
+            user_id: user.uid,
+            quien: cuota.quien_recibio,
+            fecha: moment().format('DD/MM/YYYY'),
+            motivo: 'CUOTA',
+            mes: moment().month() + 1,
+            anio: moment().year()
+        }
+
+        const resp = await fetchConToken('contable/new', {...data}, 'POST')
+        const body = await resp.json();
+
+        if(body.ok){
+            dispatch(startGetIngresos());
+            dispatch(startGetEgresos());
+            dismiss();
+        }else{
+            dismiss();
         }
     }
 

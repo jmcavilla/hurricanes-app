@@ -3,7 +3,7 @@ import moment from 'moment';
 import React, { useState } from 'react'
 import InfoCuotaPaga from './InfoCuotaPaga';
 
-const CuotaSocio = ({ cuota, getCuotaSocio }) => {
+const CuotaSocio = ({ cuota, getCuotaSocio, socio }) => {
     const [showInfoCuota, setShowInfoCuota] = useState(false);
     return (
         <>
@@ -33,6 +33,7 @@ const CuotaSocio = ({ cuota, getCuotaSocio }) => {
                     setShowInfoCuota(false);
                     getCuotaSocio();
                 }}
+                socio={socio}
                 pagar={cuota.status === 'Pending'} />
             }
         </>
