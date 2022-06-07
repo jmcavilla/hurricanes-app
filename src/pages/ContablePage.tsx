@@ -7,16 +7,53 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useEffect, useState } from 'react'
 import ModalIngreso from '../components/modals/ModalIngreso';
+import moment from 'moment';
 
 const ContablePage = () => {
     const { ingresos, egresos, ingresosCount, egresosCount } = useSelector((state: RootState) => state.admin);
     const [segment, setSegment] = useState('I');
+    const [ingCuotas, setIngCuotas] = useState(0);
+    const [ingRopa, setIngRopa] = useState(0);
     const [showModalIngreso, setShowModalIngreso] = useState(false)
     const [tipo, setTipo] = useState('')
     const showNewIngreso = (tipo) => {
         setTipo(tipo)
         setShowModalIngreso(true);
     }
+
+    useEffect(() => {
+        setIngCuotas(0);
+        setIngRopa(0);
+        let cuotas = 0;
+        let ropa = 0;
+        for (let index = 0; index < ingresos.length; index++) {
+            const ing = ingresos[index];
+            if((moment().year()) === ing.anio){
+                if((moment().month()+1) === ing.mes){
+                    if( ing.motivo && ing.motivo === 'CUOTA'){
+                        cuotas = (cuotas + ing.monto);
+                    }
+                    if( ing.motivo && ing.motivo === 'ROPA'){
+                        ropa = (ropa + ing.monto);
+                    }
+                }
+            }
+        }
+
+        setIngCuotas(cuotas);
+        setIngRopa(ropa);
+        // ingresos.forEach((ing) => {
+        //     console.log(ing)
+        //     if( ing.motivo && ing.motivo === 'CUOTA'){
+        //         cuotas = (ingCuotas + ing.monto);
+        //     }
+        //     if( ing.motivo && ing.motivo === 'ROPA'){
+        //         ropa = (ingRopa + ing.monto);
+        //     }
+        // })
+
+    }, [ingresos])
+    
     return (
         <>
             {
@@ -34,6 +71,7 @@ const ContablePage = () => {
                                     </IonCard>
                                 </IonCol>
                             </IonRow>
+                            
                             <IonRow>
                                 <IonSegment onIonChange={e => setSegment(e.detail.value)} value={segment}>
                                     <IonSegmentButton value="I">
@@ -46,13 +84,36 @@ const ContablePage = () => {
                                 </IonSegment>
                                 {
                                     segment === 'I' ?
-                                        <IonCol size='12'>
-                                            <IonCard className='ion-text-center ion-padding' color='success'>
-                                                <IonCardSubtitle color='dark'>INGRESOS</IonCardSubtitle>
-                                                <IonCardTitle color='dark'>${ingresosCount}</IonCardTitle>
-                                            </IonCard>
-                                            <IngresosSegment />
-                                        </IonCol>
+                                        <>
+                                        <IonRow>
+                                            <IonCol size='12'>
+                                                <IonCard className='ion-text-center ion-padding' color='success'>
+                                                    <IonCardSubtitle color='dark'>INGRESOS</IonCardSubtitle>
+                                                    <IonCardTitle color='dark'>${ingresosCount}</IonCardTitle>
+                                                </IonCard>
+                                            </IonCol>
+                                            <IonCol size='6'>
+                                                <IonCard style={{
+                                                    border: '3px solid var(--ion-color-dark)'
+                                                }} className='ion-text-center ion-padding' color=''>
+                                                    <IonCardSubtitle>ROPA</IonCardSubtitle>
+                                                    <IonCardTitle>${ingRopa}</IonCardTitle>
+                                                </IonCard>
+                                            </IonCol>
+                                            <IonCol size='6'>
+                                                <IonCard style={{
+                                                    border: '3px solid var(--ion-color-medium)'
+                                                }} className='ion-text-center ion-padding' color=''>
+                                                    <IonCardSubtitle>CUOTAS</IonCardSubtitle>
+                                                    <IonCardTitle>${ingCuotas}</IonCardTitle>
+                                                </IonCard>
+                                            </IonCol>
+                                            <IonCol size='12'>
+                                                <IngresosSegment />
+
+                                            </IonCol>
+                                        </IonRow>
+                                        </>
                                         :
                                         <IonCol size='12'>
                                             <IonCard className='ion-text-center ion-padding' color='danger'>

@@ -195,7 +195,7 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
                 {segment === 'C' &&
                     cuotasSocio.sort((a, b) => (a.mes < b.mes) ? 1 : ((b.mes < a.mes) ? -1 : 0))
                         .map((cuota, i) => (
-                            <CuotaSocio key={i} cuota={cuota} getCuotaSocio={() => getCuotaSocio()} />
+                            <CuotaSocio key={i} cuota={cuota} getCuotaSocio={() => getCuotaSocio()} socio={socioSelected}/>
                         ))
                 }
             </IonContent>

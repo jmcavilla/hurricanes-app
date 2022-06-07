@@ -1,4 +1,4 @@
-import { IonAlert, IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonTitle, IonToast, IonToolbar, useIonLoading } from '@ionic/react'
+import { IonAlert, IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption, IonTitle, IonToast, IonToolbar, useIonLoading } from '@ionic/react'
 import { closeCircleSharp, documentAttachSharp, trashBinSharp } from 'ionicons/icons'
 import { useEffect, useState } from 'react'
 import { Camera, CameraResultType, CameraDirection, CameraSource } from '@capacitor/camera';
@@ -22,6 +22,7 @@ const ModalIngreso = ({ hide, tipo }) => {
     const [showAlert, setShowAlert] = useState(false)
     const [showError, setShowError] = useState(false)
     const [error, setError] = useState(null)
+    const [motivo, setMotivo] = useState('CUOTA')
     const takePhoto = async () => {
 
         const image = await Camera.getPhoto({
@@ -78,7 +79,10 @@ const ModalIngreso = ({ hide, tipo }) => {
             tipo: tipo,
             user_id: user.uid,
             quien,
-            fecha: moment().format('DD/MM/YYYY')
+            fecha: moment().format('DD/MM/YYYY'),
+            motivo,
+            mes: moment().month() + 1,
+            anio: moment().year()
         }
 
         const resp = await fetchConToken('contable/new', {...data}, 'POST')
@@ -123,9 +127,29 @@ const ModalIngreso = ({ hide, tipo }) => {
                 </IonItem>
                 }
                 <IonItem>
+                    <IonLabel position='stacked'>Motivo</IonLabel>
+                    {/* <IonInput value={tipoSocio} disabled={true}></IonInput> */}
+                    <IonSelect
+                        value={motivo}
+                        okText="Aceptar"
+                        cancelText="Cancelar"
+                        onIonChange={e => {
+                            setMotivo(e.detail.value);
+                        }}
+                    >
+                        <IonSelectOption value='CUOTA'>Cuota</IonSelectOption>
+                        <IonSelectOption value='ROPA'>Ropa</IonSelectOption>
+                        <IonSelectOption value='OTRO'>Otro</IonSelectOption>
+                    </IonSelect>
+                </IonItem>
+                {tipo !== 'Egreso' && motivo === 'OTRO' && <IonItem>
                     <IonLabel position='stacked'>Concepto</IonLabel>
                     <IonInput autocomplete='off' value={concepto} onIonChange={e => setConcepto(e.detail.value)}></IonInput>
-                </IonItem>
+                </IonItem>}
+                {tipo === 'Egreso' && <IonItem>
+                    <IonLabel position='stacked'>Concepto</IonLabel>
+                    <IonInput autocomplete='off' value={concepto} onIonChange={e => setConcepto(e.detail.value)}></IonInput>
+                </IonItem>}
                 <IonItem>
                     <IonLabel position='stacked'>Monto</IonLabel>
                     <IonInput autocomplete='off' type='number' value={monto} onIonChange={e => setMonto(e.detail.value)}></IonInput>
@@ -149,7 +173,7 @@ const ModalIngreso = ({ hide, tipo }) => {
                 <IonButton className='admin__enviar-button' onClick={create} 
                 expand='block' 
                 fill='solid' 
-                disabled={ !quien || quien === '' || !concepto || concepto === '' || !monto}
+                disabled={ !quien || quien === '' || !motivo || !monto}
                 style={{ padding: '0 10px' }}>ENVÍAR</IonButton>
                 </IonToolbar>
             </IonFooter>
