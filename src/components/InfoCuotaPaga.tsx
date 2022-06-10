@@ -22,7 +22,9 @@ const InfoCuotaPaga = ({ cuota, close, socio, pagar = false }) => {
         const body = await resp.json();
 
         if (body.ok) {
-            createIngreso();
+            if(socio.tipo_socio !== 'P'){
+                createIngreso();
+            }
             close();
         }
         dismiss()
@@ -111,6 +113,7 @@ const InfoCuotaPaga = ({ cuota, close, socio, pagar = false }) => {
                         <IonSelectOption value='Efectivo'>Efectivo</IonSelectOption>
                         <IonSelectOption value='Transeferencia'>Transeferencia</IonSelectOption>
                         <IonSelectOption value='Mercado Pago'>Mercado Pago</IonSelectOption>
+                        <IonSelectOption value='Excento'>Excento</IonSelectOption>
                     </IonSelect>
                 </IonItem>
                 <IonItem>

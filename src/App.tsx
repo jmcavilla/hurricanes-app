@@ -42,9 +42,11 @@ import { uiHideLogin, uiHideSignIn } from './store/ui/ui.actions'
 import TabRifa from './pages/tabs/TabRifa';
 import { fetchSinToken } from './helpers/fetch';
 import { Capacitor } from '@capacitor/core';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation';
 setupIonicReact();
 
 const App: React.FC = () => {
+  ScreenOrientation.lock(ScreenOrientation.ORIENTATIONS.PORTRAIT);
   const { showLogin, showSignIn, showSignInParent, error } = useSelector((state: RootState) => state.ui)
   const { user } = useSelector((state: RootState) => state.user);
   const [showError, setShowError] = useState(false);

@@ -1,6 +1,8 @@
-import { IonButton, IonCard, IonCardContent, IonSearchbar, IonCardHeader, IonCol, IonItem, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton, IonSpinner } from '@ionic/react';
+import { IonButton, IonCard, IonCardContent, IonSearchbar, IonCardHeader, IonCol, IonItem, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonSelect, IonSelectOption } from '@ionic/react';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { fetchConToken } from '../helpers/fetch';
 import { RootState } from '../store';
 import { getSociosPending, startGetSociosActivos } from '../store/admin/admin.actions';
 import SocioDataModal from './modals/SocioDataModal';
@@ -13,6 +15,7 @@ const SociosPage = () => {
     const [selected, setSelected] = useState(null);
     const [searchText, setSearchText] = useState('');
     const [sociosTable, setSociosTable] = useState([]);
+    const [month, setMonth] = useState(moment().month() + 1)
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -28,6 +31,20 @@ const SociosPage = () => {
             socio.dni.includes(searchText))
         )])
     }, [searchText, sociosActivos])
+
+    const generateCuotas = async () => {
+        try {
+            const resp = await fetchConToken('cuota/generarCuotasMes', { mes: month }, 'POST');
+            const body = await resp.json();
+
+            if (body.ok) {
+            }
+
+        } catch (error) {
+
+        } finally {
+        }
+    }
 
     return (
         <>
@@ -49,6 +66,30 @@ const SociosPage = () => {
                             </IonCardContent>
                         </>
                     </IonCard>
+                </IonCol>
+            </IonRow>
+            <IonRow>
+                <IonCol size='12'>
+                    <IonItem>
+                        <IonLabel>Mes a generar</IonLabel>
+                        <IonSelect value={month} okText="Aceptar" cancelText="Cancelar" onIonChange={e => setMonth(e.detail.value)}>
+                            <IonSelectOption value={1}>Enero {moment().year()}</IonSelectOption>
+                            <IonSelectOption value={2}>Febrero {moment().year()}</IonSelectOption>
+                            <IonSelectOption value={3}>Marzo {moment().year()}</IonSelectOption>
+                            <IonSelectOption value={4}>Abril {moment().year()}</IonSelectOption>
+                            <IonSelectOption value={5}>Mayo {moment().year()}</IonSelectOption>
+                            <IonSelectOption value={6}>Junio {moment().year()}</IonSelectOption>
+                            <IonSelectOption value={7}>Julio {moment().year()}</IonSelectOption>
+                            <IonSelectOption value={8}>Agosto {moment().year()}</IonSelectOption>
+                            <IonSelectOption value={9}>Septiembre {moment().year()}</IonSelectOption>
+                            <IonSelectOption value={10}>Octubre {moment().year()}</IonSelectOption>
+                            <IonSelectOption value={11}>Noviembre {moment().year()}</IonSelectOption>
+                            <IonSelectOption value={12}>Diciembre {moment().year()}</IonSelectOption>
+                        </IonSelect>
+                    </IonItem>
+                </IonCol>
+                <IonCol size='12'>
+                    <IonButton expand='block' onClick={generateCuotas} >GENERAR CUOTAS PARA MES</IonButton>
                 </IonCol>
             </IonRow>
             <IonSegment onIonChange={e => setSegment(e.detail.value)} value={segment}>

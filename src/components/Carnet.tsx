@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardContent, IonChip, IonCol, IonContent, IonFooter, IonHeader, IonIcon, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton, IonSlide, IonSlides, IonTitle, IonToolbar } from '@ionic/react'
+import { IonButton, IonCard, IonCardContent, IonCardTitle, IonChip, IonCol, IonContent, IonFooter, IonHeader, IonIcon, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton, IonSlide, IonSlides, IonTitle, IonToast, IonToolbar } from '@ionic/react'
 import { closeCircleSharp } from 'ionicons/icons'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
@@ -13,6 +13,7 @@ const Carnet = () => {
     const { data: socio, familia } = useSelector((state: RootState) => state.socio);
     const { cuotas } = useSelector((state: RootState) => state.cuota);
     const { showAddFamily, showFieldsSocio } = useSelector((state: RootState) => state.ui);
+    const [showToastCuotas, setShowToastCuotas] = useState(false);
     const [familySelected, setFamilySelected] = useState(null);
     const [showCuotasFamily, setShowCuotasFamily] = useState(false);
     const [showCuotas, setShowCuotas] = useState(false);
@@ -37,6 +38,24 @@ const Carnet = () => {
 
     }, [familia])
 
+    useEffect(() => {
+        console.log('first')
+        let cuotasPending = 0;
+        if(cuotas){
+
+            for (let index = 0; index < cuotas?.length; index++) {
+                const element = cuotas[index];
+                if(element.status === "Pending"){
+                    cuotasPending += 1;
+                }
+            }
+            
+            if(cuotasPending > 1){
+                setShowToastCuotas(true)
+            }
+        }
+
+    }, [cuotas])
 
     const addFamily = () => {
         console.log('first')
@@ -94,13 +113,18 @@ const Carnet = () => {
                 </IonSegmentButton>
             </IonSegment>}
             {socio && segment === 'S' && <IonContent>
+                {/* <IonRow>
+                {showToastCuotas && <IonCol size='12' style={{  }}>
+                        <IonCard className='ion-padding' color='tertiary'>
+                            <IonLabel>
+                                <strong> Tenés cuotas pendientes. Por favor, mantené tus cuotas al día</strong>
+                            </IonLabel>
+                        </IonCard>
+                    </IonCol>}
+                </IonRow> */}
                 <Socio socio={socio} />
                 <IonRow style={{ marginTop: '10px' }}>
-                    {/* <IonCol>
-                        <div style={{ padding: '0 10vw' }}>
-                            <IonButton color='secondary' fill='outline' expand='block'> VER FICHA</IonButton>
-                        </div>
-                    </IonCol> */}
+                    
                     {socio.status === 'Active' && <><IonCol>
                         <div style={{ padding: '0 10vw' }}>
                             <IonButton color='secondary' fill='solid' expand='block' onClick={() => setShowCuotas(true)}> VER CUOTAS</IonButton>
@@ -165,7 +189,7 @@ const Carnet = () => {
                 </IonHeader>
                 <IonContent>
                     {
-                        cuotas?.map((cuota, i) => (
+                        cuotas?.reverse().map((cuota, i) => (
                             <IonCard key={i}>
                                 <IonCardContent>
                                     <IonRow>
@@ -244,6 +268,13 @@ const Carnet = () => {
                     }
                 </IonContent>
             </IonModal>
+            <IonToast
+                isOpen={showToastCuotas}
+                onDidDismiss={() => setShowToastCuotas(false)}
+                message="Tenés algunas cuotas pendientes de pago. Si no es así, comunicate con nosotros para regularizar la situación."
+                color='danger'
+                duration={5000}
+            />
         </>
     )
 }

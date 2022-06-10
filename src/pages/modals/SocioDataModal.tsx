@@ -134,6 +134,7 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
                                 >
                                     <IonSelectOption value='N'>Normal</IonSelectOption>
                                     <IonSelectOption value='J'>Jugador</IonSelectOption>
+                                    <IonSelectOption value='P'>Padre/Madre</IonSelectOption>
                                     <IonSelectOption value='X'>Especial</IonSelectOption>
                                     <IonSelectOption value='S'>Staff</IonSelectOption>
                                     <IonSelectOption value='F'>Fundador</IonSelectOption>

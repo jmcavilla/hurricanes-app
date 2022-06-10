@@ -20,5 +20,6 @@ export enum TipoSocio {
     Especial='X',
     Normal='N',
     Staff='S',
-    Fundador='F'
+    Fundador='F',
+    Padre='P'
 }

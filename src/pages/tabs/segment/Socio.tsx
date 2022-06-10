@@ -27,7 +27,11 @@ const Socio: React.FC<Props> = ({ socio }) => {
                     return 'Jugador'
                 case TipoSocio.Especial:
                     setTipoSocio('Especial')
+                    setStyle({ background: 'linear-gradient(220deg, #FCBF28, #E95203)' })
                     return 'Especial'
+                case TipoSocio.Padre:
+                    setTipoSocio('Padre')
+                    return 'Padre'
                 case TipoSocio.Normal:
                     if (socio?.socio_huracan) {
                         setStyle({ background: 'linear-gradient(0deg, rgba(234,31,31,1) 2.5%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 95%, rgba(234,31,31,1) 97.5%)' })
