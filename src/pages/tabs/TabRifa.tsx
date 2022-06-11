@@ -28,10 +28,8 @@ const TabRifa = () => {
         id_rifa: ''
     });
     const onBtnClicked = async (direction: string, data?: any) => {
-        debugger
         const swiper: any = await mySlides.current.getSwiper();
         if (direction === "next") {
-            debugger
             if (data) {
                 setSocio({
                     ...socio,

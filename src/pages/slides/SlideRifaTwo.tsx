@@ -47,7 +47,6 @@ const SlideRifaTwo = ({ onBtnClicked, rifa }) => {
             for (let index = 0; index < quantity; index++) {
                 // const element = quantity;
                 let eleInd = Math.floor(Math.random() * availableNumbers.length)
-                debugger;
                 const randomElement = availableNumbers[eleInd];
                 if(!randomElement.selected){
                     numbers.push(randomElement);

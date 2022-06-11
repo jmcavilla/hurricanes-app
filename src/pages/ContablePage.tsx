@@ -14,7 +14,10 @@ const ContablePage = () => {
     const [segment, setSegment] = useState('I');
     const [ingCuotas, setIngCuotas] = useState(0);
     const [ingRopa, setIngRopa] = useState(0);
-    const [showModalIngreso, setShowModalIngreso] = useState(false)
+    const [ingOtro, setIngOtro] = useState(0);
+    const [showModalIngreso, setShowModalIngreso] = useState(false);
+    const [ingMes, setIngMes] = useState(0);
+    const [egrMes, setEgrMes] = useState(0);
     const [tipo, setTipo] = useState('')
     const showNewIngreso = (tipo) => {
         setTipo(tipo)
@@ -22,10 +25,11 @@ const ContablePage = () => {
     }
 
     useEffect(() => {
-        setIngCuotas(0);
-        setIngRopa(0);
         let cuotas = 0;
         let ropa = 0;
+        let otro = 0;
+        let ingMesActual = 0;
+        let egrMesActual = 0;
         for (let index = 0; index < ingresos.length; index++) {
             const ing = ingresos[index];
             if((moment().year()) === ing.anio){
@@ -36,12 +40,28 @@ const ContablePage = () => {
                     if( ing.motivo && ing.motivo === 'ROPA'){
                         ropa = (ropa + ing.monto);
                     }
+                    if( ing.motivo && ing.motivo === 'OTRO'){
+                        otro = (otro + ing.monto);
+                    }
+                    ingMesActual += ing.monto;
+                }
+            }
+        }
+
+        for (let index = 0; index < egresos.length; index++) {
+            const egr = egresos[index];
+            if((moment().year()) === egr.anio){
+                if((moment().month()+1) === egr.mes){
+                    egrMesActual += egr.monto;
                 }
             }
         }
 
         setIngCuotas(cuotas);
         setIngRopa(ropa);
+        setIngOtro(otro);
+        setIngMes(ingMesActual);
+        setEgrMes(egrMesActual);
         // ingresos.forEach((ing) => {
         //     console.log(ing)
         //     if( ing.motivo && ing.motivo === 'CUOTA'){
@@ -64,14 +84,26 @@ const ContablePage = () => {
                             <IonRow>
                                 <IonCol size='12'>
                                     <IonCard style={{
-                                        border: '3px solid var(--ion-color-secondary)'
+                                        border: '3px solid var(--ion-color-secondary)',
+                                        margin: '0 10px',
+                                        padding: '5px'
                                     }} className='ion-text-center ion-padding' color=''>
                                         <IonCardSubtitle>TOTAL DISPONIBLE</IonCardSubtitle>
                                         <IonCardTitle>${ingresosCount - egresosCount}</IonCardTitle>
                                     </IonCard>
                                 </IonCol>
                             </IonRow>
-                            
+                            <IonRow>
+                                <IonCol size='12'>
+                                    <IonCard style={{
+                                        border: `3px solid var( ${ ingMes - egrMes > 0 ? '--ion-color-success' : '--ion-color-danger'})`,
+                                        margin: '0 10px'
+                                    }} className='ion-text-center' color=''>
+                                        <IonCardSubtitle>ESTADO MENSUAL</IonCardSubtitle>
+                                        <IonCardTitle>${ingMes - egrMes}</IonCardTitle>
+                                    </IonCard>
+                                </IonCol>
+                            </IonRow>
                             <IonRow>
                                 <IonSegment onIonChange={e => setSegment(e.detail.value)} value={segment}>
                                     <IonSegmentButton value="I">
@@ -87,25 +119,37 @@ const ContablePage = () => {
                                         <>
                                         <IonRow>
                                             <IonCol size='12'>
-                                                <IonCard className='ion-text-center ion-padding' color='success'>
+                                                <IonCard className='ion-text-center ion-padding' color='success' style={{ margin: '0',
+                                        padding: '10px' }}>
                                                     <IonCardSubtitle color='dark'>INGRESOS</IonCardSubtitle>
                                                     <IonCardTitle color='dark'>${ingresosCount}</IonCardTitle>
                                                 </IonCard>
                                             </IonCol>
-                                            <IonCol size='6'>
+                                            <IonCol size='4'>
                                                 <IonCard style={{
-                                                    border: '3px solid var(--ion-color-dark)'
+                                                    border: '3px solid var(--ion-color-primary)',
+                                                    margin: '0'
                                                 }} className='ion-text-center ion-padding' color=''>
                                                     <IonCardSubtitle>ROPA</IonCardSubtitle>
-                                                    <IonCardTitle>${ingRopa}</IonCardTitle>
+                                                    <IonCardSubtitle>${ingRopa}</IonCardSubtitle>
                                                 </IonCard>
                                             </IonCol>
-                                            <IonCol size='6'>
+                                            <IonCol size='4'>
                                                 <IonCard style={{
-                                                    border: '3px solid var(--ion-color-medium)'
+                                                    border: '3px solid var(--ion-color-secondary)',
+                                                    margin: '0'
                                                 }} className='ion-text-center ion-padding' color=''>
                                                     <IonCardSubtitle>CUOTAS</IonCardSubtitle>
-                                                    <IonCardTitle>${ingCuotas}</IonCardTitle>
+                                                    <IonCardSubtitle>${ingCuotas}</IonCardSubtitle>
+                                                </IonCard>
+                                            </IonCol>
+                                            <IonCol size='4'>
+                                                <IonCard style={{
+                                                    border: '3px solid var(--ion-color-tertiary)',
+                                                    margin: '0'
+                                                }} className='ion-text-center ion-padding' color=''>
+                                                    <IonCardSubtitle>OTRO</IonCardSubtitle>
+                                                    <IonCardSubtitle>${ingOtro}</IonCardSubtitle>
                                                 </IonCard>
                                             </IonCol>
                                             <IonCol size='12'>
@@ -116,7 +160,8 @@ const ContablePage = () => {
                                         </>
                                         :
                                         <IonCol size='12'>
-                                            <IonCard className='ion-text-center ion-padding' color='danger'>
+                                            <IonCard className='ion-text-center ion-padding' color='danger' style={{ margin: '0',
+                                        padding: '10px' }}>
                                                 <IonCardSubtitle>EGRESOS</IonCardSubtitle>
                                                 <IonCardTitle>${egresosCount}</IonCardTitle>
                                             </IonCard>

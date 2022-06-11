@@ -51,10 +51,12 @@ export const startGetRifa = () => {
         try {
             const resp = await fetchConToken('rifa')
             const body = await resp.json();
-            
-            dispatch(setRifa({
-                ...body.rifa
-            }))
+            if(body.ok){
+
+                dispatch(setRifa(
+                    body.rifa
+                ))
+            }
         } catch (error) {
             
         }

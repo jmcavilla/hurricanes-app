@@ -18,7 +18,7 @@ const IngresosSegment = () => {
                                     <IonCardTitle>${ingreso.monto}</IonCardTitle>
                                     {ingreso.quien}<br />
                                     {ingreso.fecha}<br />
-                                    <IonChip color={ingreso.motivo === 'ROPA' ? 'primary' : 'secondary'}>
+                                    <IonChip color={ingreso.motivo === 'ROPA' ? 'primary' : (ingreso.motivo === 'CUOTA' ? 'secondary' : 'tertiary')}>
                                        <IonLabel>{ingreso.motivo}</IonLabel>
                                     </IonChip>
                                 </IonCard>
