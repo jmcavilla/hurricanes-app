@@ -43,16 +43,19 @@ const HomeCarousel = () => {
                     infiniteLoop={true}
                     dynamicHeight={false}
                     interval={15000}>
-                    <div>
-                        <img alt='aprende' src={`${process.env.PUBLIC_URL}/assets/images/aprende.jpg`}  />
+                    <div className='home__carrousel-item' style={{ 
+                        backgroundImage: `url("${process.env.PUBLIC_URL}/assets/images/aprende.jpg")` }}>
+                        {/* <img alt='aprende' src={`${process.env.PUBLIC_URL}/assets/images/aprende.jpg`}  /> */}
                         {/* <p className="legend">Legend 1</p> */}
                     </div>
-                    <div>
-                        <img alt='veni_infantiles' src={`${process.env.PUBLIC_URL}/assets/images/veni_infantiles.jpg`}  />
+                    <div className='home__carrousel-item' style={{ 
+                        backgroundImage: `url("${process.env.PUBLIC_URL}/assets/images/veni_infantiles.jpg")` }}>
+                        {/* <img alt='veni_infantiles' src={`${process.env.PUBLIC_URL}/assets/images/veni_infantiles.jpg`}  /> */}
                         {/* <p className="legend">Legend 2</p> */}
                     </div>
-                    <div>
-                        <img alt='donde_entrenamos' src={`${process.env.PUBLIC_URL}/assets/images/donde_entrenamos.jpg`}  />
+                    <div className='home__carrousel-item' style={{ 
+                        backgroundImage: `url("${process.env.PUBLIC_URL}/assets/images/donde_entrenamos.jpg")` }}>
+                        {/* <img alt='donde_entrenamos' src={`${process.env.PUBLIC_URL}/assets/images/donde_entrenamos.jpg`}  /> */}
                         {/* <p className="legend">Legend 3</p> */}
                     </div>
                 </Carousel>

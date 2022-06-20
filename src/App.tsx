@@ -1,5 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonIcon, IonLabel, IonModal, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonToast, setupIonicReact } from '@ionic/react';
+import { IonApp, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuButton, IonModal, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToast, IonToolbar, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { PushNotifications } from '@capacitor/push-notifications';
 
@@ -144,86 +144,57 @@ const App: React.FC = () => {
           ?
           <SplashScreen />
           :
-          <>
-            {
-              // uid ?
-              <IonReactRouter>
-                <IonTabs >
-                  <IonRouterOutlet>
-                    <Route path='/tabUser' exact>
-                      <TabUser />
-                    </Route>
-                    <Route path='/tabHome' exact>
-                      <TabHome />
-                    </Route>
-                    <Route path='/tabOptions' exact>
-                      <TabOptions />
-                    </Route>
-                    <Route path='/tabShop' exact>
-                      <TabStore />
-                    </Route>
-                    <Route path='/tabAdmin' exact>
-                      <TabAdmin />
-                    </Route>
-                    <Route path='/tabRifa' exact>
-                      <TabRifa />
-                    </Route>
-                    <Redirect path='' to='tabHome' exact />
-                  </IonRouterOutlet>
-                  <IonTabBar slot="bottom" color="secondary" >
-                    <IonTabButton tab="tabUser" href='/tabUser'>
-                      <IonIcon icon={personCircleSharp} />
-                      <IonLabel>Socio</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="tabHome" href='/tabHome'>
-                      <IonIcon icon={home} />
-                      <IonLabel>Inicio</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="tabShop" href='/tabShop'>
-                      <IonIcon icon={cartSharp} />
-                      <IonLabel>Shop</IonLabel>
-                    </IonTabButton>
-                    {rifa && <IonTabButton tab="tabRifa" href='/tabRifa'>
-                      <IonIcon icon={ticketSharp} />
-                      <IonLabel>Rifas</IonLabel>
-                    </IonTabButton>}
-                    {user?.admin && <IonTabButton tab="tabAdmin" href='/tabAdmin'>
-                      <IonIcon icon={keyOutline} />
-                      <IonLabel>Admin</IonLabel>
-                    </IonTabButton>}
-                    {/* <IonTabButton tab="tabOptions" href='/tabOptions'>
-                        <IonIcon icon={optionsSharp} />
-                        <IonLabel>Opciones</IonLabel>
-                      </IonTabButton> */}
-                  </IonTabBar>
-                </IonTabs>
-              </IonReactRouter>
-
-            }
-            <IonModal isOpen={showLogin} onIonModalDidDismiss={() => dispatch(uiHideLogin())}>
-              <LoginPage />
-            </IonModal>
-            <IonModal isOpen={showSignIn} onIonModalDidDismiss={() => dispatch(uiHideSignIn())}>
-              <SignInPage />
-            </IonModal>
-            <IonModal isOpen={showSignInParent}>
-              <ParentSignIn />
-            </IonModal>
-            <IonToast
-              isOpen={showToast}
-              onDidDismiss={() => setShowToast(false)}
-              message="Presiona una vez mas para salir de la app."
-              duration={4000}
-            />
-            <IonToast
-              isOpen={showError}
-              color='danger'
-              onDidDismiss={() => setShowError(false)}
-              message={error?.message}
-              duration={5000}
-              position="top"
-            />
-          </>
+          <IonReactRouter>
+              <IonMenu side='start' contentId='maincontent'>
+                <IonHeader>
+                  <IonToolbar>
+                    <IonTitle>Menu</IonTitle>
+                  </IonToolbar>
+                </IonHeader>
+                <IonContent>
+                  <IonList>
+                    <IonItem>
+                      <IonLabel>Home</IonLabel>
+                    </IonItem>
+                  </IonList>
+                </IonContent>
+              </IonMenu>
+              <IonRouterOutlet>
+                <Route path='/tabUser' exact>
+                  <TabUser />
+                </Route>
+                <Route path='/tabHome' exact>
+                  <TabHome />
+                </Route>
+                <Route path='/tabOptions' exact>
+                  <TabOptions />
+                </Route>
+                <Route path='/tabShop' exact>
+                  <TabStore />
+                </Route>
+                <Route path='/tabAdmin' exact>
+                  <TabAdmin />
+                </Route>
+                <Route path='/tabRifa' exact>
+                  <TabRifa />
+                </Route>
+                <Redirect path='' to='tabHome' exact />
+              </IonRouterOutlet>
+              {/* <IonPage id="maincontent">
+                <IonHeader>
+                  <IonToolbar>
+                    <IonButtons slot="start">
+                      <IonMenuButton></IonMenuButton>
+                    </IonButtons>
+                    <IonTitle>Hurricanes</IonTitle>
+                  </IonToolbar>
+                </IonHeader>
+                <IonContent>
+                  <IonButton expand='block'>Open</IonButton>
+                </IonContent>
+              </IonPage> */}
+              <TabHome />
+          </IonReactRouter>
 
       }
     </IonApp>
