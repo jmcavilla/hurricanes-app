@@ -7,6 +7,7 @@ import { socioReducer, SocioState } from "./socio/socio.reducer";
 import { cuotaReducer, CuotaState } from "./cuota/cuota.reducer";
 import { adminReducer, AdminState } from "./admin/admin.reducer";
 import { eventoReducer, EventoState } from "./evento/evento.reducer";
+import { staffReducer, StaffState } from "./staff/staff.reducer";
 
 declare global {
     interface Window {
@@ -23,7 +24,8 @@ export type RootState = {
     socio: SocioState,
     cuota: CuotaState,
     admin: AdminState,
-    evento: EventoState
+    evento: EventoState,
+    staff: StaffState
 }
 
 const rootReducer = combineReducers({
@@ -33,7 +35,8 @@ const rootReducer = combineReducers({
     socio: socioReducer,
     cuota: cuotaReducer,
     admin: adminReducer,
-    evento: eventoReducer
+    evento: eventoReducer,
+    staff: staffReducer
 })
 
 const store = createStore(rootReducer, composeEnhancers(
