@@ -40,6 +40,13 @@ const SignInPage = () => {
             }))
             return;
         }
+        if(password.length < 6){
+            dispatch(uiSetError({
+                code: 400,
+                message: 'La contraseña debe contener al menos 6 caracteres'
+            }))
+            return;
+        }
         if (password !== repassword) {
             dispatch(uiSetError({
                 code: 400,
@@ -144,6 +151,13 @@ const SignInPage = () => {
                                         <IonLabel position="stacked">Ingresa nuevamente</IonLabel>
                                         <IonInput type='password' value={repassword} autocapitalize='on' onIonChange={e => setRepassword(e.detail.value)}></IonInput>
                                     </IonItem>
+                                </IonCol>
+                            </IonRow>
+                            <IonRow>
+                                <IonCol>
+                                    {/* <IonItem color=""> */}
+                                        <IonLabel position="stacked">La contraseña debe contener al menos 6 caracteres</IonLabel>
+                                    {/* </IonItem> */}
                                 </IonCol>
                             </IonRow>
                             <IonRow>

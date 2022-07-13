@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import SlideThree from './SlideThree';
 import SlideTwo from './SlideTwo';
 import SlideOne from './SlideOne';
-import { createFamily, createSocio } from '../../store/socio/socio.actions';
+import { createFamily, createSocio, getFamily, getSocioData } from '../../store/socio/socio.actions';
 import { RootState } from '../../store';
-import { uiHideFieldsSocio } from '../../store/ui/ui.actions';
+import { uiCloseLoading, uiHideAddFamily, uiHideFieldsSocio, uiHideFieldsSocioAdmin, uiHideSignIn, uiOpenLoading, uiSetError } from '../../store/ui/ui.actions';
+import { fetchConToken } from '../../helpers/fetch';
 
-const SocioSlides = ({ parent = false, close}) => {
+const SocioSlides = ({ parent = false, admin = false, close}) => {
     const { user } = useSelector((state: RootState) => state.user);
     const mySlides = useRef(null);
     const dispatch = useDispatch();
@@ -43,6 +44,19 @@ const SocioSlides = ({ parent = false, close}) => {
                     ...data
                 })
             }
+            if(swiper.activeIndex === 0){
+                const resp = await fetchConToken('socio/socioByDni', data, 'POST');
+                const body = await resp.json()
+
+                if(body.ok){
+                    let socioExistente = body.socio;
+                    socioExistente.user_id = user.uid;
+                    if(parent){
+                        socioExistente.parent_id = user.uid;
+                    }
+                    guardarSocio(socioExistente, parent)
+                }
+            }
             swiper.slideNext();
         } else if (direction === "prev") {
             swiper.slidePrev();
@@ -53,12 +67,44 @@ const SocioSlides = ({ parent = false, close}) => {
             if(parent){
                 socio.parent_id = user.uid;
                 dispatch(createFamily(socio));
+            }else if(parent){
+                socio.user_id = null;
+                dispatch(createSocio(socio));
             }else{
                 dispatch(createSocio(socio))
             }
         }
     };
 
+    const guardarSocio = async (socio, parent = false) => {
+        try {
+            const resp = await fetchConToken('socio/save', {...socio}, 'PUT');
+            const body = await resp.json();
+
+            if(body.ok){
+                if(parent){
+                    dispatch(uiHideFieldsSocio())
+                    dispatch(uiHideSignIn());
+                    dispatch(uiCloseLoading());
+                    dispatch(uiHideAddFamily());
+                    dispatch(getFamily(socio.user_id));
+                }else{
+                    dispatch(uiHideFieldsSocioAdmin());
+                    dispatch(uiHideFieldsSocio())
+                    dispatch(uiHideSignIn());
+                    dispatch(uiCloseLoading());
+                    dispatch(getSocioData(socio.user_id));
+                }
+            }
+            
+        } catch (error) {
+            dispatch(uiCloseLoading())
+            dispatch(uiSetError({
+                code: 400,
+                message: 'Ocurrion un error, intentalo nuevamente.'
+            }))
+        }
+    }
 
     const setCategoria = () => {
         const edad = parseInt(socio.edad)
@@ -86,13 +132,13 @@ const SocioSlides = ({ parent = false, close}) => {
             <IonContent>
                 <IonSlides ref={mySlides} draggable={false} options={slideOpts} style={{ height: '100%' }}>
                     <IonSlide style={{ height: '100%' }}>
-                        <SlideOne parent={parent} onBtnClicked={onBtnClicked} />
+                        <SlideOne parent={parent} admin={admin} onBtnClicked={onBtnClicked} />
                     </IonSlide>
                     <IonSlide style={{ height: '100%' }}>
-                        <SlideTwo parent={parent} onBtnClicked={onBtnClicked} />
+                        <SlideTwo parent={parent} admin={admin} onBtnClicked={onBtnClicked} />
                     </IonSlide>
                     <IonSlide style={{ height: '100%' }}>
-                        <SlideThree parent={parent} onBtnClicked={onBtnClicked} />
+                        <SlideThree parent={parent} admin={admin} onBtnClicked={onBtnClicked} />
                     </IonSlide>
                 </IonSlides>
             </IonContent>

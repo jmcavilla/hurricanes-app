@@ -2,7 +2,7 @@ import { IonButton, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonFooter
 import { arrowBack, arrowForward } from 'ionicons/icons';
 import React, { useState } from 'react';
 
-const SlideTwo = ({ onBtnClicked, parent = false }) => {
+const SlideTwo = ({ onBtnClicked, parent = false, admin = false  }) => {
     const [socioHuracan, setSocioHuracan] = useState(false)
     const [numeroSocioHuracan, setNumeroSocioHuracan] = useState(null);
     const next = () => {
@@ -21,7 +21,7 @@ const SlideTwo = ({ onBtnClicked, parent = false }) => {
                 </div>
                 <div style={{ flex: 1 }}>
                     <IonCardTitle color="primary" style={{ fontSize: '1.5em', padding: '10vw 0 10vw 0' }}>
-                        {parent ? '¿Es socio/a de Huracán?' : '¿Sos socio de Huracán?'}
+                        {(parent || admin) ? '¿Es socio/a de Huracán?' : '¿Sos socio de Huracán?'}
                     </IonCardTitle>
                     <IonCardSubtitle color="primary" style={{ padding: '0 10vw 10vw 10vw' }}>
                         {`Para poder realizar el descuento en la cuota necesitamos ${parent ? 'su' : 'tu'} número de socio del Club Atlético Huracán.`}

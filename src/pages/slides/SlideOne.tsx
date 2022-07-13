@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import DatePicker from 'react-mobile-datepicker';
 import { uiHideSignIn } from '../../store/ui/ui.actions';
 
-const SlideOne = ({ onBtnClicked, parent = false }) => {
+const SlideOne = ({ onBtnClicked, parent = false, admin = false }) => {
     const dispatch = useDispatch();
     const [dateOpen, setDateOpen] = useState(false)
     const [showAlert, setShowAlert] = useState(false)
@@ -66,7 +66,7 @@ const SlideOne = ({ onBtnClicked, parent = false }) => {
         setNacimiento(format(value, 'dd/MM/yyyy'));
         const age = getAge(value);
         setEdad(age);
-        if (!parent && age < 18) {
+        if (!parent && !admin && age < 18) {
             setShowAlert(true);
         }
     };
@@ -87,7 +87,7 @@ const SlideOne = ({ onBtnClicked, parent = false }) => {
                 <IonContent>
                     <div style={{ flex: 1, padding: '2vh 0 0 0' }}>
                         <IonCardTitle color="primary" style={{ fontSize: '1.5em' }}>
-                            {parent ? 'Completá los datos' :'Completá tus datos'}
+                            {(parent || admin) ? 'Completá los datos' :'Completá tus datos'}
                         </IonCardTitle>
                     </div>
                     <div style={{ padding: '2vw', flex: 5 }}>
@@ -115,7 +115,7 @@ const SlideOne = ({ onBtnClicked, parent = false }) => {
                                 </IonItem>
                             </IonCol>
                         </IonRow>
-                        {!parent && <IonRow>
+                        {(!parent && !admin) && <IonRow>
                             <IonCol>
                                 <IonItem color="">
                                     <IonLabel position="floating">Teléfono</IonLabel>
@@ -152,17 +152,17 @@ const SlideOne = ({ onBtnClicked, parent = false }) => {
                             </IonCol>
                         </IonRow>
                         <IonRow>
-                            <IonCol>
+                            <IonCol size='6'>
                                 <IonButton
                                     expand="full"
                                     color={sexo === Gender.Male ? 'secondary' : 'light'}
                                     onClick={() => setSexo(Gender.Male)}
                                     style={{ height: '15vh' }}
                                 >
-                                    {parent ? 'Niño' : 'Hombre'}<IonIcon icon={man} size="large" />
+                                    {parent ? 'Niño' : admin ? 'MASC' :'Hombre'}<IonIcon icon={man} size="large" />
                                 </IonButton>
                             </IonCol>
-                            <IonCol>
+                            <IonCol size='6'>
                                 <IonButton
                                     expand="full"
                                     color={sexo === Gender.Female ? 'secondary' : 'light'}
@@ -170,7 +170,7 @@ const SlideOne = ({ onBtnClicked, parent = false }) => {
                                     style={{ height: '15vh' }}
                                 >
                                     <IonIcon icon={woman} size="large" />
-                                    {parent ? 'Niña' :'mujer'}
+                                    {parent ? 'Niña' : admin ? 'FEM' :'mujer'}
                                 </IonButton>
                             </IonCol>
                         </IonRow>

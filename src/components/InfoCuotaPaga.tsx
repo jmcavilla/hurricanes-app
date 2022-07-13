@@ -22,7 +22,7 @@ const InfoCuotaPaga = ({ cuota, close, socio, pagar = false }) => {
         const body = await resp.json();
 
         if (body.ok) {
-            if(socio.tipo_socio !== 'P'){
+            if(formaPago !== 'Exento'){
                 createIngreso();
             }
             close();
@@ -108,28 +108,35 @@ const InfoCuotaPaga = ({ cuota, close, socio, pagar = false }) => {
                         cancelText="Cancelar"
                         onIonChange={e => {
                             setFormaPago(e.detail.value)
+                            if(e.detail.value === 'Exento'){
+                                setQuienRecibio(e.detail.value)
+                            }else if(e.detail.value === 'Mercado Pago'){
+                                setQuienRecibio(e.detail.value)
+                            }else{
+                                setQuienRecibio('')
+                            }
                         }}
                     >
                         <IonSelectOption value='Efectivo'>Efectivo</IonSelectOption>
                         <IonSelectOption value='Transeferencia'>Transeferencia</IonSelectOption>
                         <IonSelectOption value='Mercado Pago'>Mercado Pago</IonSelectOption>
-                        <IonSelectOption value='Excento'>Excento</IonSelectOption>
+                        <IonSelectOption value='Exento'>Exento</IonSelectOption>
                     </IonSelect>
                 </IonItem>
                 <IonItem>
                     <IonLabel position='stacked'>¿Quién recibió el dinero?</IonLabel>
-                    <IonInput disabled={!pagar} value={quienRecibio} onIonChange={e => setQuienRecibio(e.detail.value)}></IonInput>
+                    <IonInput disabled={!pagar || quienRecibio === 'Exento' || quienRecibio === 'Mercado Pago'} value={quienRecibio} onIonChange={e => setQuienRecibio(e.detail.value)}></IonInput>
                 </IonItem>
             </IonCol>
             </IonRow>
-            {formaPago && formaPago !== '' && formaPago !== 'Efectivo' && pagar && <IonButton color='secondary' fill='solid' expand='block' onClick={uploadPhoto}>SUBIR COMPROBANTE</IonButton>}
+            {formaPago && formaPago !== '' && formaPago !== 'Efectivo' && formaPago !== 'Exento' && pagar && <IonButton color='secondary' fill='solid' expand='block' onClick={uploadPhoto}>SUBIR COMPROBANTE</IonButton>}
             
             {pagar && <IonButton
                 color='secondary'
                 fill='outline'
                 expand='block'
                 onClick={() => { marcarPagado(cuota._id) }}
-                disabled={!formaPago || !quienRecibio || (formaPago !== 'Efectivo' && !comprobante)}
+                disabled={!formaPago || !quienRecibio || (formaPago !== 'Efectivo' && formaPago !== 'Exento' && !comprobante)}
             >GUARDAR</IonButton>}
         </div>
     )

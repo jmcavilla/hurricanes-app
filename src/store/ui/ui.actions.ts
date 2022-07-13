@@ -18,6 +18,9 @@ export const uiHideSignInParent = () => ({ type: types.uiHideSigninParent });
 export const uiShowFieldsSocio = () => ({ type: types.uiShowFieldsSocio });
 export const uiHideFieldsSocio = () => ({ type: types.uiHideFieldsSocio });
 
+export const uiShowFieldsSocioAdmin = () => ({ type: types.uiShowFieldsSocioAdmin });
+export const uiHideFieldsSocioAdmin = () => ({ type: types.uiHideFieldsSocioAdmin });
+
 export const uiShowAddFamily = () => ({ type: types.uiShowAddFamily });
 export const uiHideAddFamily = () => ({ type: types.uiHideAddFamily });
 

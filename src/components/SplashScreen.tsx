@@ -15,7 +15,7 @@ const SplashScreen: React.FC = () => {
     return (
         <IonPage
             style={{
-                backgroundColor: '#fff',
+                backgroundColor: 'var(--ion-color-secondary)',
                 display: 'flex',
                 justifyContent: 'center'
             }}

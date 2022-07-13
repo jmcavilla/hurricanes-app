@@ -6,7 +6,7 @@ import { Camera, CameraResultType, CameraDirection, CameraSource } from '@capaci
 import { uiSetError } from '../../store/ui/ui.actions';
 import { RootState } from '../../store';
 
-const SlideThree = ({ onBtnClicked, parent = false  }) => {
+const SlideThree = ({ onBtnClicked, parent = false, admin = false }) => {
     const { loading } = useSelector((state: RootState) => state.ui);
     const dispatch = useDispatch()
     const [photo, setPhoto] = useState(null);

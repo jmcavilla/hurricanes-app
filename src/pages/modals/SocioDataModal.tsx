@@ -169,7 +169,10 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
                         <IonCol size='12'>
                             <IonItem>
                                 <IonLabel position='stacked'>Teléfono</IonLabel>
-                                <IonInput value={socioSelected?.telefono} disabled={true}></IonInput>
+                                <IonInput type='tel' value={socioSelected?.telefono} onIonChange={e => {
+                                    setHuboCambio(true);
+                                    socioSelected.telefono = e.detail.value;
+                                }} disabled={false}></IonInput>
                             </IonItem>
                         </IonCol>
                         <IonCol>

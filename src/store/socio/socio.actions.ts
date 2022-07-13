@@ -1,6 +1,6 @@
 import { async } from "rxjs";
 import { fetchConToken } from "../../helpers/fetch";
-import { uiCloseLoading, uiHideAddFamily, uiHideFieldsSocio, uiHideSignIn, uiOpenLoading, uiSetError, uiShowFieldsSocio } from "../ui/ui.actions";
+import { uiCloseLoading, uiHideAddFamily, uiHideFieldsSocio, uiHideFieldsSocioAdmin, uiHideSignIn, uiOpenLoading, uiSetError, uiShowFieldsSocio } from "../ui/ui.actions";
 import { types } from "./socio.types";
 
 export const setSocioData = (payload) => ({
@@ -72,6 +72,7 @@ export const createSocio = (data) => {
 
             if(body.ok){
 
+                dispatch(uiHideFieldsSocioAdmin());
                 dispatch(uiHideFieldsSocio())
                 dispatch(uiHideSignIn());
                 dispatch(uiCloseLoading());

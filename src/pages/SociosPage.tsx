@@ -1,20 +1,25 @@
-import { IonButton, IonCard, IonCardContent, IonSearchbar, IonCardHeader, IonCol, IonItem, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonButton, IonCard, IonCardContent, IonSearchbar, IonCardHeader, IonCol, IonItem, IonLabel, IonModal, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonSelect, IonSelectOption, IonFab, IonFabButton, IonIcon, IonList } from '@ionic/react';
+import { addCircleOutline } from 'ionicons/icons';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchConToken } from '../helpers/fetch';
 import { RootState } from '../store';
 import { getSociosPending, startGetSociosActivos } from '../store/admin/admin.actions';
+import { uiHideFieldsSocioAdmin, uiShowFieldsSocioAdmin } from '../store/ui/ui.actions';
 import SocioDataModal from './modals/SocioDataModal';
+import SocioSlides from './slides/SocioSlides';
 
 const SociosPage = () => {
     const { sociosActivos, sociosPendientes } = useSelector((state: RootState) => state.admin);
+    const { showFieldsSocioAdmin } = useSelector((state: RootState) => state.ui);
     const [segment, setSegment] = useState('A');
     const [showModal, setShowModal] = useState(false);
     const [showModalPending, setShowModalPending] = useState(false);
     const [selected, setSelected] = useState(null);
     const [searchText, setSearchText] = useState('');
     const [sociosTable, setSociosTable] = useState([]);
+    const [showAddSocio, setShowAddSocio] = useState(false)
     const [month, setMonth] = useState(moment().month() + 1)
 
     const dispatch = useDispatch();
@@ -111,20 +116,23 @@ const SociosPage = () => {
                 </>
             }
             {
-                segment === 'A' && sociosTable && sociosTable.length > 0 && sociosTable.map((socio, i) => (
-                    <>
-
-                        <IonItem key={i} lines="full">
-                            <IonLabel>{
-                                `${socio?.numero_socio && ('0000' + socio?.numero_socio).slice(-4)} - ${socio.apellido}, ${socio.nombre}`
-                            }</IonLabel>
-                            <IonButton fill='clear' color='primary' onClick={() => {
-                                setSelected(socio);
-                                setShowModal(true);
-                            }}>VER</IonButton>
-                        </IonItem>
-                    </>
-                ))
+                segment === 'A' && <IonList style={{ marginBottom: '10vh'}}>
+                    {
+                        sociosTable && sociosTable.length > 0 && sociosTable.map((socio, i) => (
+                        
+                            <IonItem key={i} lines="full">
+                                <IonLabel>{
+                                    `${socio?.numero_socio && ('0000' + socio?.numero_socio).slice(-4)} - ${socio.apellido}, ${socio.nombre}`
+                                }</IonLabel>
+                                <IonButton fill='clear' color='primary' onClick={() => {
+                                    setSelected(socio);
+                                    setShowModal(true);
+                                }}>VER</IonButton>
+                            </IonItem>
+                        
+                        ))
+                    }
+                </IonList>
             }
             {
                 segment === 'P' && sociosPendientes && sociosPendientes.length > 0 && sociosPendientes.map((socio, i) => (
@@ -165,6 +173,18 @@ const SociosPage = () => {
             </IonModal>
             <IonModal isOpen={showModalPending} onIonModalDidDismiss={() => { setShowModalPending(false) }}>
                 <SocioDataModal isPending={true} socioSelected={selected} close={() => { setShowModalPending(false); setSelected(null); }} />
+            </IonModal>
+            <IonFab vertical="bottom" horizontal="end" slot="fixed">
+                <IonFabButton color='secondary' onClick={() => {
+                    dispatch(uiShowFieldsSocioAdmin())
+                }}>
+                    <IonIcon size='large' icon={addCircleOutline} />
+                </IonFabButton>
+            </IonFab>
+            <IonModal isOpen={showFieldsSocioAdmin}>
+                <SocioSlides admin={true} close={() => {
+                    dispatch(uiHideFieldsSocioAdmin())
+                }}></SocioSlides>
             </IonModal>
         </>
     )

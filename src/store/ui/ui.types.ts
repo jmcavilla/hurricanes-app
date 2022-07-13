@@ -18,6 +18,9 @@ export const types = {
     uiShowFieldsSocio: '[ui] Show fields socio',
     uiHideFieldsSocio: '[ui] Hide fields socio',
 
+    uiShowFieldsSocioAdmin: '[ui] Show fields socio admin',
+    uiHideFieldsSocioAdmin: '[ui] Hide fields socio admin',
+
     uiShowAddFamily: '[ui] Show Add Family',
     uiHideAddFamily: '[ui] Hide Add Family',
 

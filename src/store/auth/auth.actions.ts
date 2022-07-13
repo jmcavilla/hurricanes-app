@@ -18,7 +18,7 @@ export const startLogin = ( email, password ) => {
                 localStorage.setItem('token', body.token );
                 localStorage.setItem('token-init-date', new Date().getTime().toString() );
                 localStorage.setItem('email', body.email);
-                setTimeout(() => {
+                // setTimeout(() => {
                     
                     dispatch( login({
                         uid: body.uid,
@@ -38,7 +38,7 @@ export const startLogin = ( email, password ) => {
                     dispatch(uiCloseLoading())
                     dispatch( uiHideLogin());
                     dispatch( uiHideSignIn());
-                }, 5000);
+                // }, 5000);
             }else{
                 dispatch(uiCloseLoading());
                 dispatch(uiSetError({

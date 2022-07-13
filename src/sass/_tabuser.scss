@@ -71,6 +71,9 @@
     justify-content: center;
     flex: 1;
     align-items: center;
+    background: var(--ion-color-secondary);
+    margin: 10px;
+    border-radius: 15px;
 }
 .user__login-text{
     display: flex;

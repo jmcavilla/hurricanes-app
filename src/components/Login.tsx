@@ -1,5 +1,5 @@
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser';
-import { IonActionSheet, IonButton, IonCol, IonGrid, IonIcon, IonImg, IonLabel, IonRow, IonSpinner } from '@ionic/react';
+import { IonActionSheet, IonButton, IonCol, IonGrid, IonIcon, IonImg, IonLabel, IonRow, IonSpinner, IonText } from '@ionic/react';
 import { close, createSharp, logInSharp, logoInstagram, logoWhatsapp } from 'ionicons/icons';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,6 +27,7 @@ const Login = () => {
                     <IonImg
                         className="animate__animated"
                         src={`${process.env.PUBLIC_URL}/assets/images/hurricanes_logo.png`}
+                        style={{ height: '40vh' }}
                     />
                 </div>
                     <IonGrid>
@@ -45,17 +46,18 @@ const Login = () => {
                                 <IonButton onClick={asociate} className='user__card' fill='solid' color='secondary'>
                                     <div className='user__button_text'>
                                         <IonIcon src={createSharp} />
-                                        <span>ASOCIATE</span>
+                                        <span>REGISTRATE</span>
                                     </div>
                                 </IonButton>
                             </IonCol>
                         </IonRow>
                         <IonRow>
                             <IonCol size='12' className='ion-text-center'>
-                                <IonLabel>¿Querés asociar a tu hijo/a? </IonLabel>
-                                <IonButton className='user__button_large' onClick={() => { setShowActionSheet(true) }} fill='outline' color='dark'>
+                                <IonLabel> <strong>¿Querés asociar a tu hijo/a?</strong>  </IonLabel> <br />
+                                {/* <IonButton className='user__button_large' onClick={() => { setShowActionSheet(true) }} fill='outline' color='dark'>
                                     <span>Comunícate con nosotros</span>
-                                </IonButton>
+                                </IonButton> */}
+                                <IonText>Para poder asociar a tu hijo/a primero, por favor, registrá tus datos desde el botón de registro. Luego podras cargar los datos de tu hijo/a.</IonText>
                             </IonCol>
                         </IonRow>
                     </IonGrid>
