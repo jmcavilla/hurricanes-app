@@ -47,9 +47,9 @@ const TabAdmin = () => {
                             <IonHeader>
                                 <IonToolbar color='secondary'>
                                     <IonTitle>Admin</IonTitle>
-                                    <IonChip className='ion-margin-rigth' slot='end' color='dark' outline={false} >
+                                    <IonChip className='ion-margin-rigth' slot='end' color='dark' outline={false} onClick={reloadAction}>
                                         <IonLabel className='ion-margin-right' color='light'>{`RECARGAR `} </IonLabel>
-                                        <IonIcon className='ion-no-margin' color='light' icon={refreshCircleSharp} onClick={reloadAction} size='large'/>
+                                        <IonIcon className='ion-no-margin' color='light' icon={refreshCircleSharp}  size='large'/>
                                     </IonChip>
                                 </IonToolbar>
                             </IonHeader>

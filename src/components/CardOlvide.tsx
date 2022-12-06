@@ -43,7 +43,7 @@ const CardOlvide = ({ email, setEmail, showTokenOlvideAction }) => {
                             <IonCol>
                                 <IonItem className='ion-no-padding'>
                                     <IonLabel position="stacked">Email</IonLabel>
-                                    <IonInput autocomplete='language' value={email} onIonChange={e => setEmail(e.detail.value)}></IonInput>
+                                    <IonInput autocomplete='language' value={email} onIonChange={e => setEmail(e.detail.value.trim())}></IonInput>
                                 </IonItem>
                             </IonCol>
                         </IonRow>

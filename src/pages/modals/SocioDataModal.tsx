@@ -2,13 +2,16 @@ import { IonAlert, IonButton, IonCol, IonContent, IonGrid, IonHeader, IonIcon, I
 import { closeCircleSharp, saveSharp } from 'ionicons/icons';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CuotaSocio from '../../components/CuotaSocio';
 import { fetchConToken } from '../../helpers/fetch';
+import { RootState } from '../../store';
 import { getSociosPending, startGetSociosActivos } from '../../store/admin/admin.actions';
 
 const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
     const dispatch = useDispatch();
+    const { user } = useSelector((state: RootState) => state.user);
+    const [socioSel, setSocioSel] = useState(socioSelected)
     const [cuotasSocio, setCuotasSocio] = useState([]);
     const [tipoSocio, setTipoSocio] = useState('');
     const [huboCambio, setHuboCambio] = useState(false);
@@ -20,7 +23,7 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
     moment.locale('es');
     const getCuotaSocio = async () => {
         // present();
-        const resp = await fetchConToken('cuota/getCuotasBySocio', { socio_id: socioSelected._id }, 'POST');
+        const resp = await fetchConToken('cuota/getCuotasBySocio', { socio_id: socioSel._id }, 'POST');
         const body = await resp.json();
 
         if (body.ok) {
@@ -30,15 +33,21 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
     }
 
     const guardarSocio = async () => {
+        if(socioSel.socio_huracan && (!socioSel.numero_socio_huracan || socioSel.numero_socio_huracan === 0)){
+            setShowAlertError(true);
+            return;
+        }
         present()
         try {
-            socioSelected.tipo_socio = tipoSocio;
-            const resp = await fetchConToken('socio/save', { ...socioSelected }, 'PUT');
+            socioSel.tipo_socio = tipoSocio;
+            const resp = await fetchConToken('socio/save', { ...socioSel }, 'PUT');
             const body = await resp.json();
 
             if (body.ok) {
                 dismiss();
                 setShowAlertOk(true);
+                dispatch(startGetSociosActivos());
+                dispatch(getSociosPending());
             } else {
                 dismiss();
                 setShowAlertError(true);
@@ -52,7 +61,7 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
 
     const activate = async () => {
         try {
-            const res = await fetchConToken('socio/activate', { socio_id: socioSelected._id }, 'POST');
+            const res = await fetchConToken('socio/activate', { socio_id: socioSel._id }, 'POST');
             const body = await res.json()
 
             if(body.ok){
@@ -69,8 +78,8 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
 
     useEffect(() => {
         getCuotaSocio();
-        setTipoSocio(socioSelected?.tipo_socio);
-    }, [socioSelected])
+        setTipoSocio(socioSel?.tipo_socio);
+    }, [socioSel])
 
     return (
         <>
@@ -94,7 +103,7 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
                 {segment === 'D' && <IonGrid>
                     <IonRow>
                         <IonCol style={{ display: 'flex', justifyContent: 'center' }}>
-                            <div className='user__img' style={{ backgroundImage: `url(${socioSelected?.foto})` }}>
+                            <div className='user__img' style={{ backgroundImage: `url(${socioSel?.foto})` }}>
                             </div>
                         </IonCol>
                     </IonRow>
@@ -107,11 +116,11 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
                     </IonRow>
                     <IonRow>
                         {
-                            socioSelected?.numero_socio &&
+                            socioSel?.numero_socio &&
                             <IonCol size='12'>
                                 <IonItem>
                                     <IonLabel position='stacked'>N° Socio</IonLabel>
-                                    <IonInput value={socioSelected?.numero_socio} disabled={true}></IonInput>
+                                    <IonInput value={socioSel?.numero_socio} disabled={true} ></IonInput>
                                 </IonItem>
                             </IonCol>
                         }
@@ -125,7 +134,7 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
                                     cancelText="Cancelar"
                                     onIonChange={e => {
                                         setTipoSocio(e.detail.value);
-                                        if (e.detail.value !== socioSelected.tipo_socio) {
+                                        if (e.detail.value !== socioSel.tipo_socio) {
                                             setHuboCambio(true)
                                         } else {
                                             setHuboCambio(false)
@@ -145,47 +154,89 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
                         <IonCol size='12'>
                             <IonItem>
                                 <IonLabel position='stacked'>Nombre</IonLabel>
-                                <IonInput value={socioSelected?.nombre} disabled={true}></IonInput>
+                                <IonInput value={socioSel?.nombre} disabled={!user.admin} onIonChange={e => { setSocioSel({
+                                        ...socioSel,
+                                        nombre: e.detail.value
+                                    })
+                                    }}></IonInput>
                             </IonItem>
                         </IonCol>
                         <IonCol size='12'>
                             <IonItem>
                                 <IonLabel position='stacked'>Apellido</IonLabel>
-                                <IonInput value={socioSelected?.apellido} disabled={true}></IonInput>
+                                <IonInput value={socioSel?.apellido} disabled={!user.admin} onIonChange={e => { setSocioSel({
+                                        ...socioSel,
+                                        apellido: e.detail.value
+                                    })
+                                    }}></IonInput>
                             </IonItem>
                         </IonCol>
                         <IonCol>
                             <IonItem>
                                 <IonLabel position='stacked'>Fecha de Nacimiento</IonLabel>
-                                <IonInput value={socioSelected?.fecha_nac} disabled={true}></IonInput>
+                                <IonInput value={socioSel?.fecha_nac} disabled={!user.admin} onIonChange={e => { setSocioSel({
+                                        ...socioSel,
+                                        fecha_nac: e.detail.value
+                                    })
+                                    }}></IonInput>
                             </IonItem>
                         </IonCol>
                         <IonCol>
                             <IonItem>
                                 <IonLabel position='stacked'>DNI</IonLabel>
-                                <IonInput value={socioSelected?.dni} disabled={true}></IonInput>
+                                <IonInput type='number' value={socioSel?.dni} disabled={!user.admin} onIonChange={e => { setSocioSel({
+                                        ...socioSel,
+                                        dni: e.detail.value
+                                    })
+                                    }}></IonInput>
                             </IonItem>
                         </IonCol>
                         <IonCol size='12'>
                             <IonItem>
                                 <IonLabel position='stacked'>Teléfono</IonLabel>
-                                <IonInput type='tel' value={socioSelected?.telefono} onIonChange={e => {
+                                <IonInput type='tel' value={socioSel?.telefono} onIonChange={e => {
                                     setHuboCambio(true);
-                                    socioSelected.telefono = e.detail.value;
-                                }} disabled={false}></IonInput>
+                                    setSocioSel({
+                                        ...socioSel,
+                                        telefono: e.detail.value
+                                    })
+                                }} disabled={!user.admin}></IonInput>
                             </IonItem>
                         </IonCol>
                         <IonCol>
                             <IonItem>
                                 <IonLabel position='stacked'>¿Socio de Huracán?</IonLabel>
-                                <IonInput value={socioSelected?.socio_huracan ? 'SI' : 'NO'} disabled={true}></IonInput>
+                                {/* <IonInput value={socioSel?.socio_huracan ? 'SI' : 'NO'} disabled={!user.admin}></IonInput> */}
+                                <IonSelect
+                                    value={socioSel?.socio_huracan}
+                                    okText="Aceptar"
+                                    cancelText="Cancelar"
+                                    disabled={!user.admin}
+                                    onIonChange={e => {
+                                        setHuboCambio(true);
+                                        setSocioSel({
+                                            ...socioSel,
+                                            socio_huracan: e.detail.value
+                                        })
+                                    }}
+                                >
+                                    <IonSelectOption value={true}>SI</IonSelectOption>
+                                    <IonSelectOption value={false}>NO</IonSelectOption>
+
+                                </IonSelect>
                             </IonItem>
                         </IonCol>
                         {
-                            socioSelected?.socio_huracan && <IonCol>
+                            socioSel?.socio_huracan && <IonCol>
                                 <IonItem>
                                     <IonLabel position='stacked'>N° Socio Huracán</IonLabel>
-                                    <IonInput value={socioSelected?.numero_socio_huracan} disabled={true}></IonInput>
+                                    <IonInput type='number' value={socioSel?.numero_socio_huracan} disabled={!user.admin}onIonChange={e => {
+                                    setHuboCambio(true);
+                                    setSocioSel({
+                                        ...socioSel,
+                                        numero_socio_huracan: e.detail.value
+                                    })
+                                }}></IonInput>
                                 </IonItem>
                             </IonCol>
                         }
@@ -199,13 +250,13 @@ const SocioDataModal = ({ socioSelected, close, isPending = false }) => {
                 {segment === 'C' &&
                     cuotasSocio.sort((a, b) => (a.mes < b.mes) ? 1 : ((b.mes < a.mes) ? -1 : 0))
                         .map((cuota, i) => (
-                            <CuotaSocio key={i} cuota={cuota} getCuotaSocio={() => getCuotaSocio()} socio={socioSelected}/>
+                            <CuotaSocio key={i} cuota={cuota} getCuotaSocio={() => getCuotaSocio()} socio={socioSel}/>
                         ))
                 }
             </IonContent>
             <IonAlert
                 isOpen={showAlertOk}
-                onDidDismiss={() => setShowAlertOk(false)}
+                onDidDismiss={() => {setShowAlertOk(false); close()}}
                 cssClass='my-custom-class'
                 header={'¡Exito!'}
                 message={'Se guardo correctamente.'}

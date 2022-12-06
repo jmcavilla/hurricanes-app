@@ -46,11 +46,11 @@ const CardChangePass = ({ email, goToLogin }) => {
                             <IonCol>
                                 <IonItem className='ion-no-padding'>
                                     <IonLabel position="stacked">Contraseña nueva</IonLabel>
-                                    <IonInput autocomplete='language' type={showPassword ? 'text' : 'password'} value={password} onIonChange={e => setPassword(e.detail.value)} clearInput={true}></IonInput>
+                                    <IonInput autocomplete='language' type={showPassword ? 'text' : 'password'} value={password} onIonChange={e => setPassword(e.detail.value.trim())} clearInput={true}></IonInput>
                                 </IonItem>
                                 <IonItem className='ion-no-padding'>
                                     <IonLabel position="stacked">Repetir contraseña</IonLabel>
-                                    <IonInput autocomplete='language' type={showPassword ? 'text' : 'password'} value={repassword} onIonChange={e => setRepassword(e.detail.value)} clearInput={true}></IonInput>
+                                    <IonInput autocomplete='language' type={showPassword ? 'text' : 'password'} value={repassword} onIonChange={e => setRepassword(e.detail.value.trim())} clearInput={true}></IonInput>
                                 </IonItem>
                             </IonCol>
                             <IonCol size='12'>

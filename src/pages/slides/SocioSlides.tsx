@@ -1,4 +1,4 @@
-import { IonAlert, IonButton, IonContent, IonHeader, IonIcon, IonPage, IonSlide, IonSlides, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAlert, IonButton, IonContent, IonHeader, IonIcon, IonPage, IonSlide, IonSlides, IonTitle, IonToolbar, useIonLoading } from '@ionic/react';
 import { closeCircleSharp } from 'ionicons/icons';
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,8 +9,10 @@ import { createFamily, createSocio, getFamily, getSocioData } from '../../store/
 import { RootState } from '../../store';
 import { uiCloseLoading, uiHideAddFamily, uiHideFieldsSocio, uiHideFieldsSocioAdmin, uiHideSignIn, uiOpenLoading, uiSetError } from '../../store/ui/ui.actions';
 import { fetchConToken } from '../../helpers/fetch';
+import { Gender } from '../../interfaces';
 
 const SocioSlides = ({ parent = false, admin = false, close}) => {
+    const [present, dismiss] = useIonLoading()
     const { user } = useSelector((state: RootState) => state.user);
     const mySlides = useRef(null);
     const dispatch = useDispatch();
@@ -45,6 +47,7 @@ const SocioSlides = ({ parent = false, admin = false, close}) => {
                 })
             }
             if(swiper.activeIndex === 0){
+                present();
                 const resp = await fetchConToken('socio/socioByDni', data, 'POST');
                 const body = await resp.json()
 
@@ -56,6 +59,7 @@ const SocioSlides = ({ parent = false, admin = false, close}) => {
                     }
                     guardarSocio(socioExistente, parent)
                 }
+                dismiss()
             }
             swiper.slideNext();
         } else if (direction === "prev") {
@@ -108,6 +112,14 @@ const SocioSlides = ({ parent = false, admin = false, close}) => {
 
     const setCategoria = () => {
         const edad = parseInt(socio.edad)
+        if(socio.sexo === Gender.Female){
+            if(edad > 13){
+                socio.categoria = 'F';
+            }else{
+                socio.categoria = 'I'
+            }
+            return;
+        }
         if( edad > 35 ){
             socio.categoria = 'V';
         }else if( edad > 19 ){

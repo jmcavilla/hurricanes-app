@@ -32,11 +32,11 @@ const CardLogin = ({ email , setEmail, showOlvideAction, showChangeSuccess, setS
                             <IonCol>
                                 <IonItem className='ion-no-padding'>
                                     <IonLabel position="stacked">Email</IonLabel>
-                                    <IonInput autocomplete='off' value={email} onIonChange={e => setEmail(e.detail.value)}></IonInput>
+                                    <IonInput autocomplete='off' value={email} onIonChange={e => setEmail(e.detail.value.trim())}></IonInput>
                                 </IonItem>
                                 <IonItem className='ion-no-padding'>
                                     <IonLabel position="stacked">Contraseña</IonLabel>
-                                    <IonInput autocomplete='off'   type='password' value={password} onIonChange={e => setPassword(e.detail.value)} clearInput={true}></IonInput>
+                                    <IonInput autocomplete='off'   type='password' value={password} onIonChange={e => setPassword(e.detail.value.trim())} clearInput={true}></IonInput>
                                 </IonItem>
                             </IonCol>
                         </IonRow>
